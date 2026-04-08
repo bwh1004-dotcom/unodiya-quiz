@@ -368,8 +368,12 @@ function loadQuestion() {
   const ke = document.getElementById('wordKanji');
   ke.textContent = q.word;
   ke.style.fontSize = q.word.length > 5 ? '28px' : q.word.length > 3 ? '38px' : '50px';
-  document.getElementById('readingArea').innerHTML =
-    '<p class="word-reading">' + q.reading + '</p>';
+  if (selectedMode === 'reading') {
+    document.getElementById('readingArea').innerHTML = '';
+  } else {
+    document.getElementById('readingArea').innerHTML =
+      '<p class="word-reading">' + q.reading + '</p>';
+  }
   document.getElementById('hintArea').innerHTML =
     '<button class="hint-btn" onclick="showHint()">💡 우노디야 힌트 (-3점)</button>';
   document.getElementById('wordCard').classList.remove('correct','wrong');
