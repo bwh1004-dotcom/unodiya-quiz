@@ -91,8 +91,9 @@
   .opt-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
     border-radius: 14px; padding: 15px 10px; font-size: 14px; font-weight: 600;
     color: #e0e0e0; cursor: pointer; text-align: center; line-height: 1.3;
-    font-family: 'Noto Serif JP'; transition: transform 0.15s, background 0.15s; }
-  .opt-btn:hover:not(.disabled) { transform: translateY(-2px); background: rgba(255,255,255,0.09); }
+    font-family: 'Noto Serif JP'; transition: background 0.15s;
+    min-height: 56px; display: flex; align-items: center; justify-content: center; }
+  .opt-btn:hover:not(.disabled) { background: rgba(255,255,255,0.09); }
   .opt-btn.correct  { background: rgba(74,222,128,0.18); border: 2px solid #4ade80; color: #4ade80; }
   .opt-btn.wrong    { background: rgba(239,68,68,0.18);  border: 2px solid #ef4444; color: #ef4444; }
   .opt-btn.disabled { opacity: 0.35; cursor: default; }
@@ -132,6 +133,16 @@
   .btn-home:hover { background: rgba(255,255,255,0.1); }
   .result-footer { text-align: center; margin-top: 14px; font-size: 11px; color: #2a2a2a; }
   #loadScreen { z-index: 1; }
+
+  /* ── 사운드 토글 ── */
+  .sound-toggle { position: fixed; top: 16px; right: 16px; z-index: 100;
+    background: rgba(233,69,96,0.12); border: 1px solid rgba(233,69,96,0.4);
+    border-radius: 20px; padding: 5px 12px;
+    cursor: pointer; font-family: 'Rajdhani'; font-size: 11px;
+    font-weight: 700; letter-spacing: 2px; color: #e94560;
+    transition: all 0.2s; }
+  .sound-toggle:hover { background: rgba(233,69,96,0.22); }
+  .sound-toggle.off { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.12); color: #444; }
   .load-text { font-size: 14px; color: #444; letter-spacing: 3px; animation: pulse 1.2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
   @keyframes flashGreen { 0%{box-shadow:0 0 0 0 rgba(74,222,128,0.5)} 100%{box-shadow:0 0 0 24px rgba(74,222,128,0)} }
@@ -141,6 +152,7 @@
 </head>
 <body>
 <div class="bg-deco"><span>語</span><span>N2</span></div>
+<div class="sound-toggle" id="soundToggle" onclick="toggleSound()">SOUND ON</div>
 
 <div id="loadScreen" class="screen active">
   <p class="load-text">LOADING · · ·</p>
@@ -343,8 +355,15 @@ function startGame() {
   const shuffled = pool.slice().sort(function() { return Math.random() - 0.5; }).slice(0, Q_COUNT);
   questions = shuffled.map(function(w) {
     const af = selectedMode === 'reading' ? 'reading' : 'meaning';
-    const wrong = WORDS.filter(function(x) { return x[af] !== w[af]; })
-      .sort(function() { return Math.random() - 0.5; }).slice(0, 3).map(function(x) { return x[af]; });
+    // 중복값 제거: 읽기모드에서 같은 히라가나 오답 방지
+    const seen = new Set([w[af]]);
+    const wrong = [];
+    const candidates = WORDS.filter(function(x) { return x[af] !== w[af]; })
+      .sort(function() { return Math.random() - 0.5; });
+    for (var i = 0; i < candidates.length && wrong.length < 3; i++) {
+      const val = candidates[i][af];
+      if (!seen.has(val)) { seen.add(val); wrong.push(val); }
+    }
     const opts = wrong.concat([w[af]]).sort(function() { return Math.random() - 0.5; });
     return Object.assign({}, w, { options: opts, answerField: af });
   });
@@ -413,7 +432,13 @@ function handleAnswer(selected) {
     score += gained;
     combo++;
     maxCombo = Math.max(maxCombo, combo);
-  } else { combo = 0; }
+    if (combo >= 3) playSound('combo');
+    else playSound('correct');
+  } else {
+    combo = 0;
+    if (selected === null) playSound('timeout');
+    else playSound('wrong');
+  }
   results.push({ word: q, correct: correct, answer: selected || '시간초과', gained: gained });
   document.getElementById('wordCard').classList.add(correct ? 'correct' : 'wrong');
   q.options.forEach(function(opt, i) {
@@ -497,6 +522,72 @@ function shareResult() {
     navigator.clipboard.writeText(text).then(function() {
       alert('결과가 복사됐어요! 붙여넣기해서 공유하세요 😄');
     });
+  }
+}
+
+// ── 사운드 시스템 ──────────────────────────────────────────
+let soundOn = true;
+let audioCtx = null;
+
+function getCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function playSound(type) {
+  if (!soundOn) return;
+  try {
+    const ctx = getCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    if (type === 'correct') {
+      osc.frequency.setValueAtTime(523, ctx.currentTime);       // C5
+      osc.frequency.setValueAtTime(659, ctx.currentTime + 0.1); // E5
+      osc.frequency.setValueAtTime(784, ctx.currentTime + 0.2); // G5
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.5);
+    } else if (type === 'wrong') {
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(300, ctx.currentTime);
+      osc.frequency.setValueAtTime(200, ctx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.4);
+    } else if (type === 'combo') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(784, ctx.currentTime);
+      osc.frequency.setValueAtTime(988, ctx.currentTime + 0.08);
+      osc.frequency.setValueAtTime(1175, ctx.currentTime + 0.16);
+      gain.gain.setValueAtTime(0.25, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.4);
+    } else if (type === 'timeout') {
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(220, ctx.currentTime);
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.3);
+    }
+  } catch(e) {}
+}
+
+function toggleSound() {
+  soundOn = !soundOn;
+  const btn = document.getElementById('soundToggle');
+  if (soundOn) {
+    btn.textContent = 'SOUND ON';
+    btn.classList.remove('off');
+  } else {
+    btn.textContent = 'SOUND OFF';
+    btn.classList.add('off');
   }
 }
 
