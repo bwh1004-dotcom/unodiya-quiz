@@ -135,12 +135,12 @@
   #loadScreen { z-index: 1; }
 
   /* ── 사운드 토글 ── */
-  .sound-toggle { position: fixed; top: 16px; right: 16px; z-index: 100;
+  .sound-toggle { display: inline-block;
     background: rgba(233,69,96,0.12); border: 1px solid rgba(233,69,96,0.4);
-    border-radius: 20px; padding: 5px 12px;
+    border-radius: 20px; padding: 5px 14px;
     cursor: pointer; font-family: 'Rajdhani'; font-size: 11px;
     font-weight: 700; letter-spacing: 2px; color: #e94560;
-    transition: all 0.2s; }
+    transition: all 0.2s; margin-bottom: 20px; }
   .sound-toggle:hover { background: rgba(233,69,96,0.22); }
   .sound-toggle.off { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.12); color: #444; }
   .load-text { font-size: 14px; color: #444; letter-spacing: 3px; animation: pulse 1.2s infinite; }
@@ -152,7 +152,7 @@
 </head>
 <body>
 <div class="bg-deco"><span>語</span><span>N2</span></div>
-<div class="sound-toggle" id="soundToggle" onclick="toggleSound()">SOUND ON</div>
+
 
 <div id="loadScreen" class="screen active">
   <p class="load-text">LOADING · · ·</p>
@@ -164,6 +164,9 @@
     <h1 class="game-title">N2 スピード<br>퀴즈</h1>
     <p class="game-sub">JLPT N2 SPEED QUIZ</p>
     <div class="word-count-badge" id="wordCountBadge">단어 로딩 중...</div>
+    <div>
+      <div class="sound-toggle" id="soundToggle" onclick="toggleSound()">SOUND ON</div>
+    </div>
     <div class="best-record" id="bestRecord"></div>
     <div class="setting-card">
       <div class="setting-label">📚 단어 범위</div>
