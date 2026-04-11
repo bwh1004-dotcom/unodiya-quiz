@@ -30,10 +30,39 @@
   .word-count-badge { display: inline-block; background: rgba(78,205,196,0.1);
     border: 1px solid rgba(78,205,196,0.25); border-radius: 20px;
     padding: 5px 16px; font-size: 13px; color: #4ecdc4; margin-bottom: 16px; }
-  .best-record { font-size: 12px; color: #555; margin-bottom: 16px; min-height: 20px; }
-  .best-item { display: inline-block; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 20px; padding: 3px 12px; margin: 2px; }
-  .best-item span { color: #e94560; font-weight: 700; }
+  /* 최고기록 버튼 */
+  .best-btn { display: inline-block; background: rgba(255,230,109,0.08);
+    border: 1px solid rgba(255,230,109,0.25); border-radius: 20px;
+    padding: 5px 14px; font-size: 11px; color: #ffe66d;
+    cursor: pointer; font-family: 'Rajdhani'; font-weight: 700;
+    letter-spacing: 1px; margin-bottom: 16px; transition: background 0.2s; }
+  .best-btn:hover { background: rgba(255,230,109,0.15); }
+
+  /* 팝업 오버레이 */
+  .popup-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+  .popup-overlay.active { display: flex; }
+  .popup-box { background: #111; border: 1px solid rgba(255,230,109,0.2);
+    border-radius: 20px; padding: 24px 20px; width: 100%; max-width: 420px;
+    max-height: 80vh; overflow-y: auto; }
+  .popup-title { font-size: 13px; color: #ffe66d; font-weight: 700;
+    letter-spacing: 2px; margin-bottom: 16px; display: flex;
+    justify-content: space-between; align-items: center; }
+  .popup-close { font-size: 18px; cursor: pointer; color: #555; padding: 0 4px; }
+  .popup-close:hover { color: #fff; }
+  .best-row { display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 13px; }
+  .best-row:last-child { border-bottom: none; }
+  .best-row-key { color: #888; font-family: 'Rajdhani'; }
+  .best-row-val { color: #e94560; font-weight: 700; font-family: 'Rajdhani'; font-size: 15px; }
+  .best-empty { color: #444; font-size: 13px; text-align: center; padding: 20px 0; }
+
+  /* 범위 버튼 가로 스크롤 */
+  .seg-group { display: flex; gap: 6px; flex-wrap: nowrap; overflow-x: auto;
+    padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+  .seg-group::-webkit-scrollbar { height: 2px; }
+  .seg-group::-webkit-scrollbar-thumb { background: rgba(233,69,96,0.3); border-radius: 2px; }
   .setting-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(233,69,96,0.15);
     border-radius: 16px; padding: 16px 18px; margin-bottom: 12px; width: 100%; }
   .setting-label { font-size: 11px; color: #555; letter-spacing: 2px; margin-bottom: 10px; }
@@ -134,6 +163,13 @@
   .result-footer { text-align: center; margin-top: 14px; font-size: 11px; color: #2a2a2a; }
   #loadScreen { z-index: 1; }
 
+  /* ── 최고기록 비교 ── */
+  .best-diff { text-align: center; font-size: 11px; font-family: 'Rajdhani';
+    font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; min-height: 18px; }
+  .best-diff.plus { color: #4ade80; }
+  .best-diff.minus { color: #e94560; }
+  .best-diff.zero { color: #ffe66d; }
+
   /* ── 사운드 토글 ── */
   .sound-toggle { display: inline-block;
     background: rgba(233,69,96,0.12); border: 1px solid rgba(233,69,96,0.4);
@@ -154,6 +190,17 @@
 <div class="bg-deco"><span>語</span><span>N2</span></div>
 
 
+<!-- 최고기록 팝업 -->
+<div class="popup-overlay" id="bestPopup" onclick="closeBestPopup(event)">
+  <div class="popup-box">
+    <div class="popup-title">
+      <span>🏅 최고기록</span>
+      <span class="popup-close" onclick="closeBestPopup()">✕</span>
+    </div>
+    <div id="bestPopupList"></div>
+  </div>
+</div>
+
 <div id="loadScreen" class="screen active">
   <p class="load-text">LOADING · · ·</p>
 </div>
@@ -167,7 +214,9 @@
     <div>
       <div class="sound-toggle" id="soundToggle" onclick="toggleSound()">SOUND ON</div>
     </div>
-    <div class="best-record" id="bestRecord"></div>
+    <div>
+      <div class="best-btn" onclick="openBestPopup()">🏅 최고기록 보기</div>
+    </div>
     <div class="setting-card">
       <div class="setting-label">📚 단어 범위</div>
       <div class="seg-group" id="rangeGroup"></div>
@@ -202,6 +251,7 @@
       <span class="hud-score" id="hudScore">0점</span>
       <span class="hud-combo hidden" id="hudCombo">🔥×2</span>
     </div>
+    <div class="best-diff" id="bestDiff"></div>
     <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
     <div class="timer-row">
       <div class="timer-circle" id="timerCircle">10</div>
@@ -283,7 +333,16 @@ function show(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
-function showStart() { renderBestRecord(); show('startScreen'); }
+function showStart() {
+  renderBestRecord();
+  show('startScreen');
+  // 사운드 버튼 상태 동기화
+  const btn = document.getElementById('soundToggle');
+  if (btn) {
+    btn.textContent = soundOn ? 'SOUND ON' : 'SOUND OFF';
+    soundOn ? btn.classList.remove('off') : btn.classList.add('off');
+  }
+}
 
 function getBest() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
@@ -295,13 +354,34 @@ function saveBest(key, val) {
   return isNew;
 }
 function renderBestRecord() {
+  // 팝업 내용 갱신
   const best = getBest();
   const keys = Object.keys(best);
-  const el = document.getElementById('bestRecord');
-  if (!keys.length) { el.innerHTML = ''; return; }
-  el.innerHTML = '🏅 최고기록 &nbsp;' + keys.map(k =>
-    '<span class="best-item">' + k + ' <span>' + best[k] + '점</span></span>'
-  ).join(' ');
+  const el = document.getElementById('bestPopupList');
+  if (!el) return;
+  if (!keys.length) {
+    el.innerHTML = '<div class="best-empty">아직 기록이 없어요!</div>';
+    return;
+  }
+  // 점수 높은 순으로 정렬
+  keys.sort(function(a,b) { return best[b] - best[a]; });
+  el.innerHTML = keys.map(function(k) {
+    return '<div class="best-row">' +
+      '<span class="best-row-key">' + k + '</span>' +
+      '<span class="best-row-val">' + best[k] + '점</span>' +
+      '</div>';
+  }).join('');
+}
+
+function openBestPopup() {
+  renderBestRecord();
+  document.getElementById('bestPopup').classList.add('active');
+}
+
+function closeBestPopup(e) {
+  if (!e || e.target === document.getElementById('bestPopup')) {
+    document.getElementById('bestPopup').classList.remove('active');
+  }
 }
 
 async function loadWords() {
@@ -323,7 +403,7 @@ function buildRangeButtons(total) {
   const group = document.getElementById('rangeGroup');
   group.innerHTML = '';
   const ranges = [{ label:'전체', val:'all' }];
-  const step = 80;
+  const step = 100;
   for (let i = 0; i < total; i += step) {
     const end = Math.min(i + step, total);
     ranges.push({ label:'#' + (i+1) + '~' + end, val: i + '-' + end });
@@ -371,6 +451,13 @@ function startGame() {
     return Object.assign({}, w, { options: opts, answerField: af });
   });
   qIdx = 0; score = 0; combo = 0; maxCombo = 0; results = [];
+  // 현재 모드 최고기록 불러오기 (questions.length 기준으로 통일)
+  const rangeLabel = selectedRange === 'all' ? '전체' : '#' + selectedRange.replace('-','~');
+  const modeLabel = selectedMode === 'reading' ? '読み' : '뜻';
+  const bestKey = rangeLabel + '·' + questions.length + '문·' + modeLabel;
+  const currentBest = getBest()[bestKey] || 0;
+  document.getElementById('bestDiff').textContent = currentBest ? '🏅 목표: ' + currentBest + '점' : '';
+  document.getElementById('bestDiff').className = 'best-diff zero';
   document.getElementById('modeBadge').textContent = selectedMode === 'reading' ? '読み 맞추기' : '뜻 맞추기';
   show('playScreen');
   loadQuestion();
@@ -388,8 +475,17 @@ function loadQuestion() {
   updateTimer();
   document.getElementById('wordNo').textContent = '#' + q.no;
   const ke = document.getElementById('wordKanji');
-  ke.textContent = q.word;
-  ke.style.fontSize = q.word.length > 5 ? '28px' : q.word.length > 3 ? '38px' : '50px';
+  // 읽기 모드에서 word===reading(순히라가나/카타카나)이면 뜻을 대신 표시
+  const isKanaOnly = (selectedMode === 'reading' && q.word === q.reading);
+  if (isKanaOnly) {
+    ke.textContent = '「' + q.meaning + '」';
+    ke.style.fontSize = '24px';
+    ke.style.fontFamily = "'Rajdhani', sans-serif";
+  } else {
+    ke.textContent = q.word;
+    ke.style.fontFamily = "'Noto Serif JP', serif";
+    ke.style.fontSize = q.word.length > 5 ? '28px' : q.word.length > 3 ? '38px' : '50px';
+  }
   if (selectedMode === 'reading') {
     document.getElementById('readingArea').innerHTML = '';
   } else {
@@ -453,6 +549,8 @@ function handleAnswer(selected) {
   });
   document.getElementById('hudScore').textContent = score + '점';
   updateComboUI();
+  // 최고기록 실시간 비교
+  updateBestDiff();
   setTimeout(function() {
     qIdx++;
     if (qIdx >= questions.length) showResult();
@@ -464,6 +562,26 @@ function updateComboUI() {
   const el = document.getElementById('hudCombo');
   if (combo >= 2) { el.textContent = '🔥x' + combo; el.classList.remove('hidden'); }
   else { el.classList.add('hidden'); }
+}
+
+function updateBestDiff() {
+  const rangeLabel = selectedRange === 'all' ? '전체' : '#' + selectedRange.replace('-','~');
+  const modeLabel = selectedMode === 'reading' ? '読み' : '뜻';
+  const bestKey = rangeLabel + '·' + questions.length + '문·' + modeLabel;
+  const best = getBest()[bestKey] || 0;
+  const el = document.getElementById('bestDiff');
+  if (!best) { el.textContent = ''; return; }
+  const diff = score - best;
+  if (diff > 0) {
+    el.textContent = '📈 +' + diff + '점 (최고기록 갱신 중!)';
+    el.className = 'best-diff plus';
+  } else if (diff < 0) {
+    el.textContent = '📉 ' + diff + '점 (최고기록: ' + best + '점)';
+    el.className = 'best-diff minus';
+  } else {
+    el.textContent = '🎯 최고기록과 동점!';
+    el.className = 'best-diff zero';
+  }
 }
 
 function showHint() {
