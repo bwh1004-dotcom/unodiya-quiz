@@ -638,6 +638,10 @@ html, body {
     <div class="home-logo">U N O _ D E Y A</div>
     <div class="home-title">部首 SNAP</div>
     <div class="home-sub">N2 단어 <strong style="color:var(--accent)">380개</strong> 기반 · 한자 부수 분류 게임</div>
+    <button onclick="toggleSound()" id="sound-btn-home"
+      style="margin-top:10px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:6px 16px;font-size:12px;color:var(--text);cursor:pointer;letter-spacing:1px;">
+      🔊 SOUND ON
+    </button>
   </div>
 
   <!-- 콘텐츠 -->
@@ -894,8 +898,7 @@ function initHome() {
   if (best) document.getElementById('best-display').textContent = best + '점';
 
   // 사운드 버튼 초기화
-  const sBtn = document.getElementById('sound-btn');
-  if (sBtn) sBtn.textContent = soundOn ? '🔊' : '🔇';
+  updateSoundBtns();
 
   const totalPlayed = parseInt(localStorage.getItem('bushu_total_played') || '0');
   const totalCorrect = parseInt(localStorage.getItem('bushu_total_correct') || '0');
@@ -1583,10 +1586,18 @@ function playSound(type) {
   } catch(e) {}
 }
 
+function updateSoundBtns() {
+  const label = soundOn ? '🔊 SOUND ON' : '🔇 SOUND OFF';
+  const home = document.getElementById('sound-btn-home');
+  const game = document.getElementById('sound-btn');
+  if (home) home.textContent = label;
+  if (game) game.textContent = soundOn ? '🔊' : '🔇';
+}
+
 function toggleSound() {
   soundOn = !soundOn;
   localStorage.setItem('bushu_sound', soundOn ? 'on' : 'off');
-  document.getElementById('sound-btn').textContent = soundOn ? '🔊' : '🔇';
+  updateSoundBtns();
   if (soundOn) playSound('correct');
 }
 
