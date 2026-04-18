@@ -1,1494 +1,654 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>部首 SNAP</title>
-<link rel="icon" type="image/png" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNODIYA N2 スピード퀴즈</title>
+<link rel="icon" type="image/png" href="./favicon.png">
+<link rel="apple-touch-icon" href="./favicon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="UNODIYA N2">
+<meta name="theme-color" content="#0a0a0f">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+KR:wght@400;700&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; background: #0a0a0f; font-family: 'Rajdhani', 'Noto Serif JP', sans-serif; color: #f0f0f0; -webkit-tap-highlight-color: transparent; }
+  .screen { display: none; min-height: 100vh; padding: 24px 20px; flex-direction: column; align-items: center; justify-content: center; }
+  .screen.active { display: flex; }
+  .inner { width: 100%; max-width: 480px; }
+  .bg-deco { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+  .bg-deco span { position: absolute; font-family: 'Noto Serif JP'; opacity: 0.04; line-height: 1; }
+  .bg-deco span:nth-child(1) { top: 8%; right: -4%; font-size: 200px; color: #e94560; }
+  .bg-deco span:nth-child(2) { bottom: 6%; left: -3%; font-size: 160px; color: #4ecdc4; }
+  #startScreen { position: relative; z-index: 1; justify-content: flex-start; padding-top: 36px; }
+  .brand-badge { font-size: 11px; letter-spacing: 8px; color: #e94560; margin-bottom: 14px; font-weight: 600; }
+  .game-title { font-family: 'Noto Serif JP'; font-size: 42px; font-weight: 900;
+    background: linear-gradient(135deg, #fff 0%, #e94560 55%, #ff6b9d 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; line-height: 1.15; margin-bottom: 6px; }
+  .game-sub { font-size: 12px; color: #444; letter-spacing: 3px; margin-bottom: 20px; }
+  .word-count-badge { display: inline-block; background: rgba(78,205,196,0.1);
+    border: 1px solid rgba(78,205,196,0.25); border-radius: 20px;
+    padding: 5px 16px; font-size: 13px; color: #4ecdc4; margin-bottom: 16px; }
+  /* 최고기록 버튼 */
+  .best-btn { display: inline-block; background: rgba(255,230,109,0.08);
+    border: 1px solid rgba(255,230,109,0.25); border-radius: 20px;
+    padding: 5px 14px; font-size: 11px; color: #ffe66d;
+    cursor: pointer; font-family: 'Rajdhani'; font-weight: 700;
+    letter-spacing: 1px; margin-bottom: 16px; transition: background 0.2s; }
+  .best-btn:hover { background: rgba(255,230,109,0.15); }
 
-:root {
-  --bg: #0a0a0f;
-  --surface: #13131a;
-  --card: #1c1c27;
-  --border: #2e2e42;
-  --text: #e8e6f0;
-  --muted: #6b6880;
-  --accent: #c9a84c;
-  --left-color: #4a7fe8;
-  --right-color: #e85a4a;
-  --correct: #4CAF50;
-  --wrong: #ef5350;
-}
+  /* 팝업 오버레이 */
+  .popup-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    z-index: 200; align-items: center; justify-content: center; padding: 20px; }
+  .popup-overlay.active { display: flex; }
+  .popup-box { background: #111; border: 1px solid rgba(255,230,109,0.2);
+    border-radius: 20px; padding: 24px 20px; width: 100%; max-width: 420px;
+    max-height: 80vh; overflow-y: auto; }
+  .popup-title { font-size: 13px; color: #ffe66d; font-weight: 700;
+    letter-spacing: 2px; margin-bottom: 16px; display: flex;
+    justify-content: space-between; align-items: center; }
+  .popup-close { font-size: 18px; cursor: pointer; color: #555; padding: 0 4px; }
+  .popup-close:hover { color: #fff; }
+  .best-row { display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 13px; }
+  .best-row:last-child { border-bottom: none; }
+  .best-row-key { color: #888; font-family: 'Rajdhani'; }
+  .best-row-val { color: #e94560; font-weight: 700; font-family: 'Rajdhani'; font-size: 15px; }
+  .best-empty { color: #444; font-size: 13px; text-align: center; padding: 20px 0; }
 
-* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  /* 범위 버튼 가로 스크롤 */
+  .seg-group { display: flex; gap: 6px; flex-wrap: nowrap; overflow-x: auto;
+    padding-bottom: 4px; -webkit-overflow-scrolling: touch; }
+  .seg-group::-webkit-scrollbar { height: 2px; }
+  .seg-group::-webkit-scrollbar-thumb { background: rgba(233,69,96,0.3); border-radius: 2px; }
+  .setting-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(233,69,96,0.15);
+    border-radius: 16px; padding: 16px 18px; margin-bottom: 12px; width: 100%; }
+  .setting-label { font-size: 11px; color: #555; letter-spacing: 2px; margin-bottom: 10px; }
+  .seg-group { display: flex; gap: 6px; flex-wrap: wrap; }
+  .seg-btn { flex: 1; min-width: 55px; background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 10px;
+    color: #888; font-size: 12px; font-weight: 600; padding: 9px 4px;
+    cursor: pointer; font-family: 'Rajdhani'; transition: all 0.18s; text-align: center; }
+  .seg-btn.active { background: rgba(233,69,96,0.15); border-color: #e94560; color: #e94560; }
+  .btn-start { background: linear-gradient(135deg, #e94560, #c23152);
+    border: none; border-radius: 50px; color: #fff;
+    font-size: 18px; font-weight: 700; padding: 16px 64px;
+    cursor: pointer; letter-spacing: 4px; font-family: 'Rajdhani';
+    box-shadow: 0 8px 32px rgba(233,69,96,0.35);
+    transition: transform 0.18s, filter 0.18s; margin-top: 8px; }
+  .btn-start:hover { transform: translateY(-2px); filter: brightness(1.1); }
+  .btn-start:active { transform: translateY(0); }
+  #playScreen { justify-content: flex-start; z-index: 1; }
+  #playScreen .inner { display: flex; flex-direction: column; flex: 1; }
+  .mode-badge { display: inline-block; font-size: 10px; color: #4ecdc4;
+    border: 1px solid rgba(78,205,196,0.3); border-radius: 10px;
+    padding: 2px 8px; margin-bottom: 6px; letter-spacing: 1px; }
+  .hud { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .hud-count { font-size: 13px; color: #555; letter-spacing: 1px; }
+  .hud-score { background: rgba(233,69,96,0.12); border: 1px solid rgba(233,69,96,0.28);
+    border-radius: 20px; padding: 5px 14px; font-size: 15px; font-weight: 700; color: #e94560; }
+  .hud-combo { background: rgba(255,230,109,0.1); border: 1px solid rgba(255,230,109,0.28);
+    border-radius: 20px; padding: 5px 10px; font-size: 13px; font-weight: 700; color: #ffe66d; }
+  .hud-combo.hidden { visibility: hidden; }
+  .progress-bar { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-bottom: 14px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, #e94560, #ff6b9d); border-radius: 2px; transition: width 0.4s ease; }
+  .timer-row { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+  .timer-circle { width: 44px; height: 44px; border-radius: 50%; border: 2.5px solid #4ecdc4;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; font-weight: 900; color: #4ecdc4; flex-shrink: 0;
+    transition: border-color 0.3s, color 0.3s; font-family: 'Rajdhani'; }
+  .timer-circle.warn { border-color: #f59e0b; color: #f59e0b; }
+  .timer-circle.danger { border-color: #e94560; color: #e94560; animation: timerBurn 0.5s infinite; }
+  .timer-track { flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+  .timer-fill { height: 100%; border-radius: 3px; transition: width 1s linear, background 0.3s; }
+  .word-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 22px 20px; text-align: center; margin-bottom: 14px; }
+  .word-card.correct { animation: flashGreen 0.5s ease-out; }
+  .word-card.wrong   { animation: flashRed   0.5s ease-out; }
+  .word-no { font-size: 11px; color: #3a3a3a; letter-spacing: 2px; margin-bottom: 6px; }
+  .word-kanji { font-family: 'Noto Serif JP'; font-weight: 900; letter-spacing: 4px; margin-bottom: 8px; line-height: 1.2; }
+  .word-reading { font-size: 14px; color: #777; margin-bottom: 14px; letter-spacing: 2px; }
+  .hint-btn { background: rgba(255,230,109,0.08); border: 1px solid rgba(255,230,109,0.25);
+    border-radius: 20px; color: #ffe66d; font-size: 12px;
+    padding: 7px 18px; cursor: pointer; font-family: 'Rajdhani'; letter-spacing: 1px; transition: background 0.2s; }
+  .hint-btn:hover { background: rgba(255,230,109,0.15); }
+  .hint-box { background: rgba(255,230,109,0.06); border: 1px solid rgba(255,230,109,0.2);
+    border-radius: 12px; padding: 10px 16px; font-size: 13px; color: #ffe66d; line-height: 1.6; font-family: 'Noto Serif JP'; }
+  .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .opt-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 15px 10px; font-size: 14px; font-weight: 600;
+    color: #e0e0e0; cursor: pointer; text-align: center; line-height: 1.3;
+    font-family: 'Noto Serif JP'; transition: background 0.15s;
+    min-height: 56px; display: flex; align-items: center; justify-content: center; }
+  .opt-btn:hover:not(.disabled) { background: rgba(255,255,255,0.09); }
+  .opt-btn.correct  { background: rgba(74,222,128,0.18); border: 2px solid #4ade80; color: #4ade80; }
+  .opt-btn.wrong    { background: rgba(239,68,68,0.18);  border: 2px solid #ef4444; color: #ef4444; }
+  .opt-btn.disabled { opacity: 0.35; cursor: default; }
+  .play-footer { text-align: center; margin-top: auto; padding-top: 10px; font-size: 10px; color: #222; letter-spacing: 2px; }
+  #resultScreen { justify-content: flex-start; padding-top: 32px; z-index: 1; }
+  .result-emoji { font-size: 52px; margin-bottom: 6px; }
+  .result-rank  { font-size: 26px; font-weight: 900; letter-spacing: 2px; font-family: 'Rajdhani'; }
+  .result-sub   { font-size: 13px; color: #777; margin-top: 4px; margin-bottom: 4px; }
+  .result-new-best { font-size: 13px; color: #ffe66d; margin-bottom: 20px; min-height: 20px; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .stat-box { background: rgba(255,255,255,0.04); border-radius: 14px; padding: 16px; text-align: center; }
+  .stat-val { font-size: 28px; font-weight: 900; font-family: 'Rajdhani'; }
+  .stat-label { font-size: 11px; color: #555; margin-top: 4px; letter-spacing: 1px; }
+  .btn-share { width: 100%; background: rgba(78,205,196,0.08); border: 1px solid rgba(78,205,196,0.25);
+    border-radius: 12px; color: #4ecdc4; font-size: 14px; font-weight: 600;
+    padding: 13px; cursor: pointer; font-family: 'Rajdhani'; margin-bottom: 10px; transition: background 0.18s; }
+  .btn-share:hover { background: rgba(78,205,196,0.15); }
+  .wrong-section { background: rgba(233,69,96,0.06); border: 1px solid rgba(233,69,96,0.18);
+    border-radius: 16px; padding: 18px; margin-bottom: 14px; }
+  .wrong-title { font-size: 13px; color: #e94560; font-weight: 700; margin-bottom: 12px; letter-spacing: 1px; }
+  .wrong-item { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .wrong-item:last-child { border-bottom: none; }
+  .wrong-word { font-family: 'Noto Serif JP'; font-size: 18px; font-weight: 700; }
+  .wrong-reading { font-size: 12px; color: #555; }
+  .wrong-answer { font-size: 13px; color: #4ecdc4; margin-top: 3px; }
+  .wrong-hint { font-size: 12px; color: #ffe66d; opacity: 0.8; margin-top: 2px; }
+  .btn-row { display: flex; gap: 10px; }
+  .btn-retry { flex: 1; background: linear-gradient(135deg,#e94560,#c23152);
+    border: none; border-radius: 12px; color: #fff;
+    font-size: 15px; font-weight: 700; padding: 14px;
+    cursor: pointer; font-family: 'Rajdhani'; letter-spacing: 2px; transition: filter 0.18s; }
+  .btn-retry:hover { filter: brightness(1.1); }
+  .btn-home { flex: 1; background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; color: #bbb;
+    font-size: 15px; font-weight: 600; padding: 14px;
+    cursor: pointer; font-family: 'Rajdhani'; transition: background 0.18s; }
+  .btn-home:hover { background: rgba(255,255,255,0.1); }
+  .result-footer { text-align: center; margin-top: 14px; font-size: 11px; color: #2a2a2a; }
+  #loadScreen { z-index: 1; }
 
-html, body {
-  height: 100%;
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Noto Sans KR', sans-serif;
-  overflow: hidden;
-  user-select: none;
-}
+  /* ── 최고기록 비교 ── */
+  .best-diff { text-align: center; font-size: 11px; font-family: 'Rajdhani';
+    font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; min-height: 18px; }
+  .best-diff.plus { color: #4ade80; }
+  .best-diff.minus { color: #e94560; }
+  .best-diff.zero { color: #ffe66d; }
 
-/* ── 화면들 ── */
-.screen { display:none; width:100%; height:100vh; flex-direction:column; }
-.screen.active { display:flex; }
-
-/* ── 홈 ── */
-#screen-home {
-  align-items: center;
-  justify-content: flex-start;
-  padding: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-/* 홈 헤더 */
-.home-header {
-  width: 100%;
-  padding: 52px 24px 20px;
-  background: linear-gradient(180deg, #0e0e1a 0%, transparent 100%);
-  text-align: center;
-  flex-shrink: 0;
-}
-.home-logo {
-  font-size: 10px;
-  letter-spacing: 5px;
-  color: var(--muted);
-  margin-bottom: 6px;
-}
-.home-title {
-  font-family: 'Noto Serif JP', serif;
-  font-size: 30px;
-  font-weight: 900;
-  color: var(--accent);
-  letter-spacing: 3px;
-  line-height: 1.1;
-}
-.home-sub {
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: 6px;
-}
-
-/* 홈 콘텐츠 */
-.home-content {
-  width: 100%;
-  max-width: 420px;
-  padding: 0 16px 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-self: center;
-}
-
-.level-list {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 4px;
-}
-
-.level-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 13px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  transition: all 0.18s;
-  position: relative;
-  overflow: hidden;
-}
-.level-card:active { border-color: var(--accent); background: #23222f; }
-.level-card.locked { opacity: 0.45; cursor: default; }
-
-.level-num {
-  font-family: 'Noto Serif JP', serif;
-  font-size: 20px;
-  font-weight: 900;
-  color: var(--accent);
-  width: 28px;
-  text-align: center;
-  flex-shrink: 0;
-}
-.level-info { flex: 1; min-width: 0; }
-.level-name { font-size: 14px; font-weight: 700; }
-.level-desc { font-size: 11px; color: var(--muted); margin-top: 1px; }
-.level-badge {
-  font-size: 10px;
-  padding: 2px 8px;
-  border-radius: 20px;
-  font-weight: 700;
-  flex-shrink: 0;
-}
-.badge-free { background: rgba(76,168,107,0.2); color: #4ca86b; border: 1px solid rgba(76,168,107,0.3); }
-.badge-pro { background: rgba(201,168,76,0.15); color: var(--accent); border: 1px solid rgba(201,168,76,0.3); }
-
-.best-display {
-  font-size: 13px;
-  color: var(--muted);
-}
-.best-display span { color: var(--accent); font-weight: 700; font-family: 'Noto Serif JP', serif; }
-
-/* 섹션 라벨 */
-.section-label {
-  font-size: 10px;
-  letter-spacing: 2px;
-  color: var(--muted);
-  padding: 0 4px;
-  margin-top: 4px;
-}
-
-/* ── 게임 ── */
-#screen-game {
-  position: relative;
-  overflow: hidden;
-}
-
-/* 부수 패널 (좌/우) */
-.radical-panels {
-  display: flex;
-  height: 100px;
-  flex-shrink: 0;
-}
-.radical-panel {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  transition: background 0.15s;
-}
-.radical-panel.left { background: rgba(74,127,232,0.08); border-bottom: 2px solid rgba(74,127,232,0.3); }
-.radical-panel.right { background: rgba(232,90,74,0.08); border-bottom: 2px solid rgba(232,90,74,0.3); }
-.radical-panel.left.glow { background: rgba(74,127,232,0.25); }
-.radical-panel.right.glow { background: rgba(232,90,74,0.25); }
-
-.panel-char {
-  font-family: 'Noto Serif JP', serif;
-  font-size: 32px;
-  font-weight: 900;
-}
-.panel-name { font-size: 10px; color: var(--muted); letter-spacing: 1px; }
-.panel-arrow { font-size: 16px; }
-
-/* 게임 중앙 영역 */
-.game-center {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  padding: 20px;
-}
-
-/* 타이머 바 */
-.timer-strip {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: var(--border);
-}
-.timer-fill {
-  height: 100%;
-  background: var(--accent);
-  transition: width 0.1s linear, background 0.3s;
-}
-.timer-fill.danger { background: var(--wrong); }
-
-/* 스코어 */
-.score-row {
-  position: absolute;
-  top: 12px;
-  left: 0; right: 0;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 20px;
-  font-size: 13px;
-  color: var(--muted);
-}
-.score-val {
-  font-family: 'Noto Serif JP', serif;
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--accent);
-}
-.combo-val { color: var(--right-color); font-weight: 700; }
-
-/* 한자 카드 (스와이프 대상) */
-.kanji-stage {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  height: 220px;
-}
-
-.kanji-card {
-  background: var(--card);
-  border: 2px solid var(--border);
-  border-radius: 20px;
-  width: 180px;
-  height: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  cursor: grab;
-  transition: transform 0.05s, box-shadow 0.1s;
-  position: relative;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-}
-.kanji-card.dragging { cursor: grabbing; transition: none; }
-.kanji-card.snap-left {
-  animation: snapLeft 0.35s ease forwards;
-}
-.kanji-card.snap-right {
-  animation: snapRight 0.35s ease forwards;
-}
-.kanji-card.correct-flash { border-color: var(--correct); box-shadow: 0 0 30px rgba(76,175,80,0.4); }
-.kanji-card.wrong-flash { border-color: var(--wrong); box-shadow: 0 0 30px rgba(239,83,80,0.4); }
-
-@keyframes snapLeft {
-  to { transform: translateX(-120vw) rotate(-20deg); opacity: 0; }
-}
-@keyframes snapRight {
-  to { transform: translateX(120vw) rotate(20deg); opacity: 0; }
-}
-
-.kanji-char {
-  font-family: 'Noto Serif JP', serif;
-  font-size: 72px;
-  font-weight: 900;
-  line-height: 1;
-}
-.kanji-meaning {
-  font-size: 14px;
-  color: var(--muted);
-}
-.kanji-from {
-  font-size: 11px;
-  color: var(--border);
-  font-family: 'Noto Serif JP', serif;
-}
-
-/* 방향 오버레이 (스와이프 중) */
-.drag-label {
-  position: absolute;
-  top: 12px;
-  font-size: 18px;
-  font-weight: 900;
-  border-radius: 8px;
-  padding: 4px 12px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.1s;
-}
-.drag-label.left-label { left: 12px; color: var(--left-color); border: 2px solid var(--left-color); }
-.drag-label.right-label { right: 12px; color: var(--right-color); border: 2px solid var(--right-color); }
-
-/* 다음 카드 미리보기 */
-.next-preview {
-  margin-top: 16px;
-  text-align: center;
-  opacity: 0.5;
-  font-size: 12px;
-  color: var(--muted);
-}
-.next-char { font-family: 'Noto Serif JP', serif; font-size: 20px; font-weight: 700; }
-
-/* 진행 도트 */
-.progress-dots {
-  display: flex;
-  gap: 6px;
-  margin-top: 12px;
-}
-.dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--border);
-  transition: background 0.2s;
-}
-.dot.done { background: var(--accent); }
-.dot.correct { background: var(--correct); }
-.dot.wrong { background: var(--wrong); }
-
-/* 하단 힌트 */
-.hint-strip {
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  color: var(--muted);
-  border-top: 1px solid var(--border);
-  flex-shrink: 0;
-  gap: 16px;
-}
-.hint-key {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.hint-key .k { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 3px 8px; font-size: 11px; }
-
-/* ── 피드백 오버레이 ── */
-.feedback-overlay {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  z-index: 200;
-  opacity: 0;
-  transition: opacity 0.15s;
-}
-.feedback-overlay.show { opacity: 1; }
-.feedback-emoji { font-size: 80px; }
-
-/* ── 결과 ── */
-#screen-result {
-  align-items: center;
-  justify-content: center;
-  padding: 40px 24px;
-  gap: 0;
-}
-
-.result-score-big {
-  font-family: 'Noto Serif JP', serif;
-  font-size: 80px;
-  font-weight: 900;
-  color: var(--accent);
-  line-height: 1;
-}
-.result-sub { font-size: 14px; color: var(--muted); margin-bottom: 32px; margin-top: 8px; }
-
-.result-stats {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
-  width: 100%;
-  max-width: 360px;
-  margin-bottom: 24px;
-}
-.result-stat {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 16px 10px;
-  text-align: center;
-}
-.rs-num { font-family: 'Noto Serif JP', serif; font-size: 26px; font-weight: 700; }
-.rs-label { font-size: 11px; color: var(--muted); margin-top: 4px; }
-
-.review-list {
-  width: 100%;
-  max-width: 360px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 28px;
-  max-height: 200px;
-  overflow-y: auto;
-}
-.review-row {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px 14px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 13px;
-}
-.review-row.r-wrong { border-color: rgba(239,83,80,0.3); }
-.review-icon { font-size: 16px; width: 20px; text-align: center; }
-.rr-char { font-family: 'Noto Serif JP', serif; font-size: 22px; font-weight: 700; width: 30px; }
-.rr-detail { flex: 1; }
-.rr-answer { font-size: 11px; color: var(--muted); }
-
-.btn-row { display: flex; gap: 10px; width: 100%; max-width: 360px; }
-.btn {
-  flex: 1;
-  padding: 14px;
-  border-radius: 12px;
-  border: none;
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.15s;
-}
-.btn-primary { background: var(--accent); color: #0a0a0f; }
-.btn-primary:hover { background: #d4b55a; }
-.btn-secondary { background: var(--card); color: var(--text); border: 1px solid var(--border); }
-.btn-secondary:hover { border-color: var(--accent); }
-
-/* ── 학습 카드 (정답/오답 후) ── */
-.learn-card {
-  position: fixed;
-  inset: 0;
-  z-index: 150;
-  display: flex;
-  align-items: flex-end;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-.learn-card.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-.learn-inner {
-  width: 100%;
-  border-radius: 24px 24px 0 0;
-  padding: 24px 24px 36px;
-  transform: translateY(20px);
-  transition: transform 0.25s cubic-bezier(.17,.67,.3,1);
-}
-.learn-card.show .learn-inner {
-  transform: translateY(0);
-}
-.learn-inner.correct-bg {
-  background: linear-gradient(160deg, #0e1f12 0%, #111a13 100%);
-  border-top: 2px solid rgba(76,175,80,0.5);
-}
-.learn-inner.wrong-bg {
-  background: linear-gradient(160deg, #1f0e0e 0%, #1a1111 100%);
-  border-top: 2px solid rgba(239,83,80,0.5);
-}
-
-.learn-verdict {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.learn-verdict.ok  { color: #4caf50; }
-.learn-verdict.ng  { color: #ef5350; }
-
-.learn-equation {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
-  font-family: 'Noto Serif JP', serif;
-}
-.learn-box {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 10px;
-  padding: 10px 14px;
-  text-align: center;
-}
-.learn-box .lb-char { font-size: 32px; font-weight: 900; line-height: 1; }
-.learn-box .lb-label { font-size: 10px; color: var(--muted); margin-top: 3px; font-family: 'Noto Sans KR', sans-serif; }
-.learn-op { font-size: 20px; color: var(--muted); }
-.learn-meaning-line {
-  font-size: 13px;
-  color: var(--muted);
-  margin-bottom: 12px;
-  line-height: 1.6;
-}
-.learn-meaning-line strong { color: var(--text); }
-.learn-words {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.learn-word-chip {
-  background: rgba(201,168,76,0.1);
-  border: 1px solid rgba(201,168,76,0.25);
-  border-radius: 8px;
-  padding: 4px 12px;
-  font-family: 'Noto Serif JP', serif;
-  font-size: 13px;
-  color: var(--accent);
-}
-.learn-word-chip span {
-  font-family: 'Noto Sans KR', sans-serif;
-  font-size: 11px;
-  color: var(--muted);
-  margin-left: 4px;
-}
-.daily-card {
-  width: 100%;
-  background: linear-gradient(135deg, #1a1a0f 0%, #1c1a10 100%);
-  border: 1px solid rgba(201,168,76,0.4);
-  border-radius: 12px;
-  padding: 14px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  transition: all 0.18s;
-  position: relative;
-  overflow: hidden;
-}
-.daily-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent), transparent);
-}
-.daily-card:active { border-color: var(--accent); }
-.daily-card.done { opacity: 0.5; cursor: default; }
-.daily-icon { font-size: 22px; }
-.daily-info { flex: 1; }
-.daily-title { font-size: 13px; font-weight: 700; color: var(--accent); }
-.daily-desc { font-size: 11px; color: var(--muted); margin-top: 1px; }
-.daily-streak {
-  font-family: 'Noto Serif JP', serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--accent);
-  text-align: center;
-}
-.streak-label { font-size: 9px; color: var(--muted); text-align: center; }
-
-/* 복습 카드 */
-.review-card {
-  width: 100%;
-  background: var(--card);
-  border: 1px solid rgba(239,83,80,0.25);
-  border-radius: 12px;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  transition: all 0.18s;
-}
-.review-card:active { border-color: rgba(239,83,80,0.6); }
-.review-card.empty { opacity: 0.35; cursor: default; }
-.review-count-badge {
-  background: rgba(239,83,80,0.15);
-  border: 1px solid rgba(239,83,80,0.3);
-  color: #ef5350;
-  font-family: 'Noto Serif JP', serif;
-  font-size: 16px;
-  font-weight: 700;
-  width: 34px; height: 34px;
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-
-/* 게임 모드 태그 */
-.mode-tag {
-  position: absolute;
-  top: 10px; right: 12px;
-  font-size: 10px;
-  padding: 2px 8px;
-  border-radius: 10px;
-  letter-spacing: 1px;
-  font-weight: 700;
-}
-.tag-daily { background: rgba(201,168,76,0.2); color: var(--accent); }
-.tag-review { background: rgba(239,83,80,0.2); color: #ef5350; }
-
-/* 홈 하단 통계 */
-.home-stats-row {
-  display: flex;
-  gap: 8px;
-  width: 100%;
-  margin-top: 4px;
-}
-.home-stat {
-  flex: 1;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 10px 8px;
-  text-align: center;
-}
-.home-stat-num {
-  font-family: 'Noto Serif JP', serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--accent);
-}
-.home-stat-label { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  /* ── 사운드 토글 ── */
+  .sound-toggle { display: inline-block;
+    background: rgba(233,69,96,0.12); border: 1px solid rgba(233,69,96,0.4);
+    border-radius: 20px; padding: 5px 14px;
+    cursor: pointer; font-family: 'Rajdhani'; font-size: 11px;
+    font-weight: 700; letter-spacing: 2px; color: #e94560;
+    transition: all 0.2s; margin-bottom: 20px; }
+  .sound-toggle:hover { background: rgba(233,69,96,0.22); }
+  .sound-toggle.off { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.12); color: #444; }
+  .load-text { font-size: 14px; color: #444; letter-spacing: 3px; animation: pulse 1.2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  @keyframes flashGreen { 0%{box-shadow:0 0 0 0 rgba(74,222,128,0.5)} 100%{box-shadow:0 0 0 24px rgba(74,222,128,0)} }
+  @keyframes flashRed   { 0%{box-shadow:0 0 0 0 rgba(239,68,68,0.5)}  100%{box-shadow:0 0 0 24px rgba(239,68,68,0)} }
+  @keyframes timerBurn  { 0%,100%{text-shadow:0 0 8px #e94560} 50%{text-shadow:0 0 22px #e94560,0 0 44px #ff6b9d} }
 </style>
 </head>
 <body>
+<div class="bg-deco"><span>語</span><span>N2</span></div>
 
-<!-- ── 홈 ── -->
-<div id="screen-home" class="screen active">
 
-  <!-- 헤더 -->
-  <div class="home-header">
-    <div class="home-logo">U N O _ D E Y A</div>
-    <div class="home-title">部首 SNAP</div>
-    <div class="home-sub">N2 단어 <strong style="color:var(--accent)">380개</strong> 기반 · 한자 부수 분류 게임</div>
-    <button onclick="toggleSound()" id="sound-btn-home"
-      style="margin-top:10px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:6px 16px;font-size:12px;color:var(--text);cursor:pointer;letter-spacing:1px;">
-      🔊 SOUND ON
-    </button>
-  </div>
-
-  <!-- 콘텐츠 -->
-  <div class="home-content">
-
-    <!-- 데일리 + 복습 -->
-    <div class="daily-card" id="daily-card" onclick="startDaily()">
-      <div class="daily-icon">☀️</div>
-      <div class="daily-info">
-        <div class="daily-title">오늘의 DAILY 5</div>
-        <div class="daily-desc" id="daily-desc">매일 새로 출제</div>
-      </div>
-      <div>
-        <div class="daily-streak" id="streak-num">0</div>
-        <div class="streak-label">연속</div>
-      </div>
+<!-- 최고기록 팝업 -->
+<div class="popup-overlay" id="bestPopup" onclick="closeBestPopup(event)">
+  <div class="popup-box">
+    <div class="popup-title">
+      <span>🏅 최고기록</span>
+      <span class="popup-close" onclick="closeBestPopup()">✕</span>
     </div>
-
-    <div class="review-card" id="review-card" onclick="startReview()">
-      <div class="review-count-badge" id="review-count">0</div>
-      <div class="daily-info">
-        <div style="font-size:13px;font-weight:700;">오답 복습</div>
-        <div class="daily-desc" id="review-desc">틀린 한자가 없어요</div>
-      </div>
-      <div style="font-size:16px;color:var(--muted)">→</div>
-    </div>
-
-    <!-- 레벨 -->
-    <div class="section-label">LEVELS</div>
-    <div class="level-list">
-      <div class="level-card" onclick="startGame(1)">
-        <div class="level-num">1</div>
-        <div class="level-info">
-          <div class="level-name">亻 vs 扌</div>
-          <div class="level-desc">사람인변 vs 손수변 · 45개</div>
-        </div>
-        <div class="level-badge badge-free">FREE</div>
-      </div>
-      <div class="level-card" onclick="startGame(2)">
-        <div class="level-num">2</div>
-        <div class="level-info">
-          <div class="level-name">言 vs 忄</div>
-          <div class="level-desc">말씀언변 vs 마음심변 · 28개</div>
-        </div>
-        <div class="level-badge badge-free">FREE</div>
-      </div>
-      <div class="level-card" onclick="startGame(3)">
-        <div class="level-num">3</div>
-        <div class="level-info">
-          <div class="level-name">氵 vs 糸</div>
-          <div class="level-desc">삼수변 vs 실사변 · 28개</div>
-        </div>
-        <div class="level-badge badge-free">FREE</div>
-      </div>
-      <div class="level-card" onclick="startGame(4)">
-        <div class="level-num">4</div>
-        <div class="level-info">
-          <div class="level-name">亻扌言忄 혼합</div>
-          <div class="level-desc">4개 부수 동시 분류 · 73개</div>
-        </div>
-        <div class="level-badge badge-free">FREE</div>
-      </div>
-      <div class="level-card" onclick="startGame(5)" style="border-color:rgba(201,168,76,0.3);">
-        <div class="level-num">∞</div>
-        <div class="level-info">
-          <div class="level-name">MASTER MODE</div>
-          <div class="level-desc">6개 부수 전체 · 101개 한자</div>
-        </div>
-        <div class="level-badge badge-free">FREE</div>
-      </div>
-    </div>
-
-    <!-- 통계 -->
-    <div class="home-stats-row">
-      <div class="home-stat">
-        <div class="home-stat-num" id="best-display">—</div>
-        <div class="home-stat-label">최고기록</div>
-      </div>
-      <div class="home-stat">
-        <div class="home-stat-num" id="total-played">0</div>
-        <div class="home-stat-label">총 플레이</div>
-      </div>
-      <div class="home-stat">
-        <div class="home-stat-num" id="accuracy-display">—</div>
-        <div class="home-stat-label">정답률</div>
-      </div>
-    </div>
-
+    <div id="bestPopupList"></div>
   </div>
 </div>
 
-<!-- ── 게임 ── -->
-<div id="screen-game" class="screen">
+<div id="loadScreen" class="screen active">
+  <p class="load-text">LOADING · · ·</p>
+</div>
 
-  <!-- 부수 패널 -->
-  <div class="radical-panels" id="radical-panels"></div>
-
-  <!-- 중앙 -->
-  <div class="game-center">
-    <div class="timer-strip"><div class="timer-fill" id="timer-fill"></div></div>
-
-    <div class="score-row">
-      <div>
-        <span id="q-count" style="font-size:12px;color:var(--muted)">1/10</span>
-      </div>
-      <div class="score-val" id="score-val">0</div>
-      <div style="display:flex;align-items:center;gap:8px;">
-        <button id="sound-btn" onclick="toggleSound()" style="background:none;border:none;font-size:18px;cursor:pointer;padding:0;">🔊</button>
-        <div class="combo-val" id="combo-val"></div>
-      </div>
+<div id="startScreen" class="screen">
+  <div class="inner" style="text-align:center;">
+    <p class="brand-badge">UNODIYA · 우노디야 연상법</p>
+    <h1 class="game-title">N2 スピード<br>퀴즈</h1>
+    <p class="game-sub">JLPT N2 SPEED QUIZ</p>
+    <div class="word-count-badge" id="wordCountBadge">단어 로딩 중...</div>
+    <div>
+      <div class="sound-toggle" id="soundToggle" onclick="toggleSound()">SOUND ON</div>
     </div>
-
-    <div class="kanji-stage">
-      <div class="drag-label left-label" id="left-label">←</div>
-      <div class="drag-label right-label" id="right-label">→</div>
-      <div class="kanji-card" id="kanji-card">
-        <div class="kanji-char" id="kanji-char">倒</div>
-        <div class="kanji-meaning" id="kanji-meaning">넘어지다</div>
-        <div class="kanji-from" id="kanji-from">倒産 · 도산</div>
+    <div>
+      <div class="best-btn" onclick="openBestPopup()">🏅 최고기록 보기</div>
+    </div>
+    <div class="setting-card">
+      <div class="setting-label">📚 단어 범위</div>
+      <div class="seg-group" id="rangeGroup"></div>
+    </div>
+    <div class="setting-card">
+      <div class="setting-label">📝 문제 수</div>
+      <div class="seg-group">
+        <div class="seg-btn" onclick="selectQ(10,this)">10문제</div>
+        <div class="seg-btn active" onclick="selectQ(20,this)">20문제</div>
+        <div class="seg-btn" onclick="selectQ(30,this)">30문제</div>
       </div>
     </div>
-
-    <div class="progress-dots" id="progress-dots"></div>
-
-    <div class="next-preview">
-      다음 <span class="next-char" id="next-char">低</span>
+    <div class="setting-card">
+      <div class="setting-label">🎮 퀴즈 모드</div>
+      <div class="seg-group">
+        <div class="seg-btn active" onclick="selectMode('meaning',this)">뜻 맞추기</div>
+        <div class="seg-btn" onclick="selectMode('reading',this)">읽기 맞추기</div>
+      </div>
     </div>
-  </div>
-
-  <div class="hint-strip">
-    <div class="hint-key"><span class="k">←</span> 왼쪽 부수</div>
-    <div style="color:var(--border)">|</div>
-    <div class="hint-key">오른쪽 부수 <span class="k">→</span></div>
+    <button class="btn-start" onclick="startGame()">START</button>
+    <p style="margin-top:16px;font-size:11px;color:#2a2a2a;letter-spacing:2px;">uno-jp.tistory.com</p>
   </div>
 </div>
 
-<!-- ── 결과 ── -->
-<div id="screen-result" class="screen">
-  <div style="font-size:11px;letter-spacing:4px;color:var(--muted);margin-bottom:12px;">RESULT</div>
-  <div class="result-score-big" id="result-score">0</div>
-  <div class="result-sub" id="result-sub">10문제 · 0개 정답</div>
-
-  <div class="result-stats">
-    <div class="result-stat">
-      <div class="rs-num" id="rs-correct" style="color:#4ca86b">0</div>
-      <div class="rs-label">정답</div>
+<div id="playScreen" class="screen">
+  <div class="inner">
+    <div style="text-align:center;margin-bottom:4px;">
+      <span class="mode-badge" id="modeBadge">뜻 맞추기</span>
     </div>
-    <div class="result-stat">
-      <div class="rs-num" id="rs-wrong" style="color:#ef5350">0</div>
-      <div class="rs-label">오답</div>
+    <div class="hud">
+      <span class="hud-count" id="hudCount">1 / 20</span>
+      <span class="hud-score" id="hudScore">0점</span>
+      <span class="hud-combo hidden" id="hudCombo">🔥×2</span>
     </div>
-    <div class="result-stat">
-      <div class="rs-num" id="rs-combo" style="color:var(--accent)">0</div>
-      <div class="rs-label">최대콤보</div>
+    <div class="best-diff" id="bestDiff"></div>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+    <div class="timer-row">
+      <div class="timer-circle" id="timerCircle">10</div>
+      <div class="timer-track"><div class="timer-fill" id="timerFill" style="width:100%;"></div></div>
     </div>
-  </div>
-
-  <div class="review-list" id="review-list"></div>
-
-  <div class="btn-row">
-    <button class="btn btn-secondary" onclick="showScreen('home')">홈</button>
-    <button class="btn btn-primary" id="retry-btn" onclick="retryGame()">다시하기</button>
-  </div>
-  <div id="wrong-again-btn" style="margin-top:10px;width:100%;max-width:360px;display:none;">
-    <button class="btn btn-secondary" style="width:100%;border-color:rgba(239,83,80,0.4);color:#ef5350;" onclick="startReview()">
-      ✕ 틀린 한자만 다시 →
-    </button>
+    <div class="word-card" id="wordCard">
+      <p class="word-no" id="wordNo">#1</p>
+      <p class="word-kanji" id="wordKanji" style="font-size:50px;">影響</p>
+      <div id="readingArea"></div>
+      <div id="hintArea"></div>
+    </div>
+    <div class="options" id="options"></div>
+    <p class="play-footer">UNODIYA N2</p>
   </div>
 </div>
 
-<!-- 피드백 -->
-<div class="feedback-overlay" id="feedback-overlay">
-  <div class="feedback-emoji" id="feedback-emoji">◎</div>
-</div>
-
-<!-- 학습 카드 -->
-<div class="learn-card" id="learn-card">
-  <div class="learn-inner" id="learn-inner">
-    <div class="learn-verdict" id="learn-verdict">◎ 正解</div>
-    <div class="learn-equation" id="learn-equation"></div>
-    <div class="learn-meaning-line" id="learn-meaning-line"></div>
-    <div class="learn-words" id="learn-words"></div>
+<div id="resultScreen" class="screen">
+  <div class="inner">
+    <div style="text-align:center;margin-bottom:20px;">
+      <div class="result-emoji" id="resultEmoji">🎌</div>
+      <div class="result-rank" id="resultRank">MASTER</div>
+      <div class="result-sub" id="resultSub">완벽해요!</div>
+      <div class="result-new-best" id="resultNewBest"></div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-box" style="border:1px solid rgba(233,69,96,0.25)">
+        <div class="stat-val" style="color:#e94560" id="statScore">0</div>
+        <div class="stat-label">총 점수</div>
+      </div>
+      <div class="stat-box" style="border:1px solid rgba(78,205,196,0.25)">
+        <div class="stat-val" style="color:#4ecdc4" id="statAccuracy">0%</div>
+        <div class="stat-label">정답률</div>
+      </div>
+      <div class="stat-box" style="border:1px solid rgba(255,230,109,0.25)">
+        <div class="stat-val" style="color:#ffe66d" id="statCorrect">0/20</div>
+        <div class="stat-label">정답 수</div>
+      </div>
+      <div class="stat-box" style="border:1px solid rgba(255,107,107,0.25)">
+        <div class="stat-val" style="color:#ff6b6b" id="statCombo">x0</div>
+        <div class="stat-label">최대 콤보</div>
+      </div>
+    </div>
+    <button class="btn-share" onclick="shareResult()">📤 결과 공유하기</button>
+    <div class="wrong-section" id="wrongSection" style="display:none">
+      <div class="wrong-title" id="wrongTitle">틀린 단어</div>
+      <div id="wrongList"></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-retry" onclick="startGame()">다시 도전</button>
+      <button class="btn-home"  onclick="showStart()">홈으로</button>
+    </div>
+    <p class="result-footer">UNODIYA · uno-jp.tistory.com</p>
   </div>
 </div>
 
 <script>
-// ─────────────────────────────────
-// 데이터
-// ─────────────────────────────────
-const LEVELS = {
-  1: {
-    radicals: [{"name": "にんべん", "korean": "사람인변", "meaning": "사람·인간", "color": "#4a7fe8", "char": "亻", "radical_meaning": "사람·인간"}, {"name": "てへん", "korean": "손수변", "meaning": "손·행동", "color": "#e85a4a", "char": "扌", "radical_meaning": "손·행동"}],
-    kanji: [{"char": "休", "radical": "亻", "component": "木", "meaning": "휴가", "word": "休暇", "word_reading": "きゅうか", "word_meaning": "휴가"}, {"char": "備", "radical": "亻", "component": "用", "meaning": "준비", "word": "準備", "word_reading": "じゅんび", "word_meaning": "준비"}, {"char": "保", "radical": "亻", "component": "口", "meaning": "보관", "word": "保管", "word_reading": "ほかん", "word_meaning": "보관"}, {"char": "袋", "radical": "亻", "component": "衣", "meaning": "장갑", "word": "手袋", "word_reading": "てぶくろ", "word_meaning": "장갑"}, {"char": "貸", "radical": "亻", "component": "貝", "meaning": "빌려주다", "word": "貸す", "word_reading": "かす", "word_meaning": "빌려주다"}, {"char": "似", "radical": "亻", "component": "人", "meaning": "닮다", "word": "似る", "word_reading": "にる", "word_meaning": "닮다"}, {"char": "付", "radical": "亻", "component": "寸", "meaning": "사귀다", "word": "付き合う", "word_reading": "つきあう", "word_meaning": "사귀다"}, {"char": "夜", "radical": "亻", "component": "夕", "meaning": "야간, 밤 시간", "word": "夜間", "word_reading": "やかん", "word_meaning": "야간, 밤 시간"}, {"char": "例", "radical": "亻", "component": "刂", "meaning": "예외", "word": "例外", "word_reading": "れいがい", "word_meaning": "예외"}, {"char": "儀", "radical": "亻", "component": "一", "meaning": "예의, 예절", "word": "礼儀", "word_reading": "れいぎ", "word_meaning": "예의, 예절"}, {"char": "働", "radical": "亻", "component": "｜", "meaning": "맞벌이", "word": "共働き", "word_reading": "ともばたらき", "word_meaning": "맞벌이"}, {"char": "伸", "radical": "亻", "component": "｜", "meaning": "(손·도움을) 내밀다, 뻗다", "word": "差し伸べる", "word_reading": "さしのべる", "word_meaning": "(손·도움을) 내밀다, 뻗다"}, {"char": "仕", "radical": "亻", "component": "士", "meaning": "어쩔 수 없다, 방법이 없다", "word": "仕方ない", "word_reading": "しかたない", "word_meaning": "어쩔 수 없다, 방법이 없다"}, {"char": "代", "radical": "亻", "component": "弋", "meaning": "교체, 번갈아 바꿈", "word": "交代", "word_reading": "こうたい", "word_meaning": "교체, 번갈아 바꿈"}, {"char": "任", "radical": "亻", "component": "ノ", "meaning": "자임, 자신이 적임자라고 자부함", "word": "自任", "word_reading": "じにん", "word_meaning": "자임, 자신이 적임자라고 자부함"}, {"char": "使", "radical": "亻", "component": "ノ", "meaning": "1회용, 한번 쓰고 버림", "word": "使い捨て", "word_reading": "つかいすて", "word_meaning": "1회용, 한번 쓰고 버림"}, {"char": "傷", "radical": "亻", "component": "ノ", "meaning": "상처받다, 다치다", "word": "傷つく", "word_reading": "きずつく", "word_meaning": "상처받다, 다치다"}, {"char": "倒", "radical": "亻", "component": "刂", "meaning": "귀찮음, 번거로움, 돌봄", "word": "面倒", "word_reading": "めんどう", "word_meaning": "귀찮음, 번거로움, 돌봄"}, {"char": "住", "radical": "亻", "component": "王", "meaning": "정들면 고향, 어디서든 살다 보면 정이 든다", "word": "住めば都", "word_reading": "すめばみやこ", "word_meaning": "정들면 고향, 어디서든 살다 보면 정이 든다"}, {"char": "作", "radical": "亻", "component": "｜", "meaning": "작업, 일을 함", "word": "作業", "word_reading": "さぎょう", "word_meaning": "작업, 일을 함"}, {"char": "低", "radical": "亻", "component": "氏", "meaning": "저하, 수준·능력이 낮아짐", "word": "低下", "word_reading": "ていか", "word_meaning": "저하, 수준·능력이 낮아짐"}, {"char": "値", "radical": "亻", "component": "十", "meaning": "가치, 값어치", "word": "値打ち", "word_reading": "ねうち", "word_meaning": "가치, 값어치"}, {"char": "揮", "radical": "扌", "component": "車", "meaning": "발휘", "word": "発揮", "word_reading": "はっき", "word_meaning": "발휘"}, {"char": "推", "radical": "扌", "component": "隹", "meaning": "추천·권장", "word": "推奨", "word_reading": "すいしょう", "word_meaning": "추천·권장"}, {"char": "操", "radical": "扌", "component": "口", "meaning": "조종", "word": "操縦", "word_reading": "そうじゅう", "word_meaning": "조종"}, {"char": "搬", "radical": "扌", "component": "舟", "meaning": "반송·이송", "word": "搬送", "word_reading": "はんそう", "word_meaning": "반송·이송"}, {"char": "扱", "radical": "扌", "component": "及", "meaning": "취급", "word": "取り扱い", "word_reading": "とりあつかい", "word_meaning": "취급"}, {"char": "控", "radical": "扌", "component": "穴", "meaning": "줄임·절제", "word": "控え目", "word_reading": "ひかえめ", "word_meaning": "줄임·절제"}, {"char": "持", "radical": "扌", "component": "寸", "meaning": "화제지속", "word": "持ちきり", "word_reading": "もちきり", "word_meaning": "화제지속"}, {"char": "押", "radical": "扌", "component": "｜", "meaning": "밀다·누르다", "word": "押す", "word_reading": "おす", "word_meaning": "밀다·누르다"}, {"char": "抜", "radical": "扌", "component": "夂", "meaning": "정신이 팔리다", "word": "現を抜かす", "word_reading": "うつつをぬかす", "word_meaning": "정신이 팔리다"}, {"char": "接", "radical": "扌", "component": "女", "meaning": "접근, 가까이 다가감", "word": "接近", "word_reading": "せっきん", "word_meaning": "접근, 가까이 다가감"}, {"char": "指", "radical": "扌", "component": "日", "meaning": "굴지, 손꼽힘", "word": "屈指", "word_reading": "くっし", "word_meaning": "굴지, 손꼽힘"}, {"char": "技", "radical": "扌", "component": "支", "meaning": "기술, 솜씨, 기예", "word": "技", "word_reading": "わざ", "word_meaning": "기술, 솜씨, 기예"}, {"char": "折", "radical": "扌", "component": "斤", "meaning": "꺾다, 접다, 부러뜨리다", "word": "折る", "word_reading": "おる", "word_meaning": "꺾다, 접다, 부러뜨리다"}, {"char": "抱", "radical": "扌", "component": "勹", "meaning": "(쓰러지지 않도록) 끌어안다, 붙들어 안다", "word": "抱きかかえる", "word_reading": "だきかかえる", "word_meaning": "(쓰러지지 않도록) 끌어안다, 붙들어 안다"}, {"char": "摘", "radical": "扌", "component": "口", "meaning": "여우에 홀리다, 영문을 모르다", "word": "狐に摘まれる", "word_reading": "きつねにつままれる", "word_meaning": "여우에 홀리다, 영문을 모르다"}, {"char": "担", "radical": "扌", "component": "一", "meaning": "부담, 짐을 짊어짐", "word": "負担", "word_reading": "ふたん", "word_meaning": "부담, 짐을 짊어짐"}, {"char": "捨", "radical": "扌", "component": "口", "meaning": "1회용, 한번 쓰고 버림", "word": "使い捨て", "word_reading": "つかいすて", "word_meaning": "1회용, 한번 쓰고 버림"}, {"char": "掻", "radical": "扌", "component": "虫", "meaning": "긁다, 긁어내다", "word": "掻く", "word_reading": "かく", "word_meaning": "긁다, 긁어내다"}, {"char": "挟", "radical": "扌", "component": "人", "meaning": "사이에 두다, 끼우다", "word": "挟む", "word_reading": "はさむ", "word_meaning": "사이에 두다, 끼우다"}, {"char": "打", "radical": "扌", "component": "亅", "meaning": "털어놓다, 솔직하게 말하다", "word": "打ち明ける", "word_reading": "うちあける", "word_meaning": "털어놓다, 솔직하게 말하다"}, {"char": "掘", "radical": "扌", "component": "｜", "meaning": "제 무덤을 파다, 스스로 파멸을 초래하다", "word": "墓穴を掘る", "word_reading": "ぼけつをほる", "word_meaning": "제 무덤을 파다, 스스로 파멸을 초래하다"}, {"char": "拠", "radical": "扌", "component": "几", "meaning": "근거, 판단의 바탕이 되는 이유", "word": "根拠", "word_reading": "こんきょ", "word_meaning": "근거, 판단의 바탕이 되는 이유"}, {"char": "払", "radical": "扌", "component": "厶", "meaning": "선불 배송료, 발송인이 요금을 부담함", "word": "元払い", "word_reading": "もとばらい", "word_meaning": "선불 배송료, 발송인이 요금을 부담함"}]
-  },
-  2: {
-    radicals: [{"name": "ごんべん", "korean": "말씀언변", "meaning": "말·언어", "color": "#7b5ea7", "char": "言", "radical_meaning": "말·언어"}, {"name": "こころ", "korean": "마음심변", "meaning": "마음·감정", "color": "#c4556a", "char": "忄", "radical_meaning": "마음·감정"}],
-    kanji: [{"char": "認", "radical": "言", "component": "心", "meaning": "확인", "word": "確認", "word_reading": "かくにん", "word_meaning": "확인"}, {"char": "説", "radical": "言", "component": "口", "meaning": "설득", "word": "説得", "word_reading": "せっとく", "word_meaning": "설득"}, {"char": "設", "radical": "言", "component": "殳", "meaning": "설립", "word": "設立", "word_reading": "せつりつ", "word_meaning": "설립"}, {"char": "話", "radical": "言", "component": "口", "meaning": "대화", "word": "対話", "word_reading": "たいわ", "word_meaning": "대화"}, {"char": "語", "radical": "言", "component": "一", "meaning": "이야기", "word": "物語", "word_reading": "ものがたり", "word_meaning": "이야기"}, {"char": "謝", "radical": "言", "component": "身", "meaning": "감사", "word": "感謝", "word_reading": "かんしゃ", "word_meaning": "감사"}, {"char": "誤", "radical": "言", "component": "口", "meaning": "오해", "word": "誤解", "word_reading": "ごかい", "word_meaning": "오해"}, {"char": "識", "radical": "言", "component": "音", "meaning": "인식, 알아봄, 이해", "word": "認識", "word_reading": "にんしき", "word_meaning": "인식, 알아봄, 이해"}, {"char": "訪", "radical": "言", "component": "方", "meaning": "방문, 찾아감", "word": "訪問", "word_reading": "ほうもん", "word_meaning": "방문, 찾아감"}, {"char": "訳", "radical": "言", "component": "尸", "meaning": "죄송합니다, 면목 없다", "word": "申し訳ない", "word_reading": "もうしわけない", "word_meaning": "죄송합니다, 면목 없다"}, {"char": "計", "radical": "言", "component": "十", "meaning": "쓸데없음, 불필요함", "word": "余計", "word_reading": "よけい", "word_meaning": "쓸데없음, 불필요함"}, {"char": "証", "radical": "言", "component": "一", "meaning": "증명, 사실임을 밝힘", "word": "証明", "word_reading": "しょうめい", "word_meaning": "증명, 사실임을 밝힘"}, {"char": "言", "radical": "言", "component": "?", "meaning": "명언, 분명하게 말함 (유명한 말 아님)", "word": "明言", "word_reading": "めいげん", "word_meaning": "명언, 분명하게 말함 (유명한 말 아님)"}, {"char": "罰", "radical": "言", "component": "刂", "meaning": "겸연쩍다, 민망하다, 멋쩍다", "word": "罰が悪い", "word_reading": "ばつがわるい", "word_meaning": "겸연쩍다, 민망하다, 멋쩍다"}, {"char": "調", "radical": "言", "component": "口", "meaning": "강조, 두드러지게 나타냄", "word": "強調", "word_reading": "きょうちょう", "word_meaning": "강조, 두드러지게 나타냄"}, {"char": "警", "radical": "言", "component": "口", "meaning": "경고, 위험을 미리 알림", "word": "警告", "word_reading": "けいこく", "word_meaning": "경고, 위험을 미리 알림"}, {"char": "情", "radical": "忄", "component": "月", "meaning": "표정", "word": "表情", "word_reading": "ひょうじょう", "word_meaning": "표정"}, {"char": "慣", "radical": "忄", "component": "貝", "meaning": "익숙해지다", "word": "慣れる", "word_reading": "なれる", "word_meaning": "익숙해지다"}, {"char": "悔", "radical": "忄", "component": "母", "meaning": "분하다·억울하다", "word": "悔しい", "word_reading": "くやしい", "word_meaning": "분하다·억울하다"}, {"char": "懐", "radical": "忄", "component": "衣", "meaning": "그립다", "word": "懐かしい", "word_reading": "なつかしい", "word_meaning": "그립다"}, {"char": "恨", "radical": "忄", "component": "艮", "meaning": "원한을 풀다", "word": "恨みを晴らす", "word_reading": "うらみをはらす", "word_meaning": "원한을 풀다"}, {"char": "悦", "radical": "忄", "component": "口", "meaning": "흡족해하다", "word": "悦に入る", "word_reading": "えつにいる", "word_meaning": "흡족해하다"}, {"char": "愕", "radical": "忄", "component": "口", "meaning": "경악, 몹시 놀람", "word": "驚愕", "word_reading": "きょうがく", "word_meaning": "경악, 몹시 놀람"}, {"char": "慌", "radical": "忄", "component": "川", "meaning": "허둥대다, 당황하다", "word": "慌てる", "word_reading": "あわてる", "word_meaning": "허둥대다, 당황하다"}, {"char": "憎", "radical": "忄", "component": "田", "meaning": "미워하다, 증오하다", "word": "憎む", "word_reading": "にくむ", "word_meaning": "미워하다, 증오하다"}, {"char": "愉", "radical": "忄", "component": "刂", "meaning": "불쾌함, 기분 나쁨", "word": "不愉快", "word_reading": "ふゆかい", "word_meaning": "불쾌함, 기분 나쁨"}, {"char": "快", "radical": "忄", "component": "人", "meaning": "불쾌함, 기분 나쁨", "word": "不愉快", "word_reading": "ふゆかい", "word_meaning": "불쾌함, 기분 나쁨"}, {"char": "慄", "radical": "忄", "component": "西", "meaning": "전율, 두려움으로 몸이 떨림", "word": "戦慄", "word_reading": "せんりつ", "word_meaning": "전율, 두려움으로 몸이 떨림"}]
-  },
-  3: {
-    radicals: [{"name": "さんずい", "korean": "삼수변", "meaning": "물·액체", "color": "#4A90D9", "char": "氵", "radical_meaning": "물·액체"}, {"name": "いとへん", "korean": "실사변", "meaning": "실·연결", "color": "#38A89D", "char": "糸", "radical_meaning": "실·연결"}],
-    kanji: [{"char": "準", "radical": "氵", "component": "十", "meaning": "준비", "word": "準備", "word_reading": "じゅんび", "word_meaning": "준비"}, {"char": "落", "radical": "氵", "component": "口", "meaning": "원숭이도 나무에서 떨어진다", "word": "猿も木から落ちる", "word_reading": "さるもきからおちる", "word_meaning": "원숭이도 나무에서 떨어진다"}, {"char": "洪", "radical": "氵", "component": "｜", "meaning": "홍수", "word": "洪水", "word_reading": "こうずい", "word_meaning": "홍수"}, {"char": "塗", "radical": "氵", "component": "土", "meaning": "도장, 색을 칠함, 도색", "word": "塗装", "word_reading": "とそう", "word_meaning": "도장, 색을 칠함, 도색"}, {"char": "羨", "radical": "氵", "component": "王", "meaning": "부럽다", "word": "羨ましい", "word_reading": "うらやましい", "word_meaning": "부럽다"}, {"char": "泡", "radical": "氵", "component": "勹", "meaning": "질겁하다, 크게 당황하다", "word": "泡を食う", "word_reading": "あわをくう", "word_meaning": "질겁하다, 크게 당황하다"}, {"char": "薄", "radical": "氵", "component": "十", "meaning": "박약, 의지나 근거 등이 희박하고 약함", "word": "薄弱", "word_reading": "はくじゃく", "word_meaning": "박약, 의지나 근거 등이 희박하고 약함"}, {"char": "沸", "radical": "氵", "component": "｜", "meaning": "비등, 물 등이 끓음, 열기가 고조됨", "word": "沸騰", "word_reading": "ふっとう", "word_meaning": "비등, 물 등이 끓음, 열기가 고조됨"}, {"char": "渇", "radical": "氵", "component": "日", "meaning": "(목이) 마르다, 갈증이 나다", "word": "渇く", "word_reading": "かわく", "word_meaning": "(목이) 마르다, 갈증이 나다"}, {"char": "混", "radical": "氵", "component": "日", "meaning": "한데 뒤섞이다, 뒤엉키다", "word": "入り混じる", "word_reading": "いりまじる", "word_meaning": "한데 뒤섞이다, 뒤엉키다"}, {"char": "深", "radical": "氵", "component": "木", "meaning": "의미심장, 뜻이 깊고 함축적임", "word": "意味深長", "word_reading": "いみしんちょう", "word_meaning": "의미심장, 뜻이 깊고 함축적임"}, {"char": "減", "radical": "氵", "component": "口", "meaning": "감량, 무게·양을 줄임", "word": "減量", "word_reading": "げんりょう", "word_meaning": "감량, 무게·양을 줄임"}, {"char": "測", "radical": "氵", "component": "貝", "meaning": "측정, 길이·무게 등을 재어 수치화함", "word": "測定", "word_reading": "そくてい", "word_meaning": "측정, 길이·무게 등을 재어 수치화함"}, {"char": "泣", "radical": "氵", "component": "立", "meaning": "소리 내어 욺, 통곡", "word": "号泣", "word_reading": "ごうきゅう", "word_meaning": "소리 내어 욺, 통곡"}, {"char": "経", "radical": "糸", "component": "幺", "meaning": "경험", "word": "経験", "word_reading": "けいけん", "word_meaning": "경험"}, {"char": "終", "radical": "糸", "component": "幺", "meaning": "종료", "word": "終了", "word_reading": "しゅうりょう", "word_meaning": "종료"}, {"char": "縦", "radical": "糸", "component": "幺", "meaning": "조종", "word": "操縦", "word_reading": "そうじゅう", "word_meaning": "조종"}, {"char": "続", "radical": "糸", "component": "士", "meaning": "절차·수속", "word": "手続き", "word_reading": "てつづき", "word_meaning": "절차·수속"}, {"char": "細", "radical": "糸", "component": "幺", "meaning": "세심하다·꼼꼼하다", "word": "細かい", "word_reading": "こまかい", "word_meaning": "세심하다·꼼꼼하다"}, {"char": "素", "radical": "糸", "component": "幺", "meaning": "간소함", "word": "簡素", "word_reading": "かんそ", "word_meaning": "간소함"}, {"char": "緊", "radical": "糸", "component": "幺", "meaning": "긴밀함", "word": "緊密", "word_reading": "きんみつ", "word_meaning": "긴밀함"}, {"char": "紹", "radical": "糸", "component": "口", "meaning": "소개", "word": "紹介", "word_reading": "しょうかい", "word_meaning": "소개"}, {"char": "締", "radical": "糸", "component": "巾", "meaning": "(더욱 밀착되도록) 꽉 껴안다", "word": "抱き締める", "word_reading": "だきしめる", "word_meaning": "(더욱 밀착되도록) 꽉 껴안다"}, {"char": "約", "radical": "糸", "component": "幺", "meaning": "약혼, 결혼을 약속함", "word": "婚約", "word_reading": "こんやく", "word_meaning": "약혼, 결혼을 약속함"}, {"char": "織", "radical": "糸", "component": "音", "meaning": "직물, 짜서 만든 천·옷감", "word": "織物", "word_reading": "おりもの", "word_meaning": "직물, 짜서 만든 천·옷감"}, {"char": "縛", "radical": "糸", "component": "幺", "meaning": "묶다, 얽매다", "word": "縛る", "word_reading": "しばる", "word_meaning": "묶다, 얽매다"}, {"char": "純", "radical": "糸", "component": "幺", "meaning": "순수함, 불순물이 없음", "word": "純粋", "word_reading": "じゅんすい", "word_meaning": "순수함, 불순물이 없음"}, {"char": "編", "radical": "糸", "component": "｜", "meaning": "속편, 이어지는 편", "word": "続編", "word_reading": "ぞくへん", "word_meaning": "속편, 이어지는 편"}]
-  },
-  4: {
-    radicals: [{"name": "にんべん", "korean": "사람인변", "meaning": "사람·인간", "color": "#4a7fe8", "char": "亻", "radical_meaning": "사람·인간"}, {"name": "てへん", "korean": "손수변", "meaning": "손·행동", "color": "#e85a4a", "char": "扌", "radical_meaning": "손·행동"}, {"name": "ごんべん", "korean": "말씀언변", "meaning": "말·언어", "color": "#7b5ea7", "char": "言", "radical_meaning": "말·언어"}, {"name": "こころ", "korean": "마음심변", "meaning": "마음·감정", "color": "#c4556a", "char": "忄", "radical_meaning": "마음·감정"}],
-    kanji: [{"char": "休", "radical": "亻", "component": "木", "meaning": "휴가", "word": "休暇", "word_reading": "きゅうか", "word_meaning": "휴가"}, {"char": "備", "radical": "亻", "component": "用", "meaning": "준비", "word": "準備", "word_reading": "じゅんび", "word_meaning": "준비"}, {"char": "保", "radical": "亻", "component": "口", "meaning": "보관", "word": "保管", "word_reading": "ほかん", "word_meaning": "보관"}, {"char": "袋", "radical": "亻", "component": "衣", "meaning": "장갑", "word": "手袋", "word_reading": "てぶくろ", "word_meaning": "장갑"}, {"char": "貸", "radical": "亻", "component": "貝", "meaning": "빌려주다", "word": "貸す", "word_reading": "かす", "word_meaning": "빌려주다"}, {"char": "似", "radical": "亻", "component": "人", "meaning": "닮다", "word": "似る", "word_reading": "にる", "word_meaning": "닮다"}, {"char": "付", "radical": "亻", "component": "寸", "meaning": "사귀다", "word": "付き合う", "word_reading": "つきあう", "word_meaning": "사귀다"}, {"char": "夜", "radical": "亻", "component": "夕", "meaning": "야간, 밤 시간", "word": "夜間", "word_reading": "やかん", "word_meaning": "야간, 밤 시간"}, {"char": "例", "radical": "亻", "component": "刂", "meaning": "예외", "word": "例外", "word_reading": "れいがい", "word_meaning": "예외"}, {"char": "儀", "radical": "亻", "component": "一", "meaning": "예의, 예절", "word": "礼儀", "word_reading": "れいぎ", "word_meaning": "예의, 예절"}, {"char": "働", "radical": "亻", "component": "｜", "meaning": "맞벌이", "word": "共働き", "word_reading": "ともばたらき", "word_meaning": "맞벌이"}, {"char": "伸", "radical": "亻", "component": "｜", "meaning": "(손·도움을) 내밀다, 뻗다", "word": "差し伸べる", "word_reading": "さしのべる", "word_meaning": "(손·도움을) 내밀다, 뻗다"}, {"char": "仕", "radical": "亻", "component": "士", "meaning": "어쩔 수 없다, 방법이 없다", "word": "仕方ない", "word_reading": "しかたない", "word_meaning": "어쩔 수 없다, 방법이 없다"}, {"char": "代", "radical": "亻", "component": "弋", "meaning": "교체, 번갈아 바꿈", "word": "交代", "word_reading": "こうたい", "word_meaning": "교체, 번갈아 바꿈"}, {"char": "任", "radical": "亻", "component": "ノ", "meaning": "자임, 자신이 적임자라고 자부함", "word": "自任", "word_reading": "じにん", "word_meaning": "자임, 자신이 적임자라고 자부함"}, {"char": "使", "radical": "亻", "component": "ノ", "meaning": "1회용, 한번 쓰고 버림", "word": "使い捨て", "word_reading": "つかいすて", "word_meaning": "1회용, 한번 쓰고 버림"}, {"char": "傷", "radical": "亻", "component": "ノ", "meaning": "상처받다, 다치다", "word": "傷つく", "word_reading": "きずつく", "word_meaning": "상처받다, 다치다"}, {"char": "倒", "radical": "亻", "component": "刂", "meaning": "귀찮음, 번거로움, 돌봄", "word": "面倒", "word_reading": "めんどう", "word_meaning": "귀찮음, 번거로움, 돌봄"}, {"char": "住", "radical": "亻", "component": "王", "meaning": "정들면 고향, 어디서든 살다 보면 정이 든다", "word": "住めば都", "word_reading": "すめばみやこ", "word_meaning": "정들면 고향, 어디서든 살다 보면 정이 든다"}, {"char": "作", "radical": "亻", "component": "｜", "meaning": "작업, 일을 함", "word": "作業", "word_reading": "さぎょう", "word_meaning": "작업, 일을 함"}, {"char": "低", "radical": "亻", "component": "氏", "meaning": "저하, 수준·능력이 낮아짐", "word": "低下", "word_reading": "ていか", "word_meaning": "저하, 수준·능력이 낮아짐"}, {"char": "値", "radical": "亻", "component": "十", "meaning": "가치, 값어치", "word": "値打ち", "word_reading": "ねうち", "word_meaning": "가치, 값어치"}, {"char": "揮", "radical": "扌", "component": "車", "meaning": "발휘", "word": "発揮", "word_reading": "はっき", "word_meaning": "발휘"}, {"char": "推", "radical": "扌", "component": "隹", "meaning": "추천·권장", "word": "推奨", "word_reading": "すいしょう", "word_meaning": "추천·권장"}, {"char": "操", "radical": "扌", "component": "口", "meaning": "조종", "word": "操縦", "word_reading": "そうじゅう", "word_meaning": "조종"}, {"char": "搬", "radical": "扌", "component": "舟", "meaning": "반송·이송", "word": "搬送", "word_reading": "はんそう", "word_meaning": "반송·이송"}, {"char": "扱", "radical": "扌", "component": "及", "meaning": "취급", "word": "取り扱い", "word_reading": "とりあつかい", "word_meaning": "취급"}, {"char": "控", "radical": "扌", "component": "穴", "meaning": "줄임·절제", "word": "控え目", "word_reading": "ひかえめ", "word_meaning": "줄임·절제"}, {"char": "持", "radical": "扌", "component": "寸", "meaning": "화제지속", "word": "持ちきり", "word_reading": "もちきり", "word_meaning": "화제지속"}, {"char": "押", "radical": "扌", "component": "｜", "meaning": "밀다·누르다", "word": "押す", "word_reading": "おす", "word_meaning": "밀다·누르다"}, {"char": "抜", "radical": "扌", "component": "夂", "meaning": "정신이 팔리다", "word": "現を抜かす", "word_reading": "うつつをぬかす", "word_meaning": "정신이 팔리다"}, {"char": "接", "radical": "扌", "component": "女", "meaning": "접근, 가까이 다가감", "word": "接近", "word_reading": "せっきん", "word_meaning": "접근, 가까이 다가감"}, {"char": "指", "radical": "扌", "component": "日", "meaning": "굴지, 손꼽힘", "word": "屈指", "word_reading": "くっし", "word_meaning": "굴지, 손꼽힘"}, {"char": "技", "radical": "扌", "component": "支", "meaning": "기술, 솜씨, 기예", "word": "技", "word_reading": "わざ", "word_meaning": "기술, 솜씨, 기예"}, {"char": "折", "radical": "扌", "component": "斤", "meaning": "꺾다, 접다, 부러뜨리다", "word": "折る", "word_reading": "おる", "word_meaning": "꺾다, 접다, 부러뜨리다"}, {"char": "抱", "radical": "扌", "component": "勹", "meaning": "(쓰러지지 않도록) 끌어안다, 붙들어 안다", "word": "抱きかかえる", "word_reading": "だきかかえる", "word_meaning": "(쓰러지지 않도록) 끌어안다, 붙들어 안다"}, {"char": "摘", "radical": "扌", "component": "口", "meaning": "여우에 홀리다, 영문을 모르다", "word": "狐に摘まれる", "word_reading": "きつねにつままれる", "word_meaning": "여우에 홀리다, 영문을 모르다"}, {"char": "担", "radical": "扌", "component": "一", "meaning": "부담, 짐을 짊어짐", "word": "負担", "word_reading": "ふたん", "word_meaning": "부담, 짐을 짊어짐"}, {"char": "捨", "radical": "扌", "component": "口", "meaning": "1회용, 한번 쓰고 버림", "word": "使い捨て", "word_reading": "つかいすて", "word_meaning": "1회용, 한번 쓰고 버림"}, {"char": "掻", "radical": "扌", "component": "虫", "meaning": "긁다, 긁어내다", "word": "掻く", "word_reading": "かく", "word_meaning": "긁다, 긁어내다"}, {"char": "挟", "radical": "扌", "component": "人", "meaning": "사이에 두다, 끼우다", "word": "挟む", "word_reading": "はさむ", "word_meaning": "사이에 두다, 끼우다"}, {"char": "打", "radical": "扌", "component": "亅", "meaning": "털어놓다, 솔직하게 말하다", "word": "打ち明ける", "word_reading": "うちあける", "word_meaning": "털어놓다, 솔직하게 말하다"}, {"char": "掘", "radical": "扌", "component": "｜", "meaning": "제 무덤을 파다, 스스로 파멸을 초래하다", "word": "墓穴を掘る", "word_reading": "ぼけつをほる", "word_meaning": "제 무덤을 파다, 스스로 파멸을 초래하다"}, {"char": "拠", "radical": "扌", "component": "几", "meaning": "근거, 판단의 바탕이 되는 이유", "word": "根拠", "word_reading": "こんきょ", "word_meaning": "근거, 판단의 바탕이 되는 이유"}, {"char": "払", "radical": "扌", "component": "厶", "meaning": "선불 배송료, 발송인이 요금을 부담함", "word": "元払い", "word_reading": "もとばらい", "word_meaning": "선불 배송료, 발송인이 요금을 부담함"}, {"char": "認", "radical": "言", "component": "心", "meaning": "확인", "word": "確認", "word_reading": "かくにん", "word_meaning": "확인"}, {"char": "説", "radical": "言", "component": "口", "meaning": "설득", "word": "説得", "word_reading": "せっとく", "word_meaning": "설득"}, {"char": "設", "radical": "言", "component": "殳", "meaning": "설립", "word": "設立", "word_reading": "せつりつ", "word_meaning": "설립"}, {"char": "話", "radical": "言", "component": "口", "meaning": "대화", "word": "対話", "word_reading": "たいわ", "word_meaning": "대화"}, {"char": "語", "radical": "言", "component": "一", "meaning": "이야기", "word": "物語", "word_reading": "ものがたり", "word_meaning": "이야기"}, {"char": "謝", "radical": "言", "component": "身", "meaning": "감사", "word": "感謝", "word_reading": "かんしゃ", "word_meaning": "감사"}, {"char": "誤", "radical": "言", "component": "口", "meaning": "오해", "word": "誤解", "word_reading": "ごかい", "word_meaning": "오해"}, {"char": "識", "radical": "言", "component": "音", "meaning": "인식, 알아봄, 이해", "word": "認識", "word_reading": "にんしき", "word_meaning": "인식, 알아봄, 이해"}, {"char": "訪", "radical": "言", "component": "方", "meaning": "방문, 찾아감", "word": "訪問", "word_reading": "ほうもん", "word_meaning": "방문, 찾아감"}, {"char": "訳", "radical": "言", "component": "尸", "meaning": "죄송합니다, 면목 없다", "word": "申し訳ない", "word_reading": "もうしわけない", "word_meaning": "죄송합니다, 면목 없다"}, {"char": "計", "radical": "言", "component": "十", "meaning": "쓸데없음, 불필요함", "word": "余計", "word_reading": "よけい", "word_meaning": "쓸데없음, 불필요함"}, {"char": "証", "radical": "言", "component": "一", "meaning": "증명, 사실임을 밝힘", "word": "証明", "word_reading": "しょうめい", "word_meaning": "증명, 사실임을 밝힘"}, {"char": "言", "radical": "言", "component": "?", "meaning": "명언, 분명하게 말함 (유명한 말 아님)", "word": "明言", "word_reading": "めいげん", "word_meaning": "명언, 분명하게 말함 (유명한 말 아님)"}, {"char": "罰", "radical": "言", "component": "刂", "meaning": "겸연쩍다, 민망하다, 멋쩍다", "word": "罰が悪い", "word_reading": "ばつがわるい", "word_meaning": "겸연쩍다, 민망하다, 멋쩍다"}, {"char": "調", "radical": "言", "component": "口", "meaning": "강조, 두드러지게 나타냄", "word": "強調", "word_reading": "きょうちょう", "word_meaning": "강조, 두드러지게 나타냄"}, {"char": "警", "radical": "言", "component": "口", "meaning": "경고, 위험을 미리 알림", "word": "警告", "word_reading": "けいこく", "word_meaning": "경고, 위험을 미리 알림"}, {"char": "情", "radical": "忄", "component": "月", "meaning": "표정", "word": "表情", "word_reading": "ひょうじょう", "word_meaning": "표정"}, {"char": "慣", "radical": "忄", "component": "貝", "meaning": "익숙해지다", "word": "慣れる", "word_reading": "なれる", "word_meaning": "익숙해지다"}, {"char": "悔", "radical": "忄", "component": "母", "meaning": "분하다·억울하다", "word": "悔しい", "word_reading": "くやしい", "word_meaning": "분하다·억울하다"}, {"char": "懐", "radical": "忄", "component": "衣", "meaning": "그립다", "word": "懐かしい", "word_reading": "なつかしい", "word_meaning": "그립다"}, {"char": "恨", "radical": "忄", "component": "艮", "meaning": "원한을 풀다", "word": "恨みを晴らす", "word_reading": "うらみをはらす", "word_meaning": "원한을 풀다"}, {"char": "悦", "radical": "忄", "component": "口", "meaning": "흡족해하다", "word": "悦に入る", "word_reading": "えつにいる", "word_meaning": "흡족해하다"}, {"char": "愕", "radical": "忄", "component": "口", "meaning": "경악, 몹시 놀람", "word": "驚愕", "word_reading": "きょうがく", "word_meaning": "경악, 몹시 놀람"}, {"char": "慌", "radical": "忄", "component": "川", "meaning": "허둥대다, 당황하다", "word": "慌てる", "word_reading": "あわてる", "word_meaning": "허둥대다, 당황하다"}, {"char": "憎", "radical": "忄", "component": "田", "meaning": "미워하다, 증오하다", "word": "憎む", "word_reading": "にくむ", "word_meaning": "미워하다, 증오하다"}, {"char": "愉", "radical": "忄", "component": "刂", "meaning": "불쾌함, 기분 나쁨", "word": "不愉快", "word_reading": "ふゆかい", "word_meaning": "불쾌함, 기분 나쁨"}, {"char": "快", "radical": "忄", "component": "人", "meaning": "불쾌함, 기분 나쁨", "word": "不愉快", "word_reading": "ふゆかい", "word_meaning": "불쾌함, 기분 나쁨"}, {"char": "慄", "radical": "忄", "component": "西", "meaning": "전율, 두려움으로 몸이 떨림", "word": "戦慄", "word_reading": "せんりつ", "word_meaning": "전율, 두려움으로 몸이 떨림"}]
-  },
-  5: {
-    radicals: [{"name": "にんべん", "korean": "사람인변", "meaning": "사람·인간", "color": "#4a7fe8", "char": "亻", "radical_meaning": "사람·인간"}, {"name": "てへん", "korean": "손수변", "meaning": "손·행동", "color": "#e85a4a", "char": "扌", "radical_meaning": "손·행동"}, {"name": "ごんべん", "korean": "말씀언변", "meaning": "말·언어", "color": "#7b5ea7", "char": "言", "radical_meaning": "말·언어"}, {"name": "こころ", "korean": "마음심변", "meaning": "마음·감정", "color": "#c4556a", "char": "忄", "radical_meaning": "마음·감정"}, {"name": "さんずい", "korean": "삼수변", "meaning": "물·액체", "color": "#4A90D9", "char": "氵", "radical_meaning": "물·액체"}, {"name": "いとへん", "korean": "실사변", "meaning": "실·연결", "color": "#38A89D", "char": "糸", "radical_meaning": "실·연결"}],
-    kanji: [{"char": "休", "radical": "亻", "component": "木", "meaning": "휴가", "word": "休暇", "word_reading": "きゅうか", "word_meaning": "휴가"}, {"char": "備", "radical": "亻", "component": "用", "meaning": "준비", "word": "準備", "word_reading": "じゅんび", "word_meaning": "준비"}, {"char": "保", "radical": "亻", "component": "口", "meaning": "보관", "word": "保管", "word_reading": "ほかん", "word_meaning": "보관"}, {"char": "袋", "radical": "亻", "component": "衣", "meaning": "장갑", "word": "手袋", "word_reading": "てぶくろ", "word_meaning": "장갑"}, {"char": "貸", "radical": "亻", "component": "貝", "meaning": "빌려주다", "word": "貸す", "word_reading": "かす", "word_meaning": "빌려주다"}, {"char": "似", "radical": "亻", "component": "人", "meaning": "닮다", "word": "似る", "word_reading": "にる", "word_meaning": "닮다"}, {"char": "付", "radical": "亻", "component": "寸", "meaning": "사귀다", "word": "付き合う", "word_reading": "つきあう", "word_meaning": "사귀다"}, {"char": "夜", "radical": "亻", "component": "夕", "meaning": "야간, 밤 시간", "word": "夜間", "word_reading": "やかん", "word_meaning": "야간, 밤 시간"}, {"char": "例", "radical": "亻", "component": "刂", "meaning": "예외", "word": "例外", "word_reading": "れいがい", "word_meaning": "예외"}, {"char": "儀", "radical": "亻", "component": "一", "meaning": "예의, 예절", "word": "礼儀", "word_reading": "れいぎ", "word_meaning": "예의, 예절"}, {"char": "働", "radical": "亻", "component": "｜", "meaning": "맞벌이", "word": "共働き", "word_reading": "ともばたらき", "word_meaning": "맞벌이"}, {"char": "伸", "radical": "亻", "component": "｜", "meaning": "(손·도움을) 내밀다, 뻗다", "word": "差し伸べる", "word_reading": "さしのべる", "word_meaning": "(손·도움을) 내밀다, 뻗다"}, {"char": "仕", "radical": "亻", "component": "士", "meaning": "어쩔 수 없다, 방법이 없다", "word": "仕方ない", "word_reading": "しかたない", "word_meaning": "어쩔 수 없다, 방법이 없다"}, {"char": "代", "radical": "亻", "component": "弋", "meaning": "교체, 번갈아 바꿈", "word": "交代", "word_reading": "こうたい", "word_meaning": "교체, 번갈아 바꿈"}, {"char": "任", "radical": "亻", "component": "ノ", "meaning": "자임, 자신이 적임자라고 자부함", "word": "自任", "word_reading": "じにん", "word_meaning": "자임, 자신이 적임자라고 자부함"}, {"char": "使", "radical": "亻", "component": "ノ", "meaning": "1회용, 한번 쓰고 버림", "word": "使い捨て", "word_reading": "つかいすて", "word_meaning": "1회용, 한번 쓰고 버림"}, {"char": "傷", "radical": "亻", "component": "ノ", "meaning": "상처받다, 다치다", "word": "傷つく", "word_reading": "きずつく", "word_meaning": "상처받다, 다치다"}, {"char": "倒", "radical": "亻", "component": "刂", "meaning": "귀찮음, 번거로움, 돌봄", "word": "面倒", "word_reading": "めんどう", "word_meaning": "귀찮음, 번거로움, 돌봄"}, {"char": "住", "radical": "亻", "component": "王", "meaning": "정들면 고향, 어디서든 살다 보면 정이 든다", "word": "住めば都", "word_reading": "すめばみやこ", "word_meaning": "정들면 고향, 어디서든 살다 보면 정이 든다"}, {"char": "作", "radical": "亻", "component": "｜", "meaning": "작업, 일을 함", "word": "作業", "word_reading": "さぎょう", "word_meaning": "작업, 일을 함"}, {"char": "低", "radical": "亻", "component": "氏", "meaning": "저하, 수준·능력이 낮아짐", "word": "低下", "word_reading": "ていか", "word_meaning": "저하, 수준·능력이 낮아짐"}, {"char": "値", "radical": "亻", "component": "十", "meaning": "가치, 값어치", "word": "値打ち", "word_reading": "ねうち", "word_meaning": "가치, 값어치"}, {"char": "揮", "radical": "扌", "component": "車", "meaning": "발휘", "word": "発揮", "word_reading": "はっき", "word_meaning": "발휘"}, {"char": "推", "radical": "扌", "component": "隹", "meaning": "추천·권장", "word": "推奨", "word_reading": "すいしょう", "word_meaning": "추천·권장"}, {"char": "操", "radical": "扌", "component": "口", "meaning": "조종", "word": "操縦", "word_reading": "そうじゅう", "word_meaning": "조종"}, {"char": "搬", "radical": "扌", "component": "舟", "meaning": "반송·이송", "word": "搬送", "word_reading": "はんそう", "word_meaning": "반송·이송"}, {"char": "扱", "radical": "扌", "component": "及", "meaning": "취급", "word": "取り扱い", "word_reading": "とりあつかい", "word_meaning": "취급"}, {"char": "控", "radical": "扌", "component": "穴", "meaning": "줄임·절제", "word": "控え目", "word_reading": "ひかえめ", "word_meaning": "줄임·절제"}, {"char": "持", "radical": "扌", "component": "寸", "meaning": "화제지속", "word": "持ちきり", "word_reading": "もちきり", "word_meaning": "화제지속"}, {"char": "押", "radical": "扌", "component": "｜", "meaning": "밀다·누르다", "word": "押す", "word_reading": "おす", "word_meaning": "밀다·누르다"}, {"char": "抜", "radical": "扌", "component": "夂", "meaning": "정신이 팔리다", "word": "現を抜かす", "word_reading": "うつつをぬかす", "word_meaning": "정신이 팔리다"}, {"char": "接", "radical": "扌", "component": "女", "meaning": "접근, 가까이 다가감", "word": "接近", "word_reading": "せっきん", "word_meaning": "접근, 가까이 다가감"}, {"char": "指", "radical": "扌", "component": "日", "meaning": "굴지, 손꼽힘", "word": "屈指", "word_reading": "くっし", "word_meaning": "굴지, 손꼽힘"}, {"char": "技", "radical": "扌", "component": "支", "meaning": "기술, 솜씨, 기예", "word": "技", "word_reading": "わざ", "word_meaning": "기술, 솜씨, 기예"}, {"char": "折", "radical": "扌", "component": "斤", "meaning": "꺾다, 접다, 부러뜨리다", "word": "折る", "word_reading": "おる", "word_meaning": "꺾다, 접다, 부러뜨리다"}, {"char": "抱", "radical": "扌", "component": "勹", "meaning": "(쓰러지지 않도록) 끌어안다, 붙들어 안다", "word": "抱きかかえる", "word_reading": "だきかかえる", "word_meaning": "(쓰러지지 않도록) 끌어안다, 붙들어 안다"}, {"char": "摘", "radical": "扌", "component": "口", "meaning": "여우에 홀리다, 영문을 모르다", "word": "狐に摘まれる", "word_reading": "きつねにつままれる", "word_meaning": "여우에 홀리다, 영문을 모르다"}, {"char": "担", "radical": "扌", "component": "一", "meaning": "부담, 짐을 짊어짐", "word": "負担", "word_reading": "ふたん", "word_meaning": "부담, 짐을 짊어짐"}, {"char": "捨", "radical": "扌", "component": "口", "meaning": "1회용, 한번 쓰고 버림", "word": "使い捨て", "word_reading": "つかいすて", "word_meaning": "1회용, 한번 쓰고 버림"}, {"char": "掻", "radical": "扌", "component": "虫", "meaning": "긁다, 긁어내다", "word": "掻く", "word_reading": "かく", "word_meaning": "긁다, 긁어내다"}, {"char": "挟", "radical": "扌", "component": "人", "meaning": "사이에 두다, 끼우다", "word": "挟む", "word_reading": "はさむ", "word_meaning": "사이에 두다, 끼우다"}, {"char": "打", "radical": "扌", "component": "亅", "meaning": "털어놓다, 솔직하게 말하다", "word": "打ち明ける", "word_reading": "うちあける", "word_meaning": "털어놓다, 솔직하게 말하다"}, {"char": "掘", "radical": "扌", "component": "｜", "meaning": "제 무덤을 파다, 스스로 파멸을 초래하다", "word": "墓穴を掘る", "word_reading": "ぼけつをほる", "word_meaning": "제 무덤을 파다, 스스로 파멸을 초래하다"}, {"char": "拠", "radical": "扌", "component": "几", "meaning": "근거, 판단의 바탕이 되는 이유", "word": "根拠", "word_reading": "こんきょ", "word_meaning": "근거, 판단의 바탕이 되는 이유"}, {"char": "払", "radical": "扌", "component": "厶", "meaning": "선불 배송료, 발송인이 요금을 부담함", "word": "元払い", "word_reading": "もとばらい", "word_meaning": "선불 배송료, 발송인이 요금을 부담함"}, {"char": "認", "radical": "言", "component": "心", "meaning": "확인", "word": "確認", "word_reading": "かくにん", "word_meaning": "확인"}, {"char": "説", "radical": "言", "component": "口", "meaning": "설득", "word": "説得", "word_reading": "せっとく", "word_meaning": "설득"}, {"char": "設", "radical": "言", "component": "殳", "meaning": "설립", "word": "設立", "word_reading": "せつりつ", "word_meaning": "설립"}, {"char": "話", "radical": "言", "component": "口", "meaning": "대화", "word": "対話", "word_reading": "たいわ", "word_meaning": "대화"}, {"char": "語", "radical": "言", "component": "一", "meaning": "이야기", "word": "物語", "word_reading": "ものがたり", "word_meaning": "이야기"}, {"char": "謝", "radical": "言", "component": "身", "meaning": "감사", "word": "感謝", "word_reading": "かんしゃ", "word_meaning": "감사"}, {"char": "誤", "radical": "言", "component": "口", "meaning": "오해", "word": "誤解", "word_reading": "ごかい", "word_meaning": "오해"}, {"char": "識", "radical": "言", "component": "音", "meaning": "인식, 알아봄, 이해", "word": "認識", "word_reading": "にんしき", "word_meaning": "인식, 알아봄, 이해"}, {"char": "訪", "radical": "言", "component": "方", "meaning": "방문, 찾아감", "word": "訪問", "word_reading": "ほうもん", "word_meaning": "방문, 찾아감"}, {"char": "訳", "radical": "言", "component": "尸", "meaning": "죄송합니다, 면목 없다", "word": "申し訳ない", "word_reading": "もうしわけない", "word_meaning": "죄송합니다, 면목 없다"}, {"char": "計", "radical": "言", "component": "十", "meaning": "쓸데없음, 불필요함", "word": "余計", "word_reading": "よけい", "word_meaning": "쓸데없음, 불필요함"}, {"char": "証", "radical": "言", "component": "一", "meaning": "증명, 사실임을 밝힘", "word": "証明", "word_reading": "しょうめい", "word_meaning": "증명, 사실임을 밝힘"}, {"char": "言", "radical": "言", "component": "?", "meaning": "명언, 분명하게 말함 (유명한 말 아님)", "word": "明言", "word_reading": "めいげん", "word_meaning": "명언, 분명하게 말함 (유명한 말 아님)"}, {"char": "罰", "radical": "言", "component": "刂", "meaning": "겸연쩍다, 민망하다, 멋쩍다", "word": "罰が悪い", "word_reading": "ばつがわるい", "word_meaning": "겸연쩍다, 민망하다, 멋쩍다"}, {"char": "調", "radical": "言", "component": "口", "meaning": "강조, 두드러지게 나타냄", "word": "強調", "word_reading": "きょうちょう", "word_meaning": "강조, 두드러지게 나타냄"}, {"char": "警", "radical": "言", "component": "口", "meaning": "경고, 위험을 미리 알림", "word": "警告", "word_reading": "けいこく", "word_meaning": "경고, 위험을 미리 알림"}, {"char": "情", "radical": "忄", "component": "月", "meaning": "표정", "word": "表情", "word_reading": "ひょうじょう", "word_meaning": "표정"}, {"char": "慣", "radical": "忄", "component": "貝", "meaning": "익숙해지다", "word": "慣れる", "word_reading": "なれる", "word_meaning": "익숙해지다"}, {"char": "悔", "radical": "忄", "component": "母", "meaning": "분하다·억울하다", "word": "悔しい", "word_reading": "くやしい", "word_meaning": "분하다·억울하다"}, {"char": "懐", "radical": "忄", "component": "衣", "meaning": "그립다", "word": "懐かしい", "word_reading": "なつかしい", "word_meaning": "그립다"}, {"char": "恨", "radical": "忄", "component": "艮", "meaning": "원한을 풀다", "word": "恨みを晴らす", "word_reading": "うらみをはらす", "word_meaning": "원한을 풀다"}, {"char": "悦", "radical": "忄", "component": "口", "meaning": "흡족해하다", "word": "悦に入る", "word_reading": "えつにいる", "word_meaning": "흡족해하다"}, {"char": "愕", "radical": "忄", "component": "口", "meaning": "경악, 몹시 놀람", "word": "驚愕", "word_reading": "きょうがく", "word_meaning": "경악, 몹시 놀람"}, {"char": "慌", "radical": "忄", "component": "川", "meaning": "허둥대다, 당황하다", "word": "慌てる", "word_reading": "あわてる", "word_meaning": "허둥대다, 당황하다"}, {"char": "憎", "radical": "忄", "component": "田", "meaning": "미워하다, 증오하다", "word": "憎む", "word_reading": "にくむ", "word_meaning": "미워하다, 증오하다"}, {"char": "愉", "radical": "忄", "component": "刂", "meaning": "불쾌함, 기분 나쁨", "word": "不愉快", "word_reading": "ふゆかい", "word_meaning": "불쾌함, 기분 나쁨"}, {"char": "快", "radical": "忄", "component": "人", "meaning": "불쾌함, 기분 나쁨", "word": "不愉快", "word_reading": "ふゆかい", "word_meaning": "불쾌함, 기분 나쁨"}, {"char": "慄", "radical": "忄", "component": "西", "meaning": "전율, 두려움으로 몸이 떨림", "word": "戦慄", "word_reading": "せんりつ", "word_meaning": "전율, 두려움으로 몸이 떨림"}, {"char": "準", "radical": "氵", "component": "十", "meaning": "준비", "word": "準備", "word_reading": "じゅんび", "word_meaning": "준비"}, {"char": "落", "radical": "氵", "component": "口", "meaning": "원숭이도 나무에서 떨어진다", "word": "猿も木から落ちる", "word_reading": "さるもきからおちる", "word_meaning": "원숭이도 나무에서 떨어진다"}, {"char": "洪", "radical": "氵", "component": "｜", "meaning": "홍수", "word": "洪水", "word_reading": "こうずい", "word_meaning": "홍수"}, {"char": "塗", "radical": "氵", "component": "土", "meaning": "도장, 색을 칠함, 도색", "word": "塗装", "word_reading": "とそう", "word_meaning": "도장, 색을 칠함, 도색"}, {"char": "羨", "radical": "氵", "component": "王", "meaning": "부럽다", "word": "羨ましい", "word_reading": "うらやましい", "word_meaning": "부럽다"}, {"char": "泡", "radical": "氵", "component": "勹", "meaning": "질겁하다, 크게 당황하다", "word": "泡を食う", "word_reading": "あわをくう", "word_meaning": "질겁하다, 크게 당황하다"}, {"char": "薄", "radical": "氵", "component": "十", "meaning": "박약, 의지나 근거 등이 희박하고 약함", "word": "薄弱", "word_reading": "はくじゃく", "word_meaning": "박약, 의지나 근거 등이 희박하고 약함"}, {"char": "沸", "radical": "氵", "component": "｜", "meaning": "비등, 물 등이 끓음, 열기가 고조됨", "word": "沸騰", "word_reading": "ふっとう", "word_meaning": "비등, 물 등이 끓음, 열기가 고조됨"}, {"char": "渇", "radical": "氵", "component": "日", "meaning": "(목이) 마르다, 갈증이 나다", "word": "渇く", "word_reading": "かわく", "word_meaning": "(목이) 마르다, 갈증이 나다"}, {"char": "混", "radical": "氵", "component": "日", "meaning": "한데 뒤섞이다, 뒤엉키다", "word": "入り混じる", "word_reading": "いりまじる", "word_meaning": "한데 뒤섞이다, 뒤엉키다"}, {"char": "深", "radical": "氵", "component": "木", "meaning": "의미심장, 뜻이 깊고 함축적임", "word": "意味深長", "word_reading": "いみしんちょう", "word_meaning": "의미심장, 뜻이 깊고 함축적임"}, {"char": "減", "radical": "氵", "component": "口", "meaning": "감량, 무게·양을 줄임", "word": "減量", "word_reading": "げんりょう", "word_meaning": "감량, 무게·양을 줄임"}, {"char": "測", "radical": "氵", "component": "貝", "meaning": "측정, 길이·무게 등을 재어 수치화함", "word": "測定", "word_reading": "そくてい", "word_meaning": "측정, 길이·무게 등을 재어 수치화함"}, {"char": "泣", "radical": "氵", "component": "立", "meaning": "소리 내어 욺, 통곡", "word": "号泣", "word_reading": "ごうきゅう", "word_meaning": "소리 내어 욺, 통곡"}, {"char": "経", "radical": "糸", "component": "幺", "meaning": "경험", "word": "経験", "word_reading": "けいけん", "word_meaning": "경험"}, {"char": "終", "radical": "糸", "component": "幺", "meaning": "종료", "word": "終了", "word_reading": "しゅうりょう", "word_meaning": "종료"}, {"char": "縦", "radical": "糸", "component": "幺", "meaning": "조종", "word": "操縦", "word_reading": "そうじゅう", "word_meaning": "조종"}, {"char": "続", "radical": "糸", "component": "士", "meaning": "절차·수속", "word": "手続き", "word_reading": "てつづき", "word_meaning": "절차·수속"}, {"char": "細", "radical": "糸", "component": "幺", "meaning": "세심하다·꼼꼼하다", "word": "細かい", "word_reading": "こまかい", "word_meaning": "세심하다·꼼꼼하다"}, {"char": "素", "radical": "糸", "component": "幺", "meaning": "간소함", "word": "簡素", "word_reading": "かんそ", "word_meaning": "간소함"}, {"char": "緊", "radical": "糸", "component": "幺", "meaning": "긴밀함", "word": "緊密", "word_reading": "きんみつ", "word_meaning": "긴밀함"}, {"char": "紹", "radical": "糸", "component": "口", "meaning": "소개", "word": "紹介", "word_reading": "しょうかい", "word_meaning": "소개"}, {"char": "締", "radical": "糸", "component": "巾", "meaning": "(더욱 밀착되도록) 꽉 껴안다", "word": "抱き締める", "word_reading": "だきしめる", "word_meaning": "(더욱 밀착되도록) 꽉 껴안다"}, {"char": "約", "radical": "糸", "component": "幺", "meaning": "약혼, 결혼을 약속함", "word": "婚約", "word_reading": "こんやく", "word_meaning": "약혼, 결혼을 약속함"}, {"char": "織", "radical": "糸", "component": "音", "meaning": "직물, 짜서 만든 천·옷감", "word": "織物", "word_reading": "おりもの", "word_meaning": "직물, 짜서 만든 천·옷감"}, {"char": "縛", "radical": "糸", "component": "幺", "meaning": "묶다, 얽매다", "word": "縛る", "word_reading": "しばる", "word_meaning": "묶다, 얽매다"}, {"char": "純", "radical": "糸", "component": "幺", "meaning": "순수함, 불순물이 없음", "word": "純粋", "word_reading": "じゅんすい", "word_meaning": "순수함, 불순물이 없음"}, {"char": "編", "radical": "糸", "component": "｜", "meaning": "속편, 이어지는 편", "word": "続編", "word_reading": "ぞくへん", "word_meaning": "속편, 이어지는 편"}]
-  },
-};
+const TIMER_SEC = 10;
+const STORAGE_KEY = 'unodiya_best';
+const RANKS = [
+  { min:570, label:"🏆 MASTER",  color:"#FFD700", emoji:"🎌", sub:"완벽한 일본어 실력!" },
+  { min:450, label:"💎 DIAMOND", color:"#7DF9FF", emoji:"✨", sub:"거의 다 왔어요!" },
+  { min:330, label:"🥇 GOLD",    color:"#FFA500", emoji:"😄", sub:"훌륭해요!" },
+  { min:210, label:"🥈 SILVER",  color:"#C0C0C0", emoji:"😊", sub:"계속 도전!" },
+  { min:0,   label:"🥉 BRONZE",  color:"#CD7F32", emoji:"💪", sub:"더 연습해봐요!" },
+];
 
-// ─────────────────────────────────
-// 상태
-// ─────────────────────────────────
-let G = {
-  level: 1,
-  mode: 'level', // 'level' | 'daily' | 'review'
-  radicals: [],
-  questions: [],
-  idx: 0,
-  score: 0,
-  combo: 0,
-  maxCombo: 0,
-  answers: [],
-  timerInterval: null,
-  timerLeft: 8,
-  totalTime: 8,
-  isDragging: false,
-  startX: 0,
-  currentX: 0,
-  animating: false,
-};
+let WORDS = [];
+let questions = [], qIdx = 0;
+let score = 0, combo = 0, maxCombo = 0;
+let timeLeft = TIMER_SEC;
+let answered = false, hintUsed = false;
+let results = [];
+let timerInterval = null;
+let selectedRange = 'all';
+let selectedQ = 20;
+let selectedMode = 'meaning';
 
-// ─────────────────────────────────
-// 유틸
-// ─────────────────────────────────
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => { s.style.display='none'; s.classList.remove('active'); });
-  const el = document.getElementById('screen-' + id);
-  el.style.display = 'flex';
-  el.classList.add('active');
+function show(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
-
-function showLocked() {
-  alert('🔒 PRO 버전에서 해금됩니다!');
-}
-
-// ─────────────────────────────────
-// 홈 초기화
-// ─────────────────────────────────
-function initHome() {
-  const best = localStorage.getItem('bushu_snap_best');
-  if (best) document.getElementById('best-display').textContent = best + '점';
-
-  // 사운드 버튼 초기화
-  updateSoundBtns();
-
-  const totalPlayed = parseInt(localStorage.getItem('bushu_total_played') || '0');
-  const totalCorrect = parseInt(localStorage.getItem('bushu_total_correct') || '0');
-  document.getElementById('total-played').textContent = totalPlayed;
-  document.getElementById('accuracy-display').textContent =
-    totalPlayed > 0 ? Math.round((totalCorrect / totalPlayed) * 100) + '%' : '—';
-
-  const streak = parseInt(localStorage.getItem('bushu_streak') || '0');
-  document.getElementById('streak-num').textContent = streak;
-
-  const today = `${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`;
-  const dailyDone = localStorage.getItem('bushu_daily_' + today) === 'done';
-  const dailyCard = document.getElementById('daily-card');
-  if (dailyDone) {
-    dailyCard.classList.add('done');
-    document.getElementById('daily-desc').textContent = '오늘 완료 ✓  내일 다시 출제';
-  }
-
-  const bank = (() => { try { return JSON.parse(localStorage.getItem('bushu_wrong_bank') || '[]'); } catch { return []; } })();
-  document.getElementById('review-count').textContent = bank.length;
-  if (bank.length === 0) {
-    document.getElementById('review-card').classList.add('empty');
-    document.getElementById('review-desc').textContent = '틀린 한자가 없어요 👍';
-  } else {
-    document.getElementById('review-card').classList.remove('empty');
-    document.getElementById('review-desc').textContent = `${bank.length}개 한자 복습 대기 중`;
+function showStart() {
+  renderBestRecord();
+  show('startScreen');
+  // 사운드 버튼 상태 동기화
+  const btn = document.getElementById('soundToggle');
+  if (btn) {
+    btn.textContent = soundOn ? 'SOUND ON' : 'SOUND OFF';
+    soundOn ? btn.classList.remove('off') : btn.classList.add('off');
   }
 }
 
-// ─────────────────────────────────
-// 게임 시작
-// ─────────────────────────────────
-function startGame(level) {
-  G.level = level;
-  G.mode = 'level';
-  G.radicals = LEVELS[level].radicals;
-  // 셔플
-  const pool = [...LEVELS[level].kanji].sort(() => Math.random() - 0.5);
-  G.questions = pool.slice(0, Math.min(12, pool.length));
-  G.idx = 0;
-  G.score = 0;
-  G.combo = 0;
-  G.maxCombo = 0;
-  G.answers = [];
-
-  renderPanels();
-  renderDots();
-  showScreen('game');
-  renderQuestion();
-  setupSwipe();
+function getBest() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch { return {}; }
 }
-
-function retryGame() { startGame(G.level); }
-
-// ─────────────────────────────────
-// 패널 렌더
-// ─────────────────────────────────
-function renderPanels() {
-  const el = document.getElementById('radical-panels');
-  const r = G.radicals;
-
-  if (r.length === 2) {
-    el.innerHTML = `
-      <div class="radical-panel left" id="panel-0">
-        <div class="panel-arrow" style="color:${r[0].color}">←</div>
-        <div class="panel-char" style="color:${r[0].color}">${r[0].char}</div>
-        <div class="panel-name">${r[0].korean}</div>
-      </div>
-      <div class="radical-panel right" id="panel-1">
-        <div class="panel-char" style="color:${r[1].color}">${r[1].char}</div>
-        <div class="panel-name">${r[1].korean}</div>
-        <div class="panel-arrow" style="color:${r[1].color}">→</div>
-      </div>`;
-  } else {
-    // 3개 이상: 좌측 = r[0], 우측 = r[last], 나머지는 중간에 작게
-    const leftR  = r[0];
-    const rightR = r[r.length - 1];
-    const midR   = r.slice(1, -1);
-    el.innerHTML = `
-      <div class="radical-panel left" id="panel-0" style="flex:1.2">
-        <div class="panel-arrow" style="color:${leftR.color}">←</div>
-        <div class="panel-char" style="color:${leftR.color}">${leftR.char}</div>
-        <div class="panel-name">${leftR.korean}</div>
-      </div>
-      <div style="flex:${midR.length};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border-bottom:2px solid var(--border);padding:6px 4px;">
-        <div style="font-size:9px;color:var(--muted);letter-spacing:1px">중간 부수</div>
-        <div style="display:flex;gap:8px;">
-          ${midR.map((rad,i) => `<div style="text-align:center;">
-            <div style="font-family:'Noto Serif JP',serif;font-size:20px;font-weight:700;color:${rad.color}">${rad.char}</div>
-            <div style="font-size:8px;color:var(--muted)">${rad.korean}</div>
-          </div>`).join('')}
-        </div>
-        <div style="font-size:9px;color:var(--muted)">학습 카드에서 확인</div>
-      </div>
-      <div class="radical-panel right" id="panel-${r.length-1}" style="flex:1.2">
-        <div class="panel-char" style="color:${rightR.color}">${rightR.char}</div>
-        <div class="panel-name">${rightR.korean}</div>
-        <div class="panel-arrow" style="color:${rightR.color}">→</div>
-      </div>`;
-  }
-  document.getElementById('left-label').textContent = r[0].char;
-  document.getElementById('right-label').textContent = r[r.length - 1].char;
+function saveBest(key, val) {
+  const best = getBest();
+  const isNew = !best[key] || val > best[key];
+  if (isNew) { best[key] = val; localStorage.setItem(STORAGE_KEY, JSON.stringify(best)); }
+  return isNew;
 }
-
-// ─────────────────────────────────
-// 문제 렌더
-// ─────────────────────────────────
-function renderQuestion() {
-  if (G.idx >= G.questions.length) { showResult(); return; }
-  if (G.animating) return;
-
-  const q = G.questions[G.idx];
-  const card = document.getElementById('kanji-card');
-  card.style.transform = '';
-  card.style.opacity = '1';
-  card.className = 'kanji-card';
-  card.style.transition = '';
-
-  document.getElementById('kanji-char').textContent = q.char;
-  document.getElementById('kanji-meaning').textContent = q.meaning;
-  document.getElementById('kanji-from').textContent = q.word;
-  document.getElementById('q-count').textContent = `${G.idx + 1}/${G.questions.length}`;
-  document.getElementById('score-val').textContent = G.score;
-  document.getElementById('combo-val').textContent = G.combo >= 3 ? `🔥x${G.combo}` : '';
-
-  // 다음 미리보기
-  const next = G.questions[G.idx + 1];
-  document.getElementById('next-char').textContent = next ? next.char : '—';
-
-  // 레이블 리셋
-  document.getElementById('left-label').style.opacity = '0';
-  document.getElementById('right-label').style.opacity = '0';
-
-  // 패널 글로우 리셋
-  document.querySelectorAll('.radical-panel').forEach(p => { p.classList.remove('glow'); });
-
-  startTimer();
-}
-
-// ─────────────────────────────────
-// 타이머
-// ─────────────────────────────────
-function startTimer() {
-  clearInterval(G.timerInterval);
-  G.timerLeft = G.totalTime;
-  updateTimerBar();
-  G.timerInterval = setInterval(() => {
-    G.timerLeft -= 0.1;
-    updateTimerBar();
-    if (G.timerLeft <= 0) {
-      clearInterval(G.timerInterval);
-      timeOut();
-    }
-  }, 100);
-}
-
-function updateTimerBar() {
-  const pct = (G.timerLeft / G.totalTime) * 100;
-  const bar = document.getElementById('timer-fill');
-  bar.style.width = pct + '%';
-  bar.className = 'timer-fill' + (G.timerLeft < 2.5 ? ' danger' : '');
-}
-
-function timeOut() {
-  clearInterval(G.timerInterval);
-  G.combo = 0;
-  const q = G.questions[G.idx];
-  G.answers.push({ q, answered: null, correct: false });
-  updateDot(G.idx, 'wrong');
-  playSound('timeout');
-  showFeedback('⏱');
-  G.idx++;
-  setTimeout(() => showLearnCard(q, false), 400);
-}
-
-// ─────────────────────────────────
-// 스와이프 / 키보드
-// ─────────────────────────────────
-let swipeInitialized = false;
-function setupSwipe() {
-  if (swipeInitialized) return;
-  swipeInitialized = true;
-  const card = document.getElementById('kanji-card');
-
-  // 터치
-  card.addEventListener('touchstart', onDragStart, { passive: true });
-  card.addEventListener('touchmove', onDragMove, { passive: false });
-  card.addEventListener('touchend', onDragEnd);
-
-  // 마우스
-  card.addEventListener('mousedown', onDragStart);
-  document.addEventListener('mousemove', onDragMoveDoc);
-  document.addEventListener('mouseup', onDragEndDoc);
-
-  // 키보드
-  document.addEventListener('keydown', onKey);
-}
-
-function getClientX(e) {
-  return e.touches ? e.touches[0].clientX : e.clientX;
-}
-
-function onDragStart(e) {
-  if (G.animating) return;
-  G.isDragging = true;
-  G.startX = getClientX(e);
-  G.currentX = G.startX;
-  document.getElementById('kanji-card').classList.add('dragging');
-}
-
-function onDragMove(e) {
-  if (!G.isDragging) return;
-  if (e.cancelable) e.preventDefault();
-  G.currentX = getClientX(e);
-  const dx = G.currentX - G.startX;
-  const rotate = dx * 0.08;
-  document.getElementById('kanji-card').style.transform = `translateX(${dx}px) rotate(${rotate}deg)`;
-
-  // 레이블
-  const threshold = 40;
-  document.getElementById('left-label').style.opacity = dx < -threshold ? Math.min(1, (-dx - threshold) / 60) : '0';
-  document.getElementById('right-label').style.opacity = dx > threshold ? Math.min(1, (dx - threshold) / 60) : '0';
-
-  // 패널 글로우
-  if (dx < -threshold) {
-    document.getElementById('panel-0')?.classList.add('glow');
-    document.querySelectorAll('.radical-panel:not(#panel-0)').forEach(p => p.classList.remove('glow'));
-  } else if (dx > threshold) {
-    const last = document.querySelectorAll('.radical-panel');
-    last[last.length - 1]?.classList.add('glow');
-    document.querySelectorAll('.radical-panel').forEach((p, i) => { if (i < last.length - 1) p.classList.remove('glow'); });
-  } else {
-    document.querySelectorAll('.radical-panel').forEach(p => p.classList.remove('glow'));
-  }
-}
-
-function onDragEnd(e) {
-  if (!G.isDragging) return;
-  G.isDragging = false;
-  document.getElementById('kanji-card').classList.remove('dragging');
-  const dx = G.currentX - G.startX;
-  if (Math.abs(dx) > 80) {
-    const dir = dx < 0 ? 'left' : 'right';
-    playSound('swipe');
-    answerWithDir(dir);
-  } else {
-    // 복귀
-    const card = document.getElementById('kanji-card');
-    card.style.transition = 'transform 0.3s cubic-bezier(.17,.67,.83,.67)';
-    card.style.transform = '';
-    document.getElementById('left-label').style.opacity = '0';
-    document.getElementById('right-label').style.opacity = '0';
-    document.querySelectorAll('.radical-panel').forEach(p => p.classList.remove('glow'));
-  }
-}
-
-function onDragMoveDoc(e) { onDragMove(e); }
-function onDragEndDoc(e) { onDragEnd(e); }
-
-function onKey(e) {
-  if (G.animating) return;
-  if (e.key === 'ArrowLeft') answerWithDir('left');
-  else if (e.key === 'ArrowRight') answerWithDir('right');
-}
-
-// ─────────────────────────────────
-// 정답 처리
-// ─────────────────────────────────
-function answerWithDir(dir) {
-  if (G.animating || G.idx >= G.questions.length) return;
-  clearInterval(G.timerInterval);
-  G.animating = true;
-
-  const r = G.radicals;
-  // dir: left = r[0], right = r[last]
-  const guessedRadical = dir === 'left' ? r[0].char : r[r.length - 1].char;
-  const q = G.questions[G.idx];
-  const correct = guessedRadical === q.radical;
-
-  // 점수
-  if (correct) {
-    G.combo++;
-    if (G.combo > G.maxCombo) G.maxCombo = G.combo;
-    const timeBonus = Math.floor(G.timerLeft * 5);
-    const comboBonus = G.combo >= 3 ? G.combo * 3 : 0;
-    G.score += 10 + timeBonus + comboBonus;
-    if (G.combo >= 3) playSound('combo');
-    else playSound('correct');
-    showFeedback('◎');
-  } else {
-    G.combo = 0;
-    playSound('wrong');
-    showFeedback('✕');
-  }
-
-  G.answers.push({ q, answered: guessedRadical, correct });
-  updateDot(G.idx, correct ? 'correct' : 'wrong');
-
-  // 카드 날리기
-  const card = document.getElementById('kanji-card');
-  card.classList.add(dir === 'left' ? 'snap-left' : 'snap-right');
-  document.getElementById('left-label').style.opacity = '0';
-  document.getElementById('right-label').style.opacity = '0';
-
-  G.idx++;
-
-  // 380ms 후 학습 카드 표시
-  setTimeout(() => showLearnCard(q, correct), 380);
-}
-
-// ─────────────────────────────────
-// 도트
-// ─────────────────────────────────
-function renderDots() {
-  const el = document.getElementById('progress-dots');
-  el.innerHTML = G.questions.slice(0, 12).map((_, i) => `<div class="dot" id="dot-${i}"></div>`).join('');
-}
-
-function updateDot(i, state) {
-  const dot = document.getElementById(`dot-${i}`);
-  if (dot) dot.className = `dot ${state}`;
-}
-
-// ─────────────────────────────────
-// 학습 카드
-// ─────────────────────────────────
-function showLearnCard(q, correct) {
-  const allR = getAllRadicals();
-  const radical = allR.find(r => r.char === q.radical) || { char: q.radical, name: '', korean: '', color: '#c9a84c' };
-
-  // 구성요소 정보 (LEVELS 데이터에서 찾기)
-  let component = '?';
-  Object.values(LEVELS).forEach(lv => {
-    const found = lv.kanji.find(k => k.char === q.char);
-    if (found && found.component) component = found.component;
-  });
-
-  // 판정
-  const verdict = document.getElementById('learn-verdict');
-  const inner = document.getElementById('learn-inner');
-  if (correct) {
-    verdict.className = 'learn-verdict ok';
-    verdict.innerHTML = '◎ &nbsp;正解';
-    inner.className = 'learn-inner correct-bg';
-  } else {
-    verdict.className = 'learn-verdict ng';
-    verdict.innerHTML = `✕ &nbsp;오답 &nbsp;<span style="font-size:11px;font-weight:400;color:var(--muted)">정답: ${radical.char} ${radical.name}</span>`;
-    inner.className = 'learn-inner wrong-bg';
-  }
-
-  // 분해 방정식
-  document.getElementById('learn-equation').innerHTML = `
-    <div class="learn-box">
-      <div class="lb-char" style="color:${radical.color}">${radical.char}</div>
-      <div class="lb-label">${radical.korean}</div>
-    </div>
-    <div class="learn-op">＋</div>
-    <div class="learn-box">
-      <div class="lb-char">${component}</div>
-      <div class="lb-label">나머지</div>
-    </div>
-    <div class="learn-op">＝</div>
-    <div class="learn-box">
-      <div class="lb-char" style="color:${radical.color}">${q.char}</div>
-      <div class="lb-label">${q.meaning}</div>
-    </div>`;
-
-  // 의미 설명
-  document.getElementById('learn-meaning-line').innerHTML =
-    `<strong>${radical.char}</strong>(${radical.korean})가 들어가면 보통 <strong>${radical.radical_meaning || '관련 의미'}</strong>와 연결돼요`;
-
-  // N2 단어 연결
-  let wordHtml = '';
-  if (q.word) {
-    wordHtml = `<div class="learn-word-chip">${q.word}<span>N2</span></div>`;
-  }
-  // LEVELS에서 같은 부수 가진 다른 한자 1개 추가
-  let sameR = [];
-  Object.values(LEVELS).forEach(lv => {
-    if (lv.radicals.find(r => r.char === q.radical)) {
-      lv.kanji.filter(k => k.char !== q.char && k.radical === q.radical).slice(0, 2).forEach(k => {
-        sameR.push(`<div class="learn-word-chip">${k.char}<span>${k.meaning}</span></div>`);
-      });
-    }
-  });
-  document.getElementById('learn-words').innerHTML = wordHtml + sameR.slice(0, 2).join('');
-
-  // 표시
-  const lc = document.getElementById('learn-card');
-  lc.classList.add('show');
-
-  // 정답이면 1.8초, 오답이면 2.4초 후 자동 닫기
-  const delay = correct ? 1800 : 2400;
-  setTimeout(() => {
-    lc.classList.remove('show');
-    setTimeout(() => {
-      G.animating = false;
-      renderQuestion();
-    }, 220);
-  }, delay);
-}
-
-
-function showFeedback(emoji) {
-  const ov = document.getElementById('feedback-overlay');
-  const em = document.getElementById('feedback-emoji');
-  em.textContent = emoji;
-  ov.classList.add('show');
-  setTimeout(() => ov.classList.remove('show'), 600);
-}
-
-// ─────────────────────────────────
-// 결과
-// ─────────────────────────────────
-function showResult() {
-  const correctCount = G.answers.filter(a => a.correct).length;
-  const total = G.answers.length;
-  const wrongItems = G.answers.filter(a => !a.correct).map(a => a.q);
-
-  document.getElementById('result-score').textContent = G.score;
-  document.getElementById('result-sub').textContent = `${total}문제 · ${correctCount}개 정답`;
-  document.getElementById('rs-correct').textContent = correctCount;
-  document.getElementById('rs-wrong').textContent = total - correctCount;
-  document.getElementById('rs-combo').textContent = G.maxCombo;
-
-  // 최고기록
-  const best = parseInt(localStorage.getItem('bushu_snap_best') || '0');
-  if (G.score > best) localStorage.setItem('bushu_snap_best', G.score);
-
-  // 팡파레 or 결과음
-  if (wrongItems.length === 0) playSound('perfect');
-  else if (correctCount > 0) playSound('correct');
-
-  // 누적 통계
-  const tp = parseInt(localStorage.getItem('bushu_total_played') || '0');
-  const tc = parseInt(localStorage.getItem('bushu_total_correct') || '0');
-  localStorage.setItem('bushu_total_played', tp + total);
-  localStorage.setItem('bushu_total_correct', tc + correctCount);
-
-  // 데일리 완료 처리
-  if (G.mode === 'daily') {
-    const today = getTodayKey();
-    localStorage.setItem('bushu_daily_' + today, 'done');
-    updateStreak();
-  }
-
-  // 오답뱅크 업데이트
-  if (wrongItems.length > 0) {
-    addToWrongBank(wrongItems);
-  }
-  // 복습 모드에서 맞춘 것은 뱅크에서 제거
-  if (G.mode === 'review') {
-    const correctChars = G.answers.filter(a => a.correct).map(a => a.q.char);
-    if (correctChars.length > 0) removeFromWrongBank(correctChars);
-  }
-
-  // 오답 표시
-  document.getElementById('review-list').innerHTML = wrongItems.length === 0
-    ? `<div style="text-align:center;padding:20px;color:var(--accent);font-family:'Noto Serif JP',serif;font-size:18px">完璧！ 전부 정답 🎉</div>`
-    : wrongItems.map(q => {
-        const correctR = G.radicals.find(r => r.char === q.radical) || getAllRadicals().find(r => r.char === q.radical);
-        return `<div class="review-row r-wrong">
-          <div class="review-icon">✕</div>
-          <div class="rr-char" style="color:${correctR?.color || '#ef5350'}">${q.char}</div>
-          <div class="rr-detail">
-            <div>${q.meaning} · ${q.word}</div>
-            <div class="rr-answer">정답 부수: ${q.radical} ${correctR?.name || ''} (${correctR?.korean || ''})</div>
-          </div>
-        </div>`;
-      }).join('');
-
-  // 오답 있으면 복습 버튼 표시
-  const wrongAgainBtn = document.getElementById('wrong-again-btn');
-  wrongAgainBtn.style.display = wrongItems.length > 0 ? 'block' : 'none';
-
-  showScreen('result');
-}
-
-// ─────────────────────────────────
-// 날짜 / 스트릭 유틸
-// ─────────────────────────────────
-function getTodayKey() {
-  const d = new Date();
-  return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
-}
-function getStreak() {
-  return parseInt(localStorage.getItem('bushu_streak') || '0');
-}
-function updateStreak() {
-  const today = getTodayKey();
-  const lastDay = localStorage.getItem('bushu_last_daily');
-  const yesterday = (() => {
-    const d = new Date(); d.setDate(d.getDate()-1);
-    return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
-  })();
-  let streak = getStreak();
-  if (lastDay === yesterday) streak++;
-  else if (lastDay !== today) streak = 1;
-  localStorage.setItem('bushu_streak', streak);
-  localStorage.setItem('bushu_last_daily', today);
-}
-
-// ─────────────────────────────────
-// 오답 뱅크
-// ─────────────────────────────────
-function getWrongBank() {
-  try { return JSON.parse(localStorage.getItem('bushu_wrong_bank') || '[]'); }
-  catch { return []; }
-}
-function saveWrongBank(bank) {
-  localStorage.setItem('bushu_wrong_bank', JSON.stringify(bank));
-}
-function addToWrongBank(items) {
-  let bank = getWrongBank();
-  items.forEach(item => {
-    if (!bank.find(b => b.char === item.char)) bank.push(item);
-  });
-  if (bank.length > 30) bank = bank.slice(-30);
-  saveWrongBank(bank);
-}
-function removeFromWrongBank(chars) {
-  let bank = getWrongBank().filter(b => !chars.includes(b.char));
-  saveWrongBank(bank);
-}
-
-// ─────────────────────────────────
-// 데일리 모드
-// ─────────────────────────────────
-function startDaily() {
-  const today = getTodayKey();
-  if (localStorage.getItem('bushu_daily_' + today) === 'done') {
-    alert('오늘 데일리는 이미 완료! 내일 또 만나요 ☀️');
+function renderBestRecord() {
+  // 팝업 내용 갱신
+  const best = getBest();
+  const keys = Object.keys(best);
+  const el = document.getElementById('bestPopupList');
+  if (!el) return;
+  if (!keys.length) {
+    el.innerHTML = '<div class="best-empty">아직 기록이 없어요!</div>';
     return;
   }
-  const allKanji = getAllKanji();
-  const seed = today.split('-').reduce((a, b) => a * 100 + parseInt(b), 0);
-  const daily5 = seededShuffle(allKanji, seed).slice(0, 5);
-
-  G.mode = 'daily';
-  G.level = null;
-  G.radicals = getAllRadicals();
-  G.questions = daily5;
-  G.idx = 0; G.score = 0; G.combo = 0; G.maxCombo = 0; G.answers = [];
-  renderPanels(); renderDots(); showScreen('game'); renderQuestion(); setupSwipe();
+  // 점수 높은 순으로 정렬
+  keys.sort(function(a,b) { return best[b] - best[a]; });
+  el.innerHTML = keys.map(function(k) {
+    return '<div class="best-row">' +
+      '<span class="best-row-key">' + k + '</span>' +
+      '<span class="best-row-val">' + best[k] + '점</span>' +
+      '</div>';
+  }).join('');
 }
 
-// ─────────────────────────────────
-// 오답 복습 모드
-// ─────────────────────────────────
-function startReview() {
-  const bank = getWrongBank();
-  if (bank.length === 0) { alert('복습할 오답이 없어요!'); return; }
-  G.mode = 'review';
-  G.level = null;
-  G.radicals = getAllRadicals();
-  G.questions = [...bank].sort(() => Math.random() - 0.5);
-  G.idx = 0; G.score = 0; G.combo = 0; G.maxCombo = 0; G.answers = [];
-  renderPanels(); renderDots(); showScreen('game'); renderQuestion(); setupSwipe();
+function openBestPopup() {
+  renderBestRecord();
+  document.getElementById('bestPopup').classList.add('active');
 }
 
-// ─────────────────────────────────
-// 전체 한자/부수 유틸
-// ─────────────────────────────────
-function getAllKanji() {
-  const all = [];
-  Object.values(LEVELS).forEach(lv => all.push(...lv.kanji));
-  return all;
-}
-function getAllRadicals() {
-  const seen = new Set(), radicals = [];
-  Object.values(LEVELS).forEach(lv => {
-    lv.radicals.forEach(r => { if (!seen.has(r.char)) { seen.add(r.char); radicals.push(r); } });
-  });
-  return radicals;
-}
-function seededShuffle(arr, seed) {
-  const a = [...arr]; let s = seed;
-  for (let i = a.length - 1; i > 0; i--) {
-    s = (s * 9301 + 49297) % 233280;
-    const j = Math.floor((s / 233280) * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
+function closeBestPopup(e) {
+  if (!e || e.target === document.getElementById('bestPopup')) {
+    document.getElementById('bestPopup').classList.remove('active');
   }
-  return a;
 }
 
-// ─────────────────────────────────
-// 사운드 시스템 (Web Audio API)
-// ─────────────────────────────────
+async function loadWords() {
+  try {
+    const res = await fetch('./words.json');
+    WORDS = await res.json();
+    const total = WORDS.length;
+    document.getElementById('wordCountBadge').textContent =
+      '#1 ~ #' + total + ' · 총 ' + total + '개 수록';
+    buildRangeButtons(total);
+    renderBestRecord();
+    show('startScreen');
+  } catch(e) {
+    document.querySelector('.load-text').textContent = '단어 로드 실패. words.json을 확인해주세요.';
+  }
+}
+
+function buildRangeButtons(total) {
+  const group = document.getElementById('rangeGroup');
+  group.innerHTML = '';
+  const ranges = [{ label:'전체', val:'all' }];
+  const step = 100;
+  for (let i = 0; i < total; i += step) {
+    const end = Math.min(i + step, total);
+    ranges.push({ label:'#' + (i+1) + '~' + end, val: i + '-' + end });
+  }
+  ranges.forEach(function(r, idx) {
+    const btn = document.createElement('div');
+    btn.className = 'seg-btn' + (idx === 0 ? ' active' : '');
+    btn.textContent = r.label;
+    btn.onclick = function() { selectedRange = r.val; setActive(group, btn); };
+    group.appendChild(btn);
+  });
+}
+
+function setActive(group, btn) {
+  group.querySelectorAll('.seg-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+}
+function selectQ(n, btn) { selectedQ = n; setActive(btn.parentElement, btn); }
+function selectMode(m, btn) { selectedMode = m; setActive(btn.parentElement, btn); }
+
+function getFilteredWords() {
+  if (selectedRange === 'all') return WORDS;
+  const parts = selectedRange.split('-');
+  const s = parseInt(parts[0]), e = parseInt(parts[1]);
+  return WORDS.filter(function(w) { return w.no > s && w.no <= e; });
+}
+
+function startGame() {
+  const pool = getFilteredWords();
+  if (pool.length < 4) { alert('단어가 너무 적어요! 범위를 넓혀주세요.'); return; }
+  const Q_COUNT = Math.min(selectedQ, pool.length);
+  const shuffled = pool.slice().sort(function() { return Math.random() - 0.5; }).slice(0, Q_COUNT);
+  questions = shuffled.map(function(w) {
+    const af = selectedMode === 'reading' ? 'reading' : 'meaning';
+    // 중복값 제거: 읽기모드에서 같은 히라가나 오답 방지
+    const seen = new Set([w[af]]);
+    const wrong = [];
+    const candidates = WORDS.filter(function(x) { return x[af] !== w[af]; })
+      .sort(function() { return Math.random() - 0.5; });
+    for (var i = 0; i < candidates.length && wrong.length < 3; i++) {
+      const val = candidates[i][af];
+      if (!seen.has(val)) { seen.add(val); wrong.push(val); }
+    }
+    const opts = wrong.concat([w[af]]).sort(function() { return Math.random() - 0.5; });
+    return Object.assign({}, w, { options: opts, answerField: af });
+  });
+  qIdx = 0; score = 0; combo = 0; maxCombo = 0; results = [];
+  // 현재 모드 최고기록 불러오기 (questions.length 기준으로 통일)
+  const rangeLabel = selectedRange === 'all' ? '전체' : '#' + selectedRange.replace('-','~');
+  const modeLabel = selectedMode === 'reading' ? '読み' : '뜻';
+  const bestKey = rangeLabel + '·' + questions.length + '문·' + modeLabel;
+  const currentBest = getBest()[bestKey] || 0;
+  document.getElementById('bestDiff').textContent = currentBest ? '🏅 목표: ' + currentBest + '점' : '';
+  document.getElementById('bestDiff').className = 'best-diff zero';
+  document.getElementById('modeBadge').textContent = selectedMode === 'reading' ? '読み 맞추기' : '뜻 맞추기';
+  show('playScreen');
+  loadQuestion();
+}
+
+function loadQuestion() {
+  clearInterval(timerInterval);
+  answered = false; hintUsed = false; timeLeft = TIMER_SEC;
+  const q = questions[qIdx];
+  const QC = questions.length;
+  document.getElementById('hudCount').textContent = (qIdx+1) + ' / ' + QC;
+  document.getElementById('hudScore').textContent = score + '점';
+  document.getElementById('progressFill').style.width = (qIdx/QC*100) + '%';
+  updateComboUI();
+  updateTimer();
+  document.getElementById('wordNo').textContent = '#' + q.no;
+  const ke = document.getElementById('wordKanji');
+  // 읽기 모드에서 word===reading(순히라가나/카타카나)이면 뜻을 대신 표시
+  const isKanaOnly = (selectedMode === 'reading' && q.word === q.reading);
+  if (isKanaOnly) {
+    ke.textContent = '「' + q.meaning + '」';
+    ke.style.fontSize = '24px';
+    ke.style.fontFamily = "'Rajdhani', sans-serif";
+  } else {
+    ke.textContent = q.word;
+    ke.style.fontFamily = "'Noto Serif JP', serif";
+    ke.style.fontSize = q.word.length > 5 ? '28px' : q.word.length > 3 ? '38px' : '50px';
+  }
+  if (selectedMode === 'reading') {
+    document.getElementById('readingArea').innerHTML = '';
+  } else {
+    document.getElementById('readingArea').innerHTML =
+      '<p class="word-reading">' + q.reading + '</p>';
+  }
+  document.getElementById('hintArea').innerHTML =
+    '<button class="hint-btn" onclick="showHint()">💡 우노디야 힌트 (-3점)</button>';
+  document.getElementById('wordCard').classList.remove('correct','wrong');
+  document.getElementById('options').innerHTML = q.options.map(function(opt, i) {
+    const safe = opt.replace(/'/g, "&#39;").replace(/"/g, '&quot;');
+    return '<button class="opt-btn" id="opt'+i+'" onclick="handleAnswer(\''+opt.replace(/'/g,"\\'")+'\')">' + opt + '</button>';
+  }).join('');
+  timerInterval = setInterval(tickTimer, 1000);
+}
+
+function tickTimer() {
+  timeLeft--;
+  updateTimer();
+  if (timeLeft <= 0) { clearInterval(timerInterval); handleAnswer(null); }
+}
+function updateTimer() {
+  const pct = (timeLeft / TIMER_SEC) * 100;
+  const circle = document.getElementById('timerCircle');
+  const fill = document.getElementById('timerFill');
+  circle.textContent = timeLeft;
+  circle.className = 'timer-circle' + (timeLeft <= 3 ? ' danger' : timeLeft <= 6 ? ' warn' : '');
+  const color = timeLeft <= 3 ? '#e94560' : timeLeft <= 6 ? '#f59e0b' : '#4ecdc4';
+  fill.style.width = pct + '%';
+  fill.style.background = 'linear-gradient(90deg,' + color + '88,' + color + ')';
+}
+
+function handleAnswer(selected) {
+  if (answered) return;
+  answered = true;
+  clearInterval(timerInterval);
+  const q = questions[qIdx];
+  const correctAnswer = q[q.answerField];
+  const correct = selected === correctAnswer;
+  let gained = 0;
+  if (correct) {
+    gained = Math.max(5, 10 + timeLeft + Math.min(combo,5)*2 - (hintUsed?3:0));
+    score += gained;
+    combo++;
+    maxCombo = Math.max(maxCombo, combo);
+    if (combo >= 3) playSound('combo');
+    else playSound('correct');
+  } else {
+    combo = 0;
+    if (selected === null) playSound('timeout');
+    else playSound('wrong');
+  }
+  results.push({ word: q, correct: correct, answer: selected || '시간초과', gained: gained });
+  document.getElementById('wordCard').classList.add(correct ? 'correct' : 'wrong');
+  q.options.forEach(function(opt, i) {
+    const btn = document.getElementById('opt'+i);
+    if (!btn) return;
+    btn.classList.add('disabled');
+    if (opt === correctAnswer) btn.classList.add('correct');
+    else if (opt === selected) btn.classList.add('wrong');
+  });
+  document.getElementById('hudScore').textContent = score + '점';
+  updateComboUI();
+  // 최고기록 실시간 비교
+  updateBestDiff();
+  setTimeout(function() {
+    qIdx++;
+    if (qIdx >= questions.length) showResult();
+    else loadQuestion();
+  }, 1100);
+}
+
+function updateComboUI() {
+  const el = document.getElementById('hudCombo');
+  if (combo >= 2) { el.textContent = '🔥x' + combo; el.classList.remove('hidden'); }
+  else { el.classList.add('hidden'); }
+}
+
+function updateBestDiff() {
+  const rangeLabel = selectedRange === 'all' ? '전체' : '#' + selectedRange.replace('-','~');
+  const modeLabel = selectedMode === 'reading' ? '読み' : '뜻';
+  const bestKey = rangeLabel + '·' + questions.length + '문·' + modeLabel;
+  const best = getBest()[bestKey] || 0;
+  const el = document.getElementById('bestDiff');
+  if (!best) { el.textContent = ''; return; }
+  const diff = score - best;
+  if (diff > 0) {
+    el.textContent = '📈 +' + diff + '점 (최고기록 갱신 중!)';
+    el.className = 'best-diff plus';
+  } else if (diff < 0) {
+    el.textContent = '📉 ' + diff + '점 (최고기록: ' + best + '점)';
+    el.className = 'best-diff minus';
+  } else {
+    el.textContent = '🎯 최고기록과 동점!';
+    el.className = 'best-diff zero';
+  }
+}
+
+function showHint() {
+  if (answered) return;
+  hintUsed = true;
+  document.getElementById('hintArea').innerHTML =
+    '<div class="hint-box">💡 ' + questions[qIdx].hint + '</div>';
+}
+
+function showResult() {
+  const QC = questions.length;
+  const rank = RANKS.find(function(r) { return score >= r.min; }) || RANKS[RANKS.length-1];
+  const correctCount = results.filter(function(r) { return r.correct; }).length;
+  const accuracy = Math.round(correctCount / QC * 100);
+  const rangeLabel = selectedRange === 'all' ? '전체' : '#' + selectedRange.replace('-','~');
+  const modeLabel = selectedMode === 'reading' ? '読み' : '뜻';
+  const bestKey = rangeLabel + '·' + QC + '문·' + modeLabel;
+  const isNewBest = saveBest(bestKey, score);
+  document.getElementById('resultEmoji').textContent = rank.emoji;
+  document.getElementById('resultRank').textContent  = rank.label;
+  document.getElementById('resultRank').style.color  = rank.color;
+  document.getElementById('resultSub').textContent   = rank.sub;
+  document.getElementById('resultNewBest').textContent = isNewBest ? '🎉 새 최고기록 달성!' : '';
+  document.getElementById('statScore').textContent    = score;
+  document.getElementById('statAccuracy').textContent = accuracy + '%';
+  document.getElementById('statCorrect').textContent  = correctCount + '/' + QC;
+  document.getElementById('statCombo').textContent    = 'x' + maxCombo;
+  const wrong = results.filter(function(r) { return !r.correct; });
+  const ws = document.getElementById('wrongSection');
+  if (wrong.length > 0) {
+    ws.style.display = 'block';
+    document.getElementById('wrongTitle').textContent = '❌ 틀린 단어 ' + wrong.length + '개 — 다시 보기';
+    document.getElementById('wrongList').innerHTML = wrong.map(function(r) {
+      return '<div class="wrong-item">' +
+        '<div style="display:flex;justify-content:space-between;margin-bottom:3px;">' +
+        '<span class="wrong-word">' + r.word.word + '</span>' +
+        '<span class="wrong-reading">' + r.word.reading + '</span></div>' +
+        '<div class="wrong-answer">✓ ' + r.word[r.word.answerField] + '</div>' +
+        '<div class="wrong-hint">💡 ' + r.word.hint + '</div></div>';
+    }).join('');
+  } else { ws.style.display = 'none'; }
+  show('resultScreen');
+}
+
+function shareResult() {
+  const QC = questions.length;
+  const correctCount = results.filter(function(r) { return r.correct; }).length;
+  const rank = RANKS.find(function(r) { return score >= r.min; }) || RANKS[RANKS.length-1];
+  const rangeLabel = selectedRange === 'all' ? '전체' : '#' + selectedRange.replace('-','~');
+  const modeLabel = selectedMode === 'reading' ? '読み 맞추기' : '뜻 맞추기';
+  const text = '🎌 UNODIYA N2 스피드퀴즈\n' + rank.emoji + ' ' + rank.label +
+    '\n━━━━━━━━━━━\n📚 범위: ' + rangeLabel + ' · ' + modeLabel +
+    '\n🎯 점수: ' + score + '점\n✅ 정답: ' + correctCount + '/' + QC +
+    '\n🔥 최대콤보: x' + maxCombo +
+    '\n━━━━━━━━━━━\n👉 bwh1004-dotcom.github.io/unodiya-quiz/';
+  if (navigator.share) {
+    navigator.share({ title: 'UNODIYA N2 퀴즈 결과', text: text });
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(function() {
+      alert('결과가 복사됐어요! 붙여넣기해서 공유하세요 😄');
+    });
+  }
+}
+
+// ── 사운드 시스템 ──────────────────────────────────────────
+let soundOn = true;
 let audioCtx = null;
-let soundOn = localStorage.getItem('bushu_sound') !== 'off';
 
 function getCtx() {
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -1499,112 +659,60 @@ function playSound(type) {
   if (!soundOn) return;
   try {
     const ctx = getCtx();
-    const t = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
 
     if (type === 'correct') {
-      // 밝은 두 음 (정답)
-      [523.25, 783.99].forEach((freq, i) => {
-        const o = ctx.createOscillator();
-        const g = ctx.createGain();
-        o.connect(g); g.connect(ctx.destination);
-        o.type = 'sine';
-        o.frequency.setValueAtTime(freq, t + i * 0.1);
-        g.gain.setValueAtTime(0.25, t + i * 0.1);
-        g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.1 + 0.2);
-        o.start(t + i * 0.1);
-        o.stop(t + i * 0.1 + 0.2);
-      });
-    }
-
-    else if (type === 'wrong') {
-      // 낮고 짧은 음 (오답)
-      const o = ctx.createOscillator();
-      const g = ctx.createGain();
-      o.connect(g); g.connect(ctx.destination);
-      o.type = 'sawtooth';
-      o.frequency.setValueAtTime(180, t);
-      o.frequency.exponentialRampToValueAtTime(100, t + 0.25);
-      g.gain.setValueAtTime(0.2, t);
-      g.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
-      o.start(t); o.stop(t + 0.25);
-    }
-
-    else if (type === 'combo') {
-      // 콤보 상승 3음
-      [523, 659, 880].forEach((freq, i) => {
-        const o = ctx.createOscillator();
-        const g = ctx.createGain();
-        o.connect(g); g.connect(ctx.destination);
-        o.type = 'sine';
-        o.frequency.setValueAtTime(freq, t + i * 0.08);
-        g.gain.setValueAtTime(0.22, t + i * 0.08);
-        g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.08 + 0.18);
-        o.start(t + i * 0.08);
-        o.stop(t + i * 0.08 + 0.18);
-      });
-    }
-
-    else if (type === 'timeout') {
-      // 시간초과 - 하강 음
-      const o = ctx.createOscillator();
-      const g = ctx.createGain();
-      o.connect(g); g.connect(ctx.destination);
-      o.type = 'triangle';
-      o.frequency.setValueAtTime(300, t);
-      o.frequency.exponentialRampToValueAtTime(150, t + 0.4);
-      g.gain.setValueAtTime(0.2, t);
-      g.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
-      o.start(t); o.stop(t + 0.4);
-    }
-
-    else if (type === 'swipe') {
-      // 스와이프 - 짧은 클릭
-      const o = ctx.createOscillator();
-      const g = ctx.createGain();
-      o.connect(g); g.connect(ctx.destination);
-      o.type = 'sine';
-      o.frequency.setValueAtTime(440, t);
-      g.gain.setValueAtTime(0.08, t);
-      g.gain.exponentialRampToValueAtTime(0.001, t + 0.06);
-      o.start(t); o.stop(t + 0.06);
-    }
-
-    else if (type === 'perfect') {
-      // 전부 정답 팡파레
-      [523, 659, 784, 1047].forEach((freq, i) => {
-        const o = ctx.createOscillator();
-        const g = ctx.createGain();
-        o.connect(g); g.connect(ctx.destination);
-        o.type = 'sine';
-        o.frequency.setValueAtTime(freq, t + i * 0.12);
-        g.gain.setValueAtTime(0.22, t + i * 0.12);
-        g.gain.exponentialRampToValueAtTime(0.001, t + i * 0.12 + 0.25);
-        o.start(t + i * 0.12);
-        o.stop(t + i * 0.12 + 0.25);
-      });
+      osc.frequency.setValueAtTime(523, ctx.currentTime);       // C5
+      osc.frequency.setValueAtTime(659, ctx.currentTime + 0.1); // E5
+      osc.frequency.setValueAtTime(784, ctx.currentTime + 0.2); // G5
+      gain.gain.setValueAtTime(0.3, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.5);
+    } else if (type === 'wrong') {
+      osc.type = 'sawtooth';
+      osc.frequency.setValueAtTime(300, ctx.currentTime);
+      osc.frequency.setValueAtTime(200, ctx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.4);
+    } else if (type === 'combo') {
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(784, ctx.currentTime);
+      osc.frequency.setValueAtTime(988, ctx.currentTime + 0.08);
+      osc.frequency.setValueAtTime(1175, ctx.currentTime + 0.16);
+      gain.gain.setValueAtTime(0.25, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.4);
+    } else if (type === 'timeout') {
+      osc.type = 'square';
+      osc.frequency.setValueAtTime(220, ctx.currentTime);
+      gain.gain.setValueAtTime(0.15, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + 0.3);
     }
   } catch(e) {}
 }
 
-function updateSoundBtns() {
-  const label = soundOn ? '🔊 SOUND ON' : '🔇 SOUND OFF';
-  const home = document.getElementById('sound-btn-home');
-  const game = document.getElementById('sound-btn');
-  if (home) home.textContent = label;
-  if (game) game.textContent = soundOn ? '🔊' : '🔇';
-}
-
 function toggleSound() {
   soundOn = !soundOn;
-  localStorage.setItem('bushu_sound', soundOn ? 'on' : 'off');
-  updateSoundBtns();
-  if (soundOn) playSound('correct');
+  const btn = document.getElementById('soundToggle');
+  if (soundOn) {
+    btn.textContent = 'SOUND ON';
+    btn.classList.remove('off');
+  } else {
+    btn.textContent = 'SOUND OFF';
+    btn.classList.add('off');
+  }
 }
 
-// ─────────────────────────────────
-// 초기화
-// ─────────────────────────────────
-initHome();
+loadWords();
 </script>
 </body>
 </html>
