@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UNODIYA N2 スピード퀴즈</title>
+<title>UNO_DEYA N2 スピード퀴즈</title>
 <link rel="icon" type="image/png" href="./favicon.png">
 <link rel="apple-touch-icon" href="./favicon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="UNODIYA N2">
+<meta name="apple-mobile-web-app-title" content="UNO_DEYA N2">
 <meta name="theme-color" content="#0a0a0f">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -207,7 +207,7 @@
 
 <div id="startScreen" class="screen">
   <div class="inner" style="text-align:center;">
-    <p class="brand-badge">UNODIYA · 우노디야 연상법</p>
+    <p class="brand-badge">UNO_DEYA · 우노디야 연상법</p>
     <h1 class="game-title">N2 スピード<br>퀴즈</h1>
     <p class="game-sub">JLPT N2 SPEED QUIZ</p>
     <div class="word-count-badge" id="wordCountBadge">단어 로딩 중...</div>
@@ -264,7 +264,7 @@
       <div id="hintArea"></div>
     </div>
     <div class="options" id="options"></div>
-    <p class="play-footer">UNODIYA N2</p>
+    <p class="play-footer">UNO_DEYA N2</p>
   </div>
 </div>
 
@@ -303,7 +303,7 @@
       <button class="btn-retry" onclick="startGame()">다시 도전</button>
       <button class="btn-home"  onclick="showStart()">홈으로</button>
     </div>
-    <p class="result-footer">UNODIYA · uno-jp.tistory.com</p>
+    <p class="result-footer">UNO_DEYA · uno-jp.tistory.com</p>
   </div>
 </div>
 
@@ -632,13 +632,13 @@ function shareResult() {
   const rank = RANKS.find(function(r) { return score >= r.min; }) || RANKS[RANKS.length-1];
   const rangeLabel = selectedRange === 'all' ? '전체' : '#' + selectedRange.replace('-','~');
   const modeLabel = selectedMode === 'reading' ? '読み 맞추기' : '뜻 맞추기';
-  const text = '🎌 UNODIYA N2 스피드퀴즈\n' + rank.emoji + ' ' + rank.label +
+  const text = '🎌 UNO_DEYA N2 스피드퀴즈\n' + rank.emoji + ' ' + rank.label +
     '\n━━━━━━━━━━━\n📚 범위: ' + rangeLabel + ' · ' + modeLabel +
     '\n🎯 점수: ' + score + '점\n✅ 정답: ' + correctCount + '/' + QC +
     '\n🔥 최대콤보: x' + maxCombo +
     '\n━━━━━━━━━━━\n👉 bwh1004-dotcom.github.io/unodiya-quiz/';
   if (navigator.share) {
-    navigator.share({ title: 'UNODIYA N2 퀴즈 결과', text: text });
+    navigator.share({ title: 'UNO_DEYA N2 퀴즈 결과', text: text });
   } else if (navigator.clipboard) {
     navigator.clipboard.writeText(text).then(function() {
       alert('결과가 복사됐어요! 붙여넣기해서 공유하세요 😄');
