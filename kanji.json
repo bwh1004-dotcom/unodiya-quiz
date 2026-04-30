@@ -1,0 +1,2330 @@
+{
+  "total_words": 620,
+  "levels": {
+    "1": {
+      "radicals": [
+        {
+          "char": "亻",
+          "name": "にんべん",
+          "korean": "사람인변",
+          "color": "#4a7fe8",
+          "radical_meaning": "사람·인간"
+        },
+        {
+          "char": "扌",
+          "name": "てへん",
+          "korean": "손수변",
+          "color": "#e85a4a",
+          "radical_meaning": "손·행동"
+        }
+      ],
+      "kanji": [
+        {
+          "char": "休",
+          "radical": "亻",
+          "component": "木",
+          "meaning": "휴가",
+          "word": "休暇",
+          "word_reading": "きゅうか",
+          "word_meaning": "휴가"
+        },
+        {
+          "char": "備",
+          "radical": "亻",
+          "component": "用",
+          "meaning": "준비",
+          "word": "準備",
+          "word_reading": "じゅんび",
+          "word_meaning": "준비"
+        },
+        {
+          "char": "保",
+          "radical": "亻",
+          "component": "口",
+          "meaning": "보관",
+          "word": "保管",
+          "word_reading": "ほかん",
+          "word_meaning": "보관"
+        },
+        {
+          "char": "似",
+          "radical": "亻",
+          "component": "人",
+          "meaning": "닮다",
+          "word": "似る",
+          "word_reading": "にる",
+          "word_meaning": "닮다"
+        },
+        {
+          "char": "付",
+          "radical": "亻",
+          "component": "寸",
+          "meaning": "사귀다",
+          "word": "付き合う",
+          "word_reading": "つきあう",
+          "word_meaning": "사귀다"
+        },
+        {
+          "char": "例",
+          "radical": "亻",
+          "component": "刂",
+          "meaning": "예외",
+          "word": "例外",
+          "word_reading": "れいがい",
+          "word_meaning": "예외"
+        },
+        {
+          "char": "儀",
+          "radical": "亻",
+          "component": "義",
+          "meaning": "예의, 예절",
+          "word": "礼儀",
+          "word_reading": "れいぎ",
+          "word_meaning": "예의, 예절"
+        },
+        {
+          "char": "働",
+          "radical": "亻",
+          "component": "動",
+          "meaning": "맞벌이",
+          "word": "共働き",
+          "word_reading": "ともばたらき",
+          "word_meaning": "맞벌이"
+        },
+        {
+          "char": "伸",
+          "radical": "亻",
+          "component": "申",
+          "meaning": "(손·도움을) 내밀다, 뻗다",
+          "word": "差し伸べる",
+          "word_reading": "さしのべる",
+          "word_meaning": "(손·도움을) 내밀다, 뻗다"
+        },
+        {
+          "char": "仕",
+          "radical": "亻",
+          "component": "士",
+          "meaning": "어쩔 수 없다, 방법이 없다",
+          "word": "仕方ない",
+          "word_reading": "しかたない",
+          "word_meaning": "어쩔 수 없다, 방법이 없다"
+        },
+        {
+          "char": "代",
+          "radical": "亻",
+          "component": "弋",
+          "meaning": "교체, 번갈아 바꿈",
+          "word": "交代",
+          "word_reading": "こうたい",
+          "word_meaning": "교체, 번갈아 바꿈"
+        },
+        {
+          "char": "任",
+          "radical": "亻",
+          "component": "壬",
+          "meaning": "자임, 자신이 적임자라고 자부함",
+          "word": "自任",
+          "word_reading": "じにん",
+          "word_meaning": "자임, 자신이 적임자라고 자부함"
+        },
+        {
+          "char": "使",
+          "radical": "亻",
+          "component": "吏",
+          "meaning": "1회용, 한번 쓰고 버림",
+          "word": "使い捨て",
+          "word_reading": "つかいすて",
+          "word_meaning": "1회용, 한번 쓰고 버림"
+        },
+        {
+          "char": "傷",
+          "radical": "亻",
+          "component": "昜",
+          "meaning": "상처받다, 다치다",
+          "word": "傷つく",
+          "word_reading": "きずつく",
+          "word_meaning": "상처받다, 다치다"
+        },
+        {
+          "char": "倒",
+          "radical": "亻",
+          "component": "刂",
+          "meaning": "귀찮음, 번거로움, 돌봄",
+          "word": "面倒",
+          "word_reading": "めんどう",
+          "word_meaning": "귀찮음, 번거로움, 돌봄"
+        },
+        {
+          "char": "住",
+          "radical": "亻",
+          "component": "王",
+          "meaning": "정들면 고향, 어디서든 살다 보면 정이 든다",
+          "word": "住めば都",
+          "word_reading": "すめばみやこ",
+          "word_meaning": "정들면 고향, 어디서든 살다 보면 정이 든다"
+        },
+        {
+          "char": "作",
+          "radical": "亻",
+          "component": "乍",
+          "meaning": "작업, 일을 함",
+          "word": "作業",
+          "word_reading": "さぎょう",
+          "word_meaning": "작업, 일을 함"
+        },
+        {
+          "char": "低",
+          "radical": "亻",
+          "component": "氏",
+          "meaning": "저하, 수준·능력이 낮아짐",
+          "word": "低下",
+          "word_reading": "ていか",
+          "word_meaning": "저하, 수준·능력이 낮아짐"
+        },
+        {
+          "char": "値",
+          "radical": "亻",
+          "component": "十",
+          "meaning": "가치, 값어치",
+          "word": "値打ち",
+          "word_reading": "ねうち",
+          "word_meaning": "가치, 값어치"
+        },
+        {
+          "char": "揮",
+          "radical": "扌",
+          "component": "車",
+          "meaning": "발휘",
+          "word": "発揮",
+          "word_reading": "はっき",
+          "word_meaning": "발휘"
+        },
+        {
+          "char": "推",
+          "radical": "扌",
+          "component": "隹",
+          "meaning": "추천·권장",
+          "word": "推奨",
+          "word_reading": "すいしょう",
+          "word_meaning": "추천·권장"
+        },
+        {
+          "char": "操",
+          "radical": "扌",
+          "component": "口",
+          "meaning": "조종",
+          "word": "操縦",
+          "word_reading": "そうじゅう",
+          "word_meaning": "조종"
+        },
+        {
+          "char": "搬",
+          "radical": "扌",
+          "component": "舟",
+          "meaning": "반송·이송",
+          "word": "搬送",
+          "word_reading": "はんそう",
+          "word_meaning": "반송·이송"
+        },
+        {
+          "char": "扱",
+          "radical": "扌",
+          "component": "及",
+          "meaning": "취급",
+          "word": "取り扱い",
+          "word_reading": "とりあつかい",
+          "word_meaning": "취급"
+        },
+        {
+          "char": "控",
+          "radical": "扌",
+          "component": "穴",
+          "meaning": "줄임·절제",
+          "word": "控え目",
+          "word_reading": "ひかえめ",
+          "word_meaning": "줄임·절제"
+        },
+        {
+          "char": "持",
+          "radical": "扌",
+          "component": "寸",
+          "meaning": "화제지속",
+          "word": "持ちきり",
+          "word_reading": "もちきり",
+          "word_meaning": "화제지속"
+        },
+        {
+          "char": "押",
+          "radical": "扌",
+          "component": "甲",
+          "meaning": "밀다·누르다",
+          "word": "押す",
+          "word_reading": "おす",
+          "word_meaning": "밀다·누르다"
+        },
+        {
+          "char": "抜",
+          "radical": "扌",
+          "component": "夂",
+          "meaning": "정신이 팔리다",
+          "word": "現を抜かす",
+          "word_reading": "うつつをぬかす",
+          "word_meaning": "정신이 팔리다"
+        },
+        {
+          "char": "接",
+          "radical": "扌",
+          "component": "女",
+          "meaning": "접근, 가까이 다가감",
+          "word": "接近",
+          "word_reading": "せっきん",
+          "word_meaning": "접근, 가까이 다가감"
+        },
+        {
+          "char": "指",
+          "radical": "扌",
+          "component": "日",
+          "meaning": "굴지, 손꼽힘",
+          "word": "屈指",
+          "word_reading": "くっし",
+          "word_meaning": "굴지, 손꼽힘"
+        },
+        {
+          "char": "技",
+          "radical": "扌",
+          "component": "支",
+          "meaning": "기술, 솜씨, 기예",
+          "word": "技",
+          "word_reading": "わざ",
+          "word_meaning": "기술, 솜씨, 기예"
+        },
+        {
+          "char": "折",
+          "radical": "扌",
+          "component": "斤",
+          "meaning": "꺾다, 접다, 부러뜨리다",
+          "word": "折る",
+          "word_reading": "おる",
+          "word_meaning": "꺾다, 접다, 부러뜨리다"
+        },
+        {
+          "char": "抱",
+          "radical": "扌",
+          "component": "勹",
+          "meaning": "(쓰러지지 않도록) 끌어안다, 붙들어 안다",
+          "word": "抱きかかえる",
+          "word_reading": "だきかかえる",
+          "word_meaning": "(쓰러지지 않도록) 끌어안다, 붙들어 안다"
+        },
+        {
+          "char": "摘",
+          "radical": "扌",
+          "component": "口",
+          "meaning": "여우에 홀리다, 영문을 모르다",
+          "word": "狐に摘まれる",
+          "word_reading": "きつねにつままれる",
+          "word_meaning": "여우에 홀리다, 영문을 모르다"
+        },
+        {
+          "char": "担",
+          "radical": "扌",
+          "component": "旦",
+          "meaning": "부담, 짐을 짊어짐",
+          "word": "負担",
+          "word_reading": "ふたん",
+          "word_meaning": "부담, 짐을 짊어짐"
+        },
+        {
+          "char": "捨",
+          "radical": "扌",
+          "component": "口",
+          "meaning": "1회용, 한번 쓰고 버림",
+          "word": "使い捨て",
+          "word_reading": "つかいすて",
+          "word_meaning": "1회용, 한번 쓰고 버림"
+        },
+        {
+          "char": "掻",
+          "radical": "扌",
+          "component": "虫",
+          "meaning": "긁다, 긁어내다",
+          "word": "掻く",
+          "word_reading": "かく",
+          "word_meaning": "긁다, 긁어내다"
+        },
+        {
+          "char": "挟",
+          "radical": "扌",
+          "component": "人",
+          "meaning": "사이에 두다, 끼우다",
+          "word": "挟む",
+          "word_reading": "はさむ",
+          "word_meaning": "사이에 두다, 끼우다"
+        },
+        {
+          "char": "打",
+          "radical": "扌",
+          "component": "丁",
+          "meaning": "털어놓다, 솔직하게 말하다",
+          "word": "打ち明ける",
+          "word_reading": "うちあける",
+          "word_meaning": "털어놓다, 솔직하게 말하다"
+        },
+        {
+          "char": "掘",
+          "radical": "扌",
+          "component": "屈",
+          "meaning": "제 무덤을 파다, 스스로 파멸을 초래하다",
+          "word": "墓穴を掘る",
+          "word_reading": "ぼけつをほる",
+          "word_meaning": "제 무덤을 파다, 스스로 파멸을 초래하다"
+        },
+        {
+          "char": "拠",
+          "radical": "扌",
+          "component": "几",
+          "meaning": "근거, 판단의 바탕이 되는 이유",
+          "word": "根拠",
+          "word_reading": "こんきょ",
+          "word_meaning": "근거, 판단의 바탕이 되는 이유"
+        },
+        {
+          "char": "払",
+          "radical": "扌",
+          "component": "厶",
+          "meaning": "선불 배송료, 발송인이 요금을 부담함",
+          "word": "元払い",
+          "word_reading": "もとばらい",
+          "word_meaning": "선불 배송료, 발송인이 요금을 부담함"
+        },
+        {
+          "char": "拭",
+          "radical": "扌",
+          "component": "式",
+          "meaning": "닦다",
+          "word": "拭う",
+          "word_reading": "ぬぐう",
+          "word_meaning": "닦다, 닦아내다, 씻어내다"
+        },
+        {
+          "char": "投",
+          "radical": "扌",
+          "component": "殳",
+          "meaning": "의기투합, 서로 마음이 딱 맞음",
+          "word": "意気投合",
+          "word_reading": "いきとうごう",
+          "word_meaning": "의기투합, 서로 마음이 딱 맞음"
+        },
+        {
+          "char": "件",
+          "radical": "亻",
+          "component": "牛",
+          "meaning": "용건, 볼일, 용무",
+          "word": "用件",
+          "word_reading": "ようけん",
+          "word_meaning": "용건, 볼일, 용무"
+        },
+        {
+          "char": "信",
+          "radical": "亻",
+          "component": "言",
+          "meaning": "신빙성, 믿을 만한 정도",
+          "word": "信憑性",
+          "word_reading": "しんぴょうせい",
+          "word_meaning": "신빙성, 믿을 만한 정도"
+        },
+        {
+          "char": "他",
+          "radical": "亻",
+          "component": "也",
+          "meaning": "(비밀을) 타인에게 말함, 누설",
+          "word": "他言",
+          "word_reading": "たごん",
+          "word_meaning": "(비밀을) 타인에게 말함, 누설"
+        },
+        {
+          "char": "掛",
+          "radical": "扌",
+          "component": "圭",
+          "meaning": "기대어 세워놓다",
+          "word": "立て掛ける",
+          "word_reading": "たてかける",
+          "word_meaning": "기대어 세워놓다"
+        },
+        {
+          "char": "何",
+          "radical": "亻",
+          "component": "口",
+          "meaning": "무심한 듯하다, 아무렇지 않다, 자연스럽다",
+          "word": "何気ない",
+          "word_reading": "なにげない",
+          "word_meaning": "무심한 듯하다, 아무렇지 않다, 자연스럽다"
+        },
+        {
+          "char": "体",
+          "radical": "亻",
+          "component": "木",
+          "meaning": "일심동체, 마음과 몸이 하나",
+          "word": "一心同体",
+          "word_reading": "いっしんどうたい",
+          "word_meaning": "일심동체, 마음과 몸이 하나"
+        },
+        {
+          "char": "符",
+          "radical": "亻",
+          "component": "寸",
+          "meaning": "물음표, 의문부호(?)",
+          "word": "疑問符",
+          "word_reading": "ぎもんふ",
+          "word_meaning": "물음표, 의문부호(?)"
+        },
+        {
+          "char": "侮",
+          "radical": "亻",
+          "component": "每",
+          "meaning": "모멸, 업신여김, 경멸",
+          "word": "侮蔑",
+          "word_reading": "ぶべつ",
+          "word_meaning": "모멸, 업신여김, 경멸"
+        },
+        {
+          "char": "傾",
+          "radical": "亻",
+          "component": "頃",
+          "meaning": "기울다, 기울어지다, 쏠리다",
+          "word": "傾く",
+          "word_reading": "かたむく",
+          "word_meaning": "기울다, 기울어지다, 쏠리다"
+        }
+      ]
+    },
+    "2": {
+      "radicals": [
+        {
+          "char": "言",
+          "name": "ごんべん",
+          "korean": "말씀언변",
+          "color": "#7b5ea7",
+          "radical_meaning": "말·언어"
+        },
+        {
+          "char": "忄",
+          "name": "こころ",
+          "korean": "마음심변",
+          "color": "#c4556a",
+          "radical_meaning": "마음·감정"
+        }
+      ],
+      "kanji": [
+        {
+          "char": "認",
+          "radical": "言",
+          "component": "心",
+          "meaning": "확인",
+          "word": "確認",
+          "word_reading": "かくにん",
+          "word_meaning": "확인"
+        },
+        {
+          "char": "説",
+          "radical": "言",
+          "component": "口",
+          "meaning": "설득",
+          "word": "説得",
+          "word_reading": "せっとく",
+          "word_meaning": "설득"
+        },
+        {
+          "char": "設",
+          "radical": "言",
+          "component": "殳",
+          "meaning": "설립",
+          "word": "設立",
+          "word_reading": "せつりつ",
+          "word_meaning": "설립"
+        },
+        {
+          "char": "話",
+          "radical": "言",
+          "component": "口",
+          "meaning": "대화",
+          "word": "対話",
+          "word_reading": "たいわ",
+          "word_meaning": "대화"
+        },
+        {
+          "char": "語",
+          "radical": "言",
+          "component": "吾",
+          "meaning": "이야기",
+          "word": "物語",
+          "word_reading": "ものがたり",
+          "word_meaning": "이야기"
+        },
+        {
+          "char": "謝",
+          "radical": "言",
+          "component": "身",
+          "meaning": "감사",
+          "word": "感謝",
+          "word_reading": "かんしゃ",
+          "word_meaning": "감사"
+        },
+        {
+          "char": "誤",
+          "radical": "言",
+          "component": "口",
+          "meaning": "오해",
+          "word": "誤解",
+          "word_reading": "ごかい",
+          "word_meaning": "오해"
+        },
+        {
+          "char": "識",
+          "radical": "言",
+          "component": "音",
+          "meaning": "인식, 알아봄, 이해",
+          "word": "認識",
+          "word_reading": "にんしき",
+          "word_meaning": "인식, 알아봄, 이해"
+        },
+        {
+          "char": "訪",
+          "radical": "言",
+          "component": "方",
+          "meaning": "방문, 찾아감",
+          "word": "訪問",
+          "word_reading": "ほうもん",
+          "word_meaning": "방문, 찾아감"
+        },
+        {
+          "char": "訳",
+          "radical": "言",
+          "component": "尸",
+          "meaning": "죄송합니다, 면목 없다",
+          "word": "申し訳ない",
+          "word_reading": "もうしわけない",
+          "word_meaning": "죄송합니다, 면목 없다"
+        },
+        {
+          "char": "計",
+          "radical": "言",
+          "component": "十",
+          "meaning": "쓸데없음, 불필요함",
+          "word": "余計",
+          "word_reading": "よけい",
+          "word_meaning": "쓸데없음, 불필요함"
+        },
+        {
+          "char": "証",
+          "radical": "言",
+          "component": "正",
+          "meaning": "증명, 사실임을 밝힘",
+          "word": "証明",
+          "word_reading": "しょうめい",
+          "word_meaning": "증명, 사실임을 밝힘"
+        },
+        {
+          "char": "言",
+          "radical": "言",
+          "component": "曰",
+          "meaning": "명언, 분명하게 말함 (유명한 말 아님)",
+          "word": "明言",
+          "word_reading": "めいげん",
+          "word_meaning": "명언, 분명하게 말함 (유명한 말 아님)"
+        },
+        {
+          "char": "調",
+          "radical": "言",
+          "component": "口",
+          "meaning": "강조, 두드러지게 나타냄",
+          "word": "強調",
+          "word_reading": "きょうちょう",
+          "word_meaning": "강조, 두드러지게 나타냄"
+        },
+        {
+          "char": "警",
+          "radical": "言",
+          "component": "口",
+          "meaning": "경고, 위험을 미리 알림",
+          "word": "警告",
+          "word_reading": "けいこく",
+          "word_meaning": "경고, 위험을 미리 알림"
+        },
+        {
+          "char": "情",
+          "radical": "忄",
+          "component": "月",
+          "meaning": "표정",
+          "word": "表情",
+          "word_reading": "ひょうじょう",
+          "word_meaning": "표정"
+        },
+        {
+          "char": "慣",
+          "radical": "忄",
+          "component": "貝",
+          "meaning": "익숙해지다",
+          "word": "慣れる",
+          "word_reading": "なれる",
+          "word_meaning": "익숙해지다"
+        },
+        {
+          "char": "悔",
+          "radical": "忄",
+          "component": "母",
+          "meaning": "분하다·억울하다",
+          "word": "悔しい",
+          "word_reading": "くやしい",
+          "word_meaning": "분하다·억울하다"
+        },
+        {
+          "char": "懐",
+          "radical": "忄",
+          "component": "衣",
+          "meaning": "그립다",
+          "word": "懐かしい",
+          "word_reading": "なつかしい",
+          "word_meaning": "그립다"
+        },
+        {
+          "char": "恨",
+          "radical": "忄",
+          "component": "艮",
+          "meaning": "원한을 풀다",
+          "word": "恨みを晴らす",
+          "word_reading": "うらみをはらす",
+          "word_meaning": "원한을 풀다"
+        },
+        {
+          "char": "悦",
+          "radical": "忄",
+          "component": "口",
+          "meaning": "흡족해하다",
+          "word": "悦に入る",
+          "word_reading": "えつにいる",
+          "word_meaning": "흡족해하다"
+        },
+        {
+          "char": "愕",
+          "radical": "忄",
+          "component": "口",
+          "meaning": "경악, 몹시 놀람",
+          "word": "驚愕",
+          "word_reading": "きょうがく",
+          "word_meaning": "경악, 몹시 놀람"
+        },
+        {
+          "char": "慌",
+          "radical": "忄",
+          "component": "川",
+          "meaning": "허둥대다, 당황하다",
+          "word": "慌てる",
+          "word_reading": "あわてる",
+          "word_meaning": "허둥대다, 당황하다"
+        },
+        {
+          "char": "憎",
+          "radical": "忄",
+          "component": "田",
+          "meaning": "미워하다, 증오하다",
+          "word": "憎む",
+          "word_reading": "にくむ",
+          "word_meaning": "미워하다, 증오하다"
+        },
+        {
+          "char": "愉",
+          "radical": "忄",
+          "component": "刂",
+          "meaning": "불쾌함, 기분 나쁨",
+          "word": "不愉快",
+          "word_reading": "ふゆかい",
+          "word_meaning": "불쾌함, 기분 나쁨"
+        },
+        {
+          "char": "快",
+          "radical": "忄",
+          "component": "人",
+          "meaning": "불쾌함, 기분 나쁨",
+          "word": "不愉快",
+          "word_reading": "ふゆかい",
+          "word_meaning": "불쾌함, 기분 나쁨"
+        },
+        {
+          "char": "慄",
+          "radical": "忄",
+          "component": "西",
+          "meaning": "전율, 두려움으로 몸이 떨림",
+          "word": "戦慄",
+          "word_reading": "せんりつ",
+          "word_meaning": "전율, 두려움으로 몸이 떨림"
+        },
+        {
+          "char": "講",
+          "radical": "言",
+          "component": "冂",
+          "meaning": "강의, 학문을 가르침",
+          "word": "講義",
+          "word_reading": "こうぎ",
+          "word_meaning": "강의, 학문을 가르침"
+        },
+        {
+          "char": "論",
+          "radical": "言",
+          "component": "｜",
+          "meaning": "언쟁, 말다툼",
+          "word": "口論",
+          "word_reading": "こうろん",
+          "word_meaning": "언쟁, 말다툼"
+        },
+        {
+          "char": "誇",
+          "radical": "言",
+          "component": "大",
+          "meaning": "과장, 사실보다 크게 부풀림",
+          "word": "誇張",
+          "word_reading": "こちょう",
+          "word_meaning": "과장, 사실보다 크게 부풀림"
+        },
+        {
+          "char": "性",
+          "radical": "忄",
+          "component": "生",
+          "meaning": "본성, 출신, 신원",
+          "word": "素性",
+          "word_reading": "すじょう",
+          "word_meaning": "본성, 출신, 신원"
+        },
+        {
+          "char": "謬",
+          "radical": "言",
+          "component": "翏",
+          "meaning": "오류, 잘못된 판단·추론",
+          "word": "誤謬",
+          "word_reading": "ごびゅう",
+          "word_meaning": "오류, 잘못된 판단·추론"
+        },
+        {
+          "char": "謎",
+          "radical": "言",
+          "component": "辶",
+          "meaning": "수수께끼, 미스터리, 불가사의",
+          "word": "謎",
+          "word_reading": "なぞ",
+          "word_meaning": "수수께끼, 미스터리, 불가사의"
+        },
+        {
+          "char": "誘",
+          "radical": "言",
+          "component": "秀",
+          "meaning": "(함께하자고) 권하다, 유혹하다, 불러내다",
+          "word": "誘う",
+          "word_reading": "さそう",
+          "word_meaning": "(함께하자고) 권하다, 유혹하다, 불러내다"
+        }
+      ]
+    },
+    "3": {
+      "radicals": [
+        {
+          "char": "氵",
+          "name": "さんずい",
+          "korean": "삼수변",
+          "color": "#4A90D9",
+          "radical_meaning": "물·액체"
+        },
+        {
+          "char": "糸",
+          "name": "いとへん",
+          "korean": "실사변",
+          "color": "#38A89D",
+          "radical_meaning": "실·연결"
+        }
+      ],
+      "kanji": [
+        {
+          "char": "準",
+          "radical": "氵",
+          "component": "十",
+          "meaning": "준비",
+          "word": "準備",
+          "word_reading": "じゅんび",
+          "word_meaning": "준비"
+        },
+        {
+          "char": "洪",
+          "radical": "氵",
+          "component": "共",
+          "meaning": "홍수",
+          "word": "洪水",
+          "word_reading": "こうずい",
+          "word_meaning": "홍수"
+        },
+        {
+          "char": "泡",
+          "radical": "氵",
+          "component": "勹",
+          "meaning": "질겁하다, 크게 당황하다",
+          "word": "泡を食う",
+          "word_reading": "あわをくう",
+          "word_meaning": "질겁하다, 크게 당황하다"
+        },
+        {
+          "char": "沸",
+          "radical": "氵",
+          "component": "弗",
+          "meaning": "비등, 물 등이 끓음, 열기가 고조됨",
+          "word": "沸騰",
+          "word_reading": "ふっとう",
+          "word_meaning": "비등, 물 등이 끓음, 열기가 고조됨"
+        },
+        {
+          "char": "渇",
+          "radical": "氵",
+          "component": "日",
+          "meaning": "(목이) 마르다, 갈증이 나다",
+          "word": "渇く",
+          "word_reading": "かわく",
+          "word_meaning": "(목이) 마르다, 갈증이 나다"
+        },
+        {
+          "char": "混",
+          "radical": "氵",
+          "component": "日",
+          "meaning": "한데 뒤섞이다, 뒤엉키다",
+          "word": "入り混じる",
+          "word_reading": "いりまじる",
+          "word_meaning": "한데 뒤섞이다, 뒤엉키다"
+        },
+        {
+          "char": "深",
+          "radical": "氵",
+          "component": "木",
+          "meaning": "의미심장, 뜻이 깊고 함축적임",
+          "word": "意味深長",
+          "word_reading": "いみしんちょう",
+          "word_meaning": "의미심장, 뜻이 깊고 함축적임"
+        },
+        {
+          "char": "減",
+          "radical": "氵",
+          "component": "口",
+          "meaning": "감량, 무게·양을 줄임",
+          "word": "減量",
+          "word_reading": "げんりょう",
+          "word_meaning": "감량, 무게·양을 줄임"
+        },
+        {
+          "char": "測",
+          "radical": "氵",
+          "component": "貝",
+          "meaning": "측정, 길이·무게 등을 재어 수치화함",
+          "word": "測定",
+          "word_reading": "そくてい",
+          "word_meaning": "측정, 길이·무게 등을 재어 수치화함"
+        },
+        {
+          "char": "泣",
+          "radical": "氵",
+          "component": "立",
+          "meaning": "소리 내어 욺, 통곡",
+          "word": "号泣",
+          "word_reading": "ごうきゅう",
+          "word_meaning": "소리 내어 욺, 통곡"
+        },
+        {
+          "char": "経",
+          "radical": "糸",
+          "component": "巠",
+          "meaning": "경험",
+          "word": "経験",
+          "word_reading": "けいけん",
+          "word_meaning": "경험"
+        },
+        {
+          "char": "終",
+          "radical": "糸",
+          "component": "冬",
+          "meaning": "종료",
+          "word": "終了",
+          "word_reading": "しゅうりょう",
+          "word_meaning": "종료"
+        },
+        {
+          "char": "縦",
+          "radical": "糸",
+          "component": "從",
+          "meaning": "조종",
+          "word": "操縦",
+          "word_reading": "そうじゅう",
+          "word_meaning": "조종"
+        },
+        {
+          "char": "続",
+          "radical": "糸",
+          "component": "士",
+          "meaning": "절차·수속",
+          "word": "手続き",
+          "word_reading": "てつづき",
+          "word_meaning": "절차·수속"
+        },
+        {
+          "char": "細",
+          "radical": "糸",
+          "component": "田",
+          "meaning": "세심하다·꼼꼼하다",
+          "word": "細かい",
+          "word_reading": "こまかい",
+          "word_meaning": "세심하다·꼼꼼하다"
+        },
+        {
+          "char": "素",
+          "radical": "糸",
+          "component": "丿",
+          "meaning": "간소함",
+          "word": "簡素",
+          "word_reading": "かんそ",
+          "word_meaning": "간소함"
+        },
+        {
+          "char": "緊",
+          "radical": "糸",
+          "component": "堅",
+          "meaning": "긴밀함",
+          "word": "緊密",
+          "word_reading": "きんみつ",
+          "word_meaning": "긴밀함"
+        },
+        {
+          "char": "紹",
+          "radical": "糸",
+          "component": "口",
+          "meaning": "소개",
+          "word": "紹介",
+          "word_reading": "しょうかい",
+          "word_meaning": "소개"
+        },
+        {
+          "char": "締",
+          "radical": "糸",
+          "component": "巾",
+          "meaning": "(더욱 밀착되도록) 꽉 껴안다",
+          "word": "抱き締める",
+          "word_reading": "だきしめる",
+          "word_meaning": "(더욱 밀착되도록) 꽉 껴안다"
+        },
+        {
+          "char": "約",
+          "radical": "糸",
+          "component": "勺",
+          "meaning": "약혼, 결혼을 약속함",
+          "word": "婚約",
+          "word_reading": "こんやく",
+          "word_meaning": "약혼, 결혼을 약속함"
+        },
+        {
+          "char": "織",
+          "radical": "糸",
+          "component": "音",
+          "meaning": "직물, 짜서 만든 천·옷감",
+          "word": "織物",
+          "word_reading": "おりもの",
+          "word_meaning": "직물, 짜서 만든 천·옷감"
+        },
+        {
+          "char": "縛",
+          "radical": "糸",
+          "component": "尃",
+          "meaning": "묶다, 얽매다",
+          "word": "縛る",
+          "word_reading": "しばる",
+          "word_meaning": "묶다, 얽매다"
+        },
+        {
+          "char": "純",
+          "radical": "糸",
+          "component": "屯",
+          "meaning": "순수함, 불순물이 없음",
+          "word": "純粋",
+          "word_reading": "じゅんすい",
+          "word_meaning": "순수함, 불순물이 없음"
+        },
+        {
+          "char": "編",
+          "radical": "糸",
+          "component": "扁",
+          "meaning": "속편, 이어지는 편",
+          "word": "続編",
+          "word_reading": "ぞくへん",
+          "word_meaning": "속편, 이어지는 편"
+        },
+        {
+          "char": "消",
+          "radical": "氵",
+          "component": "月",
+          "meaning": "취소하다, 철회하다",
+          "word": "取り消す",
+          "word_reading": "とりけす",
+          "word_meaning": "취소하다, 철회하다"
+        },
+        {
+          "char": "活",
+          "radical": "氵",
+          "component": "ノ",
+          "meaning": "활기, 생기, 힘차고 활발한 기운",
+          "word": "活気",
+          "word_reading": "かっき",
+          "word_meaning": "활기, 생기, 힘차고 활발한 기운"
+        },
+        {
+          "char": "染",
+          "radical": "氵",
+          "component": "九",
+          "meaning": "얼룩, 때, 기미",
+          "word": "染み",
+          "word_reading": "しみ",
+          "word_meaning": "얼룩, 때, 기미"
+        },
+        {
+          "char": "泥",
+          "radical": "氵",
+          "component": "匕",
+          "meaning": "진흙, 흙탕물",
+          "word": "泥",
+          "word_reading": "どろ",
+          "word_meaning": "진흙, 흙탕물"
+        },
+        {
+          "char": "繋",
+          "radical": "糸",
+          "component": "系",
+          "meaning": "연결하다, 잇다, 묶다",
+          "word": "繋ぐ",
+          "word_reading": "つなぐ",
+          "word_meaning": "연결하다, 잇다, 묶다"
+        },
+        {
+          "char": "潮",
+          "radical": "氵",
+          "component": "朝",
+          "meaning": "퇴조, 기운·세력이 약해짐",
+          "word": "退潮",
+          "word_reading": "たいちょう",
+          "word_meaning": "퇴조, 기운·세력이 약해짐"
+        },
+        {
+          "char": "緒",
+          "radical": "糸",
+          "component": "者",
+          "meaning": "유서, 옛날부터 전해 내려오는 내력",
+          "word": "由緒",
+          "word_reading": "ゆいしょ",
+          "word_meaning": "유서, 옛날부터 전해 내려오는 내력"
+        },
+        {
+          "char": "源",
+          "radical": "氵",
+          "component": "小",
+          "meaning": "원천, 근원, 시작점",
+          "word": "源",
+          "word_reading": "みなもと",
+          "word_meaning": "원천, 근원, 시작점"
+        },
+        {
+          "char": "潰",
+          "radical": "氵",
+          "component": "貝",
+          "meaning": "으깨다, 눌러 부수다",
+          "word": "押し潰す",
+          "word_reading": "おしつぶす",
+          "word_meaning": "으깨다, 눌러 부수다"
+        }
+      ]
+    },
+    "4": {
+      "radicals": [
+        {
+          "char": "亻",
+          "name": "にんべん",
+          "korean": "사람인변",
+          "color": "#4a7fe8",
+          "radical_meaning": "사람·인간"
+        },
+        {
+          "char": "言",
+          "name": "ごんべん",
+          "korean": "말씀언변",
+          "color": "#7b5ea7",
+          "radical_meaning": "말·언어"
+        }
+      ],
+      "kanji": [
+        {
+          "char": "休",
+          "radical": "亻",
+          "component": "木",
+          "meaning": "휴가",
+          "word": "休暇",
+          "word_reading": "きゅうか",
+          "word_meaning": "휴가"
+        },
+        {
+          "char": "備",
+          "radical": "亻",
+          "component": "用",
+          "meaning": "준비",
+          "word": "準備",
+          "word_reading": "じゅんび",
+          "word_meaning": "준비"
+        },
+        {
+          "char": "保",
+          "radical": "亻",
+          "component": "口",
+          "meaning": "보관",
+          "word": "保管",
+          "word_reading": "ほかん",
+          "word_meaning": "보관"
+        },
+        {
+          "char": "似",
+          "radical": "亻",
+          "component": "人",
+          "meaning": "닮다",
+          "word": "似る",
+          "word_reading": "にる",
+          "word_meaning": "닮다"
+        },
+        {
+          "char": "付",
+          "radical": "亻",
+          "component": "寸",
+          "meaning": "사귀다",
+          "word": "付き合う",
+          "word_reading": "つきあう",
+          "word_meaning": "사귀다"
+        },
+        {
+          "char": "例",
+          "radical": "亻",
+          "component": "刂",
+          "meaning": "예외",
+          "word": "例外",
+          "word_reading": "れいがい",
+          "word_meaning": "예외"
+        },
+        {
+          "char": "儀",
+          "radical": "亻",
+          "component": "義",
+          "meaning": "예의, 예절",
+          "word": "礼儀",
+          "word_reading": "れいぎ",
+          "word_meaning": "예의, 예절"
+        },
+        {
+          "char": "働",
+          "radical": "亻",
+          "component": "動",
+          "meaning": "맞벌이",
+          "word": "共働き",
+          "word_reading": "ともばたらき",
+          "word_meaning": "맞벌이"
+        },
+        {
+          "char": "伸",
+          "radical": "亻",
+          "component": "申",
+          "meaning": "(손·도움을) 내밀다, 뻗다",
+          "word": "差し伸べる",
+          "word_reading": "さしのべる",
+          "word_meaning": "(손·도움을) 내밀다, 뻗다"
+        },
+        {
+          "char": "仕",
+          "radical": "亻",
+          "component": "士",
+          "meaning": "어쩔 수 없다, 방법이 없다",
+          "word": "仕方ない",
+          "word_reading": "しかたない",
+          "word_meaning": "어쩔 수 없다, 방법이 없다"
+        },
+        {
+          "char": "代",
+          "radical": "亻",
+          "component": "弋",
+          "meaning": "교체, 번갈아 바꿈",
+          "word": "交代",
+          "word_reading": "こうたい",
+          "word_meaning": "교체, 번갈아 바꿈"
+        },
+        {
+          "char": "任",
+          "radical": "亻",
+          "component": "壬",
+          "meaning": "자임, 자신이 적임자라고 자부함",
+          "word": "自任",
+          "word_reading": "じにん",
+          "word_meaning": "자임, 자신이 적임자라고 자부함"
+        },
+        {
+          "char": "使",
+          "radical": "亻",
+          "component": "吏",
+          "meaning": "1회용, 한번 쓰고 버림",
+          "word": "使い捨て",
+          "word_reading": "つかいすて",
+          "word_meaning": "1회용, 한번 쓰고 버림"
+        },
+        {
+          "char": "傷",
+          "radical": "亻",
+          "component": "昜",
+          "meaning": "상처받다, 다치다",
+          "word": "傷つく",
+          "word_reading": "きずつく",
+          "word_meaning": "상처받다, 다치다"
+        },
+        {
+          "char": "倒",
+          "radical": "亻",
+          "component": "刂",
+          "meaning": "귀찮음, 번거로움, 돌봄",
+          "word": "面倒",
+          "word_reading": "めんどう",
+          "word_meaning": "귀찮음, 번거로움, 돌봄"
+        },
+        {
+          "char": "住",
+          "radical": "亻",
+          "component": "王",
+          "meaning": "정들면 고향, 어디서든 살다 보면 정이 든다",
+          "word": "住めば都",
+          "word_reading": "すめばみやこ",
+          "word_meaning": "정들면 고향, 어디서든 살다 보면 정이 든다"
+        },
+        {
+          "char": "作",
+          "radical": "亻",
+          "component": "乍",
+          "meaning": "작업, 일을 함",
+          "word": "作業",
+          "word_reading": "さぎょう",
+          "word_meaning": "작업, 일을 함"
+        },
+        {
+          "char": "低",
+          "radical": "亻",
+          "component": "氏",
+          "meaning": "저하, 수준·능력이 낮아짐",
+          "word": "低下",
+          "word_reading": "ていか",
+          "word_meaning": "저하, 수준·능력이 낮아짐"
+        },
+        {
+          "char": "値",
+          "radical": "亻",
+          "component": "十",
+          "meaning": "가치, 값어치",
+          "word": "値打ち",
+          "word_reading": "ねうち",
+          "word_meaning": "가치, 값어치"
+        },
+        {
+          "char": "認",
+          "radical": "言",
+          "component": "心",
+          "meaning": "확인",
+          "word": "確認",
+          "word_reading": "かくにん",
+          "word_meaning": "확인"
+        },
+        {
+          "char": "説",
+          "radical": "言",
+          "component": "口",
+          "meaning": "설득",
+          "word": "説得",
+          "word_reading": "せっとく",
+          "word_meaning": "설득"
+        },
+        {
+          "char": "設",
+          "radical": "言",
+          "component": "殳",
+          "meaning": "설립",
+          "word": "設立",
+          "word_reading": "せつりつ",
+          "word_meaning": "설립"
+        },
+        {
+          "char": "話",
+          "radical": "言",
+          "component": "口",
+          "meaning": "대화",
+          "word": "対話",
+          "word_reading": "たいわ",
+          "word_meaning": "대화"
+        },
+        {
+          "char": "語",
+          "radical": "言",
+          "component": "吾",
+          "meaning": "이야기",
+          "word": "物語",
+          "word_reading": "ものがたり",
+          "word_meaning": "이야기"
+        },
+        {
+          "char": "謝",
+          "radical": "言",
+          "component": "身",
+          "meaning": "감사",
+          "word": "感謝",
+          "word_reading": "かんしゃ",
+          "word_meaning": "감사"
+        },
+        {
+          "char": "誤",
+          "radical": "言",
+          "component": "口",
+          "meaning": "오해",
+          "word": "誤解",
+          "word_reading": "ごかい",
+          "word_meaning": "오해"
+        },
+        {
+          "char": "識",
+          "radical": "言",
+          "component": "音",
+          "meaning": "인식, 알아봄, 이해",
+          "word": "認識",
+          "word_reading": "にんしき",
+          "word_meaning": "인식, 알아봄, 이해"
+        },
+        {
+          "char": "訪",
+          "radical": "言",
+          "component": "方",
+          "meaning": "방문, 찾아감",
+          "word": "訪問",
+          "word_reading": "ほうもん",
+          "word_meaning": "방문, 찾아감"
+        },
+        {
+          "char": "訳",
+          "radical": "言",
+          "component": "尸",
+          "meaning": "죄송합니다, 면목 없다",
+          "word": "申し訳ない",
+          "word_reading": "もうしわけない",
+          "word_meaning": "죄송합니다, 면목 없다"
+        },
+        {
+          "char": "計",
+          "radical": "言",
+          "component": "十",
+          "meaning": "쓸데없음, 불필요함",
+          "word": "余計",
+          "word_reading": "よけい",
+          "word_meaning": "쓸데없음, 불필요함"
+        },
+        {
+          "char": "証",
+          "radical": "言",
+          "component": "正",
+          "meaning": "증명, 사실임을 밝힘",
+          "word": "証明",
+          "word_reading": "しょうめい",
+          "word_meaning": "증명, 사실임을 밝힘"
+        },
+        {
+          "char": "言",
+          "radical": "言",
+          "component": "曰",
+          "meaning": "명언, 분명하게 말함 (유명한 말 아님)",
+          "word": "明言",
+          "word_reading": "めいげん",
+          "word_meaning": "명언, 분명하게 말함 (유명한 말 아님)"
+        },
+        {
+          "char": "調",
+          "radical": "言",
+          "component": "口",
+          "meaning": "강조, 두드러지게 나타냄",
+          "word": "強調",
+          "word_reading": "きょうちょう",
+          "word_meaning": "강조, 두드러지게 나타냄"
+        },
+        {
+          "char": "警",
+          "radical": "言",
+          "component": "口",
+          "meaning": "경고, 위험을 미리 알림",
+          "word": "警告",
+          "word_reading": "けいこく",
+          "word_meaning": "경고, 위험을 미리 알림"
+        },
+        {
+          "char": "講",
+          "radical": "言",
+          "component": "冂",
+          "meaning": "강의, 학문을 가르침",
+          "word": "講義",
+          "word_reading": "こうぎ",
+          "word_meaning": "강의, 학문을 가르침"
+        },
+        {
+          "char": "論",
+          "radical": "言",
+          "component": "｜",
+          "meaning": "언쟁, 말다툼",
+          "word": "口論",
+          "word_reading": "こうろん",
+          "word_meaning": "언쟁, 말다툼"
+        },
+        {
+          "char": "誇",
+          "radical": "言",
+          "component": "大",
+          "meaning": "과장, 사실보다 크게 부풀림",
+          "word": "誇張",
+          "word_reading": "こちょう",
+          "word_meaning": "과장, 사실보다 크게 부풀림"
+        },
+        {
+          "char": "件",
+          "radical": "亻",
+          "component": "牛",
+          "meaning": "용건, 볼일, 용무",
+          "word": "用件",
+          "word_reading": "ようけん",
+          "word_meaning": "용건, 볼일, 용무"
+        },
+        {
+          "char": "謬",
+          "radical": "言",
+          "component": "翏",
+          "meaning": "오류, 잘못된 판단·추론",
+          "word": "誤謬",
+          "word_reading": "ごびゅう",
+          "word_meaning": "오류, 잘못된 판단·추론"
+        },
+        {
+          "char": "信",
+          "radical": "亻",
+          "component": "言",
+          "meaning": "신빙성, 믿을 만한 정도",
+          "word": "信憑性",
+          "word_reading": "しんぴょうせい",
+          "word_meaning": "신빙성, 믿을 만한 정도"
+        },
+        {
+          "char": "他",
+          "radical": "亻",
+          "component": "也",
+          "meaning": "(비밀을) 타인에게 말함, 누설",
+          "word": "他言",
+          "word_reading": "たごん",
+          "word_meaning": "(비밀을) 타인에게 말함, 누설"
+        },
+        {
+          "char": "謎",
+          "radical": "言",
+          "component": "辶",
+          "meaning": "수수께끼, 미스터리, 불가사의",
+          "word": "謎",
+          "word_reading": "なぞ",
+          "word_meaning": "수수께끼, 미스터리, 불가사의"
+        },
+        {
+          "char": "何",
+          "radical": "亻",
+          "component": "口",
+          "meaning": "무심한 듯하다, 아무렇지 않다, 자연스럽다",
+          "word": "何気ない",
+          "word_reading": "なにげない",
+          "word_meaning": "무심한 듯하다, 아무렇지 않다, 자연스럽다"
+        },
+        {
+          "char": "体",
+          "radical": "亻",
+          "component": "木",
+          "meaning": "일심동체, 마음과 몸이 하나",
+          "word": "一心同体",
+          "word_reading": "いっしんどうたい",
+          "word_meaning": "일심동체, 마음과 몸이 하나"
+        },
+        {
+          "char": "符",
+          "radical": "亻",
+          "component": "寸",
+          "meaning": "물음표, 의문부호(?)",
+          "word": "疑問符",
+          "word_reading": "ぎもんふ",
+          "word_meaning": "물음표, 의문부호(?)"
+        },
+        {
+          "char": "侮",
+          "radical": "亻",
+          "component": "每",
+          "meaning": "모멸, 업신여김, 경멸",
+          "word": "侮蔑",
+          "word_reading": "ぶべつ",
+          "word_meaning": "모멸, 업신여김, 경멸"
+        },
+        {
+          "char": "傾",
+          "radical": "亻",
+          "component": "頃",
+          "meaning": "기울다, 기울어지다, 쏠리다",
+          "word": "傾く",
+          "word_reading": "かたむく",
+          "word_meaning": "기울다, 기울어지다, 쏠리다"
+        },
+        {
+          "char": "誘",
+          "radical": "言",
+          "component": "秀",
+          "meaning": "(함께하자고) 권하다, 유혹하다, 불러내다",
+          "word": "誘う",
+          "word_reading": "さそう",
+          "word_meaning": "(함께하자고) 권하다, 유혹하다, 불러내다"
+        }
+      ]
+    },
+    "5": {
+      "radicals": [
+        {
+          "char": "扌",
+          "name": "てへん",
+          "korean": "손수변",
+          "color": "#e85a4a",
+          "radical_meaning": "손·행동"
+        },
+        {
+          "char": "忄",
+          "name": "こころ",
+          "korean": "마음심변",
+          "color": "#c4556a",
+          "radical_meaning": "마음·감정"
+        }
+      ],
+      "kanji": [
+        {
+          "char": "揮",
+          "radical": "扌",
+          "component": "車",
+          "meaning": "발휘",
+          "word": "発揮",
+          "word_reading": "はっき",
+          "word_meaning": "발휘"
+        },
+        {
+          "char": "推",
+          "radical": "扌",
+          "component": "隹",
+          "meaning": "추천·권장",
+          "word": "推奨",
+          "word_reading": "すいしょう",
+          "word_meaning": "추천·권장"
+        },
+        {
+          "char": "操",
+          "radical": "扌",
+          "component": "口",
+          "meaning": "조종",
+          "word": "操縦",
+          "word_reading": "そうじゅう",
+          "word_meaning": "조종"
+        },
+        {
+          "char": "搬",
+          "radical": "扌",
+          "component": "舟",
+          "meaning": "반송·이송",
+          "word": "搬送",
+          "word_reading": "はんそう",
+          "word_meaning": "반송·이송"
+        },
+        {
+          "char": "扱",
+          "radical": "扌",
+          "component": "及",
+          "meaning": "취급",
+          "word": "取り扱い",
+          "word_reading": "とりあつかい",
+          "word_meaning": "취급"
+        },
+        {
+          "char": "控",
+          "radical": "扌",
+          "component": "穴",
+          "meaning": "줄임·절제",
+          "word": "控え目",
+          "word_reading": "ひかえめ",
+          "word_meaning": "줄임·절제"
+        },
+        {
+          "char": "持",
+          "radical": "扌",
+          "component": "寸",
+          "meaning": "화제지속",
+          "word": "持ちきり",
+          "word_reading": "もちきり",
+          "word_meaning": "화제지속"
+        },
+        {
+          "char": "押",
+          "radical": "扌",
+          "component": "甲",
+          "meaning": "밀다·누르다",
+          "word": "押す",
+          "word_reading": "おす",
+          "word_meaning": "밀다·누르다"
+        },
+        {
+          "char": "抜",
+          "radical": "扌",
+          "component": "夂",
+          "meaning": "정신이 팔리다",
+          "word": "現を抜かす",
+          "word_reading": "うつつをぬかす",
+          "word_meaning": "정신이 팔리다"
+        },
+        {
+          "char": "接",
+          "radical": "扌",
+          "component": "女",
+          "meaning": "접근, 가까이 다가감",
+          "word": "接近",
+          "word_reading": "せっきん",
+          "word_meaning": "접근, 가까이 다가감"
+        },
+        {
+          "char": "指",
+          "radical": "扌",
+          "component": "日",
+          "meaning": "굴지, 손꼽힘",
+          "word": "屈指",
+          "word_reading": "くっし",
+          "word_meaning": "굴지, 손꼽힘"
+        },
+        {
+          "char": "技",
+          "radical": "扌",
+          "component": "支",
+          "meaning": "기술, 솜씨, 기예",
+          "word": "技",
+          "word_reading": "わざ",
+          "word_meaning": "기술, 솜씨, 기예"
+        },
+        {
+          "char": "折",
+          "radical": "扌",
+          "component": "斤",
+          "meaning": "꺾다, 접다, 부러뜨리다",
+          "word": "折る",
+          "word_reading": "おる",
+          "word_meaning": "꺾다, 접다, 부러뜨리다"
+        },
+        {
+          "char": "抱",
+          "radical": "扌",
+          "component": "勹",
+          "meaning": "(쓰러지지 않도록) 끌어안다, 붙들어 안다",
+          "word": "抱きかかえる",
+          "word_reading": "だきかかえる",
+          "word_meaning": "(쓰러지지 않도록) 끌어안다, 붙들어 안다"
+        },
+        {
+          "char": "摘",
+          "radical": "扌",
+          "component": "口",
+          "meaning": "여우에 홀리다, 영문을 모르다",
+          "word": "狐に摘まれる",
+          "word_reading": "きつねにつままれる",
+          "word_meaning": "여우에 홀리다, 영문을 모르다"
+        },
+        {
+          "char": "担",
+          "radical": "扌",
+          "component": "旦",
+          "meaning": "부담, 짐을 짊어짐",
+          "word": "負担",
+          "word_reading": "ふたん",
+          "word_meaning": "부담, 짐을 짊어짐"
+        },
+        {
+          "char": "捨",
+          "radical": "扌",
+          "component": "口",
+          "meaning": "1회용, 한번 쓰고 버림",
+          "word": "使い捨て",
+          "word_reading": "つかいすて",
+          "word_meaning": "1회용, 한번 쓰고 버림"
+        },
+        {
+          "char": "掻",
+          "radical": "扌",
+          "component": "虫",
+          "meaning": "긁다, 긁어내다",
+          "word": "掻く",
+          "word_reading": "かく",
+          "word_meaning": "긁다, 긁어내다"
+        },
+        {
+          "char": "挟",
+          "radical": "扌",
+          "component": "人",
+          "meaning": "사이에 두다, 끼우다",
+          "word": "挟む",
+          "word_reading": "はさむ",
+          "word_meaning": "사이에 두다, 끼우다"
+        },
+        {
+          "char": "打",
+          "radical": "扌",
+          "component": "丁",
+          "meaning": "털어놓다, 솔직하게 말하다",
+          "word": "打ち明ける",
+          "word_reading": "うちあける",
+          "word_meaning": "털어놓다, 솔직하게 말하다"
+        },
+        {
+          "char": "掘",
+          "radical": "扌",
+          "component": "屈",
+          "meaning": "제 무덤을 파다, 스스로 파멸을 초래하다",
+          "word": "墓穴を掘る",
+          "word_reading": "ぼけつをほる",
+          "word_meaning": "제 무덤을 파다, 스스로 파멸을 초래하다"
+        },
+        {
+          "char": "拠",
+          "radical": "扌",
+          "component": "几",
+          "meaning": "근거, 판단의 바탕이 되는 이유",
+          "word": "根拠",
+          "word_reading": "こんきょ",
+          "word_meaning": "근거, 판단의 바탕이 되는 이유"
+        },
+        {
+          "char": "払",
+          "radical": "扌",
+          "component": "厶",
+          "meaning": "선불 배송료, 발송인이 요금을 부담함",
+          "word": "元払い",
+          "word_reading": "もとばらい",
+          "word_meaning": "선불 배송료, 발송인이 요금을 부담함"
+        },
+        {
+          "char": "拭",
+          "radical": "扌",
+          "component": "式",
+          "meaning": "닦다",
+          "word": "拭う",
+          "word_reading": "ぬぐう",
+          "word_meaning": "닦다, 닦아내다, 씻어내다"
+        },
+        {
+          "char": "情",
+          "radical": "忄",
+          "component": "月",
+          "meaning": "표정",
+          "word": "表情",
+          "word_reading": "ひょうじょう",
+          "word_meaning": "표정"
+        },
+        {
+          "char": "慣",
+          "radical": "忄",
+          "component": "貝",
+          "meaning": "익숙해지다",
+          "word": "慣れる",
+          "word_reading": "なれる",
+          "word_meaning": "익숙해지다"
+        },
+        {
+          "char": "悔",
+          "radical": "忄",
+          "component": "母",
+          "meaning": "분하다·억울하다",
+          "word": "悔しい",
+          "word_reading": "くやしい",
+          "word_meaning": "분하다·억울하다"
+        },
+        {
+          "char": "懐",
+          "radical": "忄",
+          "component": "衣",
+          "meaning": "그립다",
+          "word": "懐かしい",
+          "word_reading": "なつかしい",
+          "word_meaning": "그립다"
+        },
+        {
+          "char": "恨",
+          "radical": "忄",
+          "component": "艮",
+          "meaning": "원한을 풀다",
+          "word": "恨みを晴らす",
+          "word_reading": "うらみをはらす",
+          "word_meaning": "원한을 풀다"
+        },
+        {
+          "char": "悦",
+          "radical": "忄",
+          "component": "口",
+          "meaning": "흡족해하다",
+          "word": "悦に入る",
+          "word_reading": "えつにいる",
+          "word_meaning": "흡족해하다"
+        },
+        {
+          "char": "愕",
+          "radical": "忄",
+          "component": "口",
+          "meaning": "경악, 몹시 놀람",
+          "word": "驚愕",
+          "word_reading": "きょうがく",
+          "word_meaning": "경악, 몹시 놀람"
+        },
+        {
+          "char": "慌",
+          "radical": "忄",
+          "component": "川",
+          "meaning": "허둥대다, 당황하다",
+          "word": "慌てる",
+          "word_reading": "あわてる",
+          "word_meaning": "허둥대다, 당황하다"
+        },
+        {
+          "char": "憎",
+          "radical": "忄",
+          "component": "田",
+          "meaning": "미워하다, 증오하다",
+          "word": "憎む",
+          "word_reading": "にくむ",
+          "word_meaning": "미워하다, 증오하다"
+        },
+        {
+          "char": "愉",
+          "radical": "忄",
+          "component": "刂",
+          "meaning": "불쾌함, 기분 나쁨",
+          "word": "不愉快",
+          "word_reading": "ふゆかい",
+          "word_meaning": "불쾌함, 기분 나쁨"
+        },
+        {
+          "char": "快",
+          "radical": "忄",
+          "component": "人",
+          "meaning": "불쾌함, 기분 나쁨",
+          "word": "不愉快",
+          "word_reading": "ふゆかい",
+          "word_meaning": "불쾌함, 기분 나쁨"
+        },
+        {
+          "char": "慄",
+          "radical": "忄",
+          "component": "西",
+          "meaning": "전율, 두려움으로 몸이 떨림",
+          "word": "戦慄",
+          "word_reading": "せんりつ",
+          "word_meaning": "전율, 두려움으로 몸이 떨림"
+        },
+        {
+          "char": "投",
+          "radical": "扌",
+          "component": "殳",
+          "meaning": "의기투합, 서로 마음이 딱 맞음",
+          "word": "意気投合",
+          "word_reading": "いきとうごう",
+          "word_meaning": "의기투합, 서로 마음이 딱 맞음"
+        },
+        {
+          "char": "性",
+          "radical": "忄",
+          "component": "生",
+          "meaning": "본성, 출신, 신원",
+          "word": "素性",
+          "word_reading": "すじょう",
+          "word_meaning": "본성, 출신, 신원"
+        },
+        {
+          "char": "掛",
+          "radical": "扌",
+          "component": "圭",
+          "meaning": "기대어 세워놓다",
+          "word": "立て掛ける",
+          "word_reading": "たてかける",
+          "word_meaning": "기대어 세워놓다"
+        }
+      ]
+    },
+    "6": {
+      "radicals": [
+        {
+          "char": "氵",
+          "name": "さんずい",
+          "korean": "삼수변",
+          "color": "#4A90D9",
+          "radical_meaning": "물·액체"
+        },
+        {
+          "char": "言",
+          "name": "ごんべん",
+          "korean": "말씀언변",
+          "color": "#7b5ea7",
+          "radical_meaning": "말·언어"
+        }
+      ],
+      "kanji": [
+        {
+          "char": "準",
+          "radical": "氵",
+          "component": "十",
+          "meaning": "준비",
+          "word": "準備",
+          "word_reading": "じゅんび",
+          "word_meaning": "준비"
+        },
+        {
+          "char": "洪",
+          "radical": "氵",
+          "component": "共",
+          "meaning": "홍수",
+          "word": "洪水",
+          "word_reading": "こうずい",
+          "word_meaning": "홍수"
+        },
+        {
+          "char": "泡",
+          "radical": "氵",
+          "component": "勹",
+          "meaning": "질겁하다, 크게 당황하다",
+          "word": "泡を食う",
+          "word_reading": "あわをくう",
+          "word_meaning": "질겁하다, 크게 당황하다"
+        },
+        {
+          "char": "沸",
+          "radical": "氵",
+          "component": "弗",
+          "meaning": "비등, 물 등이 끓음, 열기가 고조됨",
+          "word": "沸騰",
+          "word_reading": "ふっとう",
+          "word_meaning": "비등, 물 등이 끓음, 열기가 고조됨"
+        },
+        {
+          "char": "渇",
+          "radical": "氵",
+          "component": "日",
+          "meaning": "(목이) 마르다, 갈증이 나다",
+          "word": "渇く",
+          "word_reading": "かわく",
+          "word_meaning": "(목이) 마르다, 갈증이 나다"
+        },
+        {
+          "char": "混",
+          "radical": "氵",
+          "component": "日",
+          "meaning": "한데 뒤섞이다, 뒤엉키다",
+          "word": "入り混じる",
+          "word_reading": "いりまじる",
+          "word_meaning": "한데 뒤섞이다, 뒤엉키다"
+        },
+        {
+          "char": "深",
+          "radical": "氵",
+          "component": "木",
+          "meaning": "의미심장, 뜻이 깊고 함축적임",
+          "word": "意味深長",
+          "word_reading": "いみしんちょう",
+          "word_meaning": "의미심장, 뜻이 깊고 함축적임"
+        },
+        {
+          "char": "減",
+          "radical": "氵",
+          "component": "口",
+          "meaning": "감량, 무게·양을 줄임",
+          "word": "減量",
+          "word_reading": "げんりょう",
+          "word_meaning": "감량, 무게·양을 줄임"
+        },
+        {
+          "char": "測",
+          "radical": "氵",
+          "component": "貝",
+          "meaning": "측정, 길이·무게 등을 재어 수치화함",
+          "word": "測定",
+          "word_reading": "そくてい",
+          "word_meaning": "측정, 길이·무게 등을 재어 수치화함"
+        },
+        {
+          "char": "泣",
+          "radical": "氵",
+          "component": "立",
+          "meaning": "소리 내어 욺, 통곡",
+          "word": "号泣",
+          "word_reading": "ごうきゅう",
+          "word_meaning": "소리 내어 욺, 통곡"
+        },
+        {
+          "char": "認",
+          "radical": "言",
+          "component": "心",
+          "meaning": "확인",
+          "word": "確認",
+          "word_reading": "かくにん",
+          "word_meaning": "확인"
+        },
+        {
+          "char": "説",
+          "radical": "言",
+          "component": "口",
+          "meaning": "설득",
+          "word": "説得",
+          "word_reading": "せっとく",
+          "word_meaning": "설득"
+        },
+        {
+          "char": "設",
+          "radical": "言",
+          "component": "殳",
+          "meaning": "설립",
+          "word": "設立",
+          "word_reading": "せつりつ",
+          "word_meaning": "설립"
+        },
+        {
+          "char": "話",
+          "radical": "言",
+          "component": "口",
+          "meaning": "대화",
+          "word": "対話",
+          "word_reading": "たいわ",
+          "word_meaning": "대화"
+        },
+        {
+          "char": "語",
+          "radical": "言",
+          "component": "吾",
+          "meaning": "이야기",
+          "word": "物語",
+          "word_reading": "ものがたり",
+          "word_meaning": "이야기"
+        },
+        {
+          "char": "謝",
+          "radical": "言",
+          "component": "身",
+          "meaning": "감사",
+          "word": "感謝",
+          "word_reading": "かんしゃ",
+          "word_meaning": "감사"
+        },
+        {
+          "char": "誤",
+          "radical": "言",
+          "component": "口",
+          "meaning": "오해",
+          "word": "誤解",
+          "word_reading": "ごかい",
+          "word_meaning": "오해"
+        },
+        {
+          "char": "識",
+          "radical": "言",
+          "component": "音",
+          "meaning": "인식, 알아봄, 이해",
+          "word": "認識",
+          "word_reading": "にんしき",
+          "word_meaning": "인식, 알아봄, 이해"
+        },
+        {
+          "char": "訪",
+          "radical": "言",
+          "component": "方",
+          "meaning": "방문, 찾아감",
+          "word": "訪問",
+          "word_reading": "ほうもん",
+          "word_meaning": "방문, 찾아감"
+        },
+        {
+          "char": "訳",
+          "radical": "言",
+          "component": "尸",
+          "meaning": "죄송합니다, 면목 없다",
+          "word": "申し訳ない",
+          "word_reading": "もうしわけない",
+          "word_meaning": "죄송합니다, 면목 없다"
+        },
+        {
+          "char": "計",
+          "radical": "言",
+          "component": "十",
+          "meaning": "쓸데없음, 불필요함",
+          "word": "余計",
+          "word_reading": "よけい",
+          "word_meaning": "쓸데없음, 불필요함"
+        },
+        {
+          "char": "証",
+          "radical": "言",
+          "component": "正",
+          "meaning": "증명, 사실임을 밝힘",
+          "word": "証明",
+          "word_reading": "しょうめい",
+          "word_meaning": "증명, 사실임을 밝힘"
+        },
+        {
+          "char": "言",
+          "radical": "言",
+          "component": "曰",
+          "meaning": "명언, 분명하게 말함 (유명한 말 아님)",
+          "word": "明言",
+          "word_reading": "めいげん",
+          "word_meaning": "명언, 분명하게 말함 (유명한 말 아님)"
+        },
+        {
+          "char": "調",
+          "radical": "言",
+          "component": "口",
+          "meaning": "강조, 두드러지게 나타냄",
+          "word": "強調",
+          "word_reading": "きょうちょう",
+          "word_meaning": "강조, 두드러지게 나타냄"
+        },
+        {
+          "char": "警",
+          "radical": "言",
+          "component": "口",
+          "meaning": "경고, 위험을 미리 알림",
+          "word": "警告",
+          "word_reading": "けいこく",
+          "word_meaning": "경고, 위험을 미리 알림"
+        },
+        {
+          "char": "消",
+          "radical": "氵",
+          "component": "月",
+          "meaning": "취소하다, 철회하다",
+          "word": "取り消す",
+          "word_reading": "とりけす",
+          "word_meaning": "취소하다, 철회하다"
+        },
+        {
+          "char": "活",
+          "radical": "氵",
+          "component": "ノ",
+          "meaning": "활기, 생기, 힘차고 활발한 기운",
+          "word": "活気",
+          "word_reading": "かっき",
+          "word_meaning": "활기, 생기, 힘차고 활발한 기운"
+        },
+        {
+          "char": "講",
+          "radical": "言",
+          "component": "冂",
+          "meaning": "강의, 학문을 가르침",
+          "word": "講義",
+          "word_reading": "こうぎ",
+          "word_meaning": "강의, 학문을 가르침"
+        },
+        {
+          "char": "論",
+          "radical": "言",
+          "component": "｜",
+          "meaning": "언쟁, 말다툼",
+          "word": "口論",
+          "word_reading": "こうろん",
+          "word_meaning": "언쟁, 말다툼"
+        },
+        {
+          "char": "誇",
+          "radical": "言",
+          "component": "大",
+          "meaning": "과장, 사실보다 크게 부풀림",
+          "word": "誇張",
+          "word_reading": "こちょう",
+          "word_meaning": "과장, 사실보다 크게 부풀림"
+        },
+        {
+          "char": "謬",
+          "radical": "言",
+          "component": "翏",
+          "meaning": "오류, 잘못된 판단·추론",
+          "word": "誤謬",
+          "word_reading": "ごびゅう",
+          "word_meaning": "오류, 잘못된 판단·추론"
+        },
+        {
+          "char": "染",
+          "radical": "氵",
+          "component": "九",
+          "meaning": "얼룩, 때, 기미",
+          "word": "染み",
+          "word_reading": "しみ",
+          "word_meaning": "얼룩, 때, 기미"
+        },
+        {
+          "char": "泥",
+          "radical": "氵",
+          "component": "匕",
+          "meaning": "진흙, 흙탕물",
+          "word": "泥",
+          "word_reading": "どろ",
+          "word_meaning": "진흙, 흙탕물"
+        },
+        {
+          "char": "謎",
+          "radical": "言",
+          "component": "辶",
+          "meaning": "수수께끼, 미스터리, 불가사의",
+          "word": "謎",
+          "word_reading": "なぞ",
+          "word_meaning": "수수께끼, 미스터리, 불가사의"
+        },
+        {
+          "char": "潮",
+          "radical": "氵",
+          "component": "朝",
+          "meaning": "퇴조, 기운·세력이 약해짐",
+          "word": "退潮",
+          "word_reading": "たいちょう",
+          "word_meaning": "퇴조, 기운·세력이 약해짐"
+        },
+        {
+          "char": "源",
+          "radical": "氵",
+          "component": "小",
+          "meaning": "원천, 근원, 시작점",
+          "word": "源",
+          "word_reading": "みなもと",
+          "word_meaning": "원천, 근원, 시작점"
+        },
+        {
+          "char": "誘",
+          "radical": "言",
+          "component": "秀",
+          "meaning": "(함께하자고) 권하다, 유혹하다, 불러내다",
+          "word": "誘う",
+          "word_reading": "さそう",
+          "word_meaning": "(함께하자고) 권하다, 유혹하다, 불러내다"
+        },
+        {
+          "char": "潰",
+          "radical": "氵",
+          "component": "貝",
+          "meaning": "으깨다, 눌러 부수다",
+          "word": "押し潰す",
+          "word_reading": "おしつぶす",
+          "word_meaning": "으깨다, 눌러 부수다"
+        }
+      ]
+    }
+  }
+}
