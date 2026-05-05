@@ -322,7 +322,7 @@ let WORDS = [];
 let questions = [], qIdx = 0;
 let score = 0, combo = 0, maxCombo = 0;
 let timeLeft = TIMER_SEC;
-let answered = false, hintUsed = false;
+let answered = false, storyUsed = false, senseUsed = false;
 let results = [];
 let timerInterval = null;
 let selectedRange = 'all';
@@ -465,7 +465,7 @@ function startGame() {
 
 function loadQuestion() {
   clearInterval(timerInterval);
-  answered = false; hintUsed = false; timeLeft = TIMER_SEC;
+  answered = false; storyUsed = false; senseUsed = false; timeLeft = TIMER_SEC;
   const q = questions[qIdx];
   const QC = questions.length;
   document.getElementById('hudCount').textContent = (qIdx+1) + ' / ' + QC;
@@ -475,8 +475,9 @@ function loadQuestion() {
   updateTimer();
   document.getElementById('wordNo').textContent = '#' + q.no;
   const ke = document.getElementById('wordKanji');
-  // 읽기 모드에서 word===reading(순히라가나/카타카나)이면 뜻을 대신 표시
-  const isKanaOnly = (selectedMode === 'reading' && q.word === q.reading);
+  // 읽기 모드에서 한자 없는 단어(히라가나/카타카나 전용)이면 뜻을 대신 표시
+  function hasKanji(str) { return /[一-龯㐀-䶿]/.test(str); }
+  const isKanaOnly = (selectedMode === 'reading' && !hasKanji(q.word));
   if (isKanaOnly) {
     ke.textContent = '「' + q.meaning + '」';
     ke.style.fontSize = '24px';
@@ -492,8 +493,15 @@ function loadQuestion() {
     document.getElementById('readingArea').innerHTML =
       '<p class="word-reading">' + q.reading + '</p>';
   }
-  document.getElementById('hintArea').innerHTML =
-    '<button class="hint-btn" onclick="showHint()">💡 우노디야 힌트 (-3점)</button>';
+  // 힌트 버튼 (hint_story, hint_sense 있을 때만 표시)
+  var hintBtns = '';
+  if (q.hint_story || q.hint) {
+    hintBtns += '<button class="hint-btn" id="btnStory" onclick="showStory()">🎬 스토리 힌트 (-3점)</button> ';
+  }
+  if (q.hint_sense || q.hint) {
+    hintBtns += '<button class="hint-btn" id="btnSense" onclick="showSense()">🎵 감각 힌트 (-5점)</button>';
+  }
+  document.getElementById('hintArea').innerHTML = '<div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:center;">' + hintBtns + '</div><div id="hintContent"></div>';
   document.getElementById('wordCard').classList.remove('correct','wrong');
   document.getElementById('options').innerHTML = q.options.map(function(opt, i) {
     const safe = opt.replace(/'/g, "&#39;").replace(/"/g, '&quot;');
@@ -527,7 +535,8 @@ function handleAnswer(selected) {
   const correct = selected === correctAnswer;
   let gained = 0;
   if (correct) {
-    gained = Math.max(5, 10 + timeLeft + Math.min(combo,5)*2 - (hintUsed?3:0));
+    var hintPenalty = (storyUsed ? 3 : 0) + (senseUsed ? 5 : 0);
+    gained = Math.max(5, 10 + timeLeft + Math.min(combo,5)*2 - hintPenalty);
     score += gained;
     combo++;
     maxCombo = Math.max(maxCombo, combo);
@@ -584,11 +593,24 @@ function updateBestDiff() {
   }
 }
 
-function showHint() {
+function showStory() {
   if (answered) return;
-  hintUsed = true;
-  document.getElementById('hintArea').innerHTML =
-    '<div class="hint-box">💡 ' + questions[qIdx].hint + '</div>';
+  storyUsed = true;
+  var q = questions[qIdx];
+  var text = q.hint_story || q.hint || '';
+  document.getElementById('btnStory') && (document.getElementById('btnStory').disabled = true);
+  document.getElementById('hintContent').innerHTML +=
+    '<div class="hint-box" style="margin-top:6px;">🎬 ' + text + '</div>';
+}
+
+function showSense() {
+  if (answered) return;
+  senseUsed = true;
+  var q = questions[qIdx];
+  var text = q.hint_sense || q.hint || '';
+  document.getElementById('btnSense') && (document.getElementById('btnSense').disabled = true);
+  document.getElementById('hintContent').innerHTML +=
+    '<div class="hint-box" style="margin-top:6px;border-color:rgba(78,205,196,0.3);color:#4ecdc4;">🎵 ' + text + '</div>';
 }
 
 function showResult() {
