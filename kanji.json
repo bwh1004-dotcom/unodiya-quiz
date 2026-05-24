@@ -1,5 +1,5 @@
 {
-  "total_words": 620,
+  "total_words": 940,
   "levels": {
     "1": {
       "radicals": [
@@ -495,6 +495,114 @@
           "word": "傾く",
           "word_reading": "かたむく",
           "word_meaning": "기울다, 기울어지다, 쏠리다"
+        },
+        {
+          "char": "偶",
+          "radical": "亻",
+          "component": "田",
+          "meaning": "우연히, 우연",
+          "word": "偶然",
+          "word_reading": "ぐうぜん",
+          "word_meaning": "우연히, 우연"
+        },
+        {
+          "char": "批",
+          "radical": "扌",
+          "component": "比",
+          "meaning": "비평, 잘잘못을 따져 평가함",
+          "word": "批評",
+          "word_reading": "ひひょう",
+          "word_meaning": "비평, 잘잘못을 따져 평가함"
+        },
+        {
+          "char": "振",
+          "radical": "扌",
+          "component": "衣",
+          "meaning": "부진, 활기가 없고 성적이 좋지 않음",
+          "word": "不振",
+          "word_reading": "ふしん",
+          "word_meaning": "부진, 활기가 없고 성적이 좋지 않음"
+        },
+        {
+          "char": "換",
+          "radical": "扌",
+          "component": "奐",
+          "meaning": "변환, 다른 형태로 바꿈",
+          "word": "変換",
+          "word_reading": "へんかん",
+          "word_meaning": "변환, 다른 형태로 바꿈"
+        },
+        {
+          "char": "挽",
+          "radical": "扌",
+          "component": "免",
+          "meaning": "만회, 잃은 것을 되찾음",
+          "word": "挽回",
+          "word_reading": "ばんかい",
+          "word_meaning": "만회, 잃은 것을 되찾음"
+        },
+        {
+          "char": "排",
+          "radical": "扌",
+          "component": "非",
+          "meaning": "배척, 밀어내어 물리침",
+          "word": "排斥",
+          "word_reading": "はいせき",
+          "word_meaning": "배척, 밀어내어 물리침"
+        },
+        {
+          "char": "便",
+          "radical": "亻",
+          "component": "更",
+          "meaning": "편승, 기회를 이용해서 함께 올라탐",
+          "word": "便乗",
+          "word_reading": "びんじょう",
+          "word_meaning": "편승, 기회를 이용해서 함께 올라탐"
+        },
+        {
+          "char": "提",
+          "radical": "扌",
+          "component": "日",
+          "meaning": "제안, 의견이나 아이디어를 내놓음",
+          "word": "提案",
+          "word_reading": "ていあん",
+          "word_meaning": "제안, 의견이나 아이디어를 내놓음"
+        },
+        {
+          "char": "供",
+          "radical": "亻",
+          "component": "｜",
+          "meaning": "공양, 죽은 이를 위해 제사나 기도를 올림",
+          "word": "供養",
+          "word_reading": "くよう",
+          "word_meaning": "공양, 죽은 이를 위해 제사나 기도를 올림"
+        },
+        {
+          "char": "荷",
+          "radical": "亻",
+          "component": "口",
+          "meaning": "짐싸기, 포장",
+          "word": "荷造り",
+          "word_reading": "にづくり",
+          "word_meaning": "짐싸기, 포장"
+        },
+        {
+          "char": "俯",
+          "radical": "亻",
+          "component": "寸",
+          "meaning": "고개를 숙이다, 아래를 향하다",
+          "word": "俯く",
+          "word_reading": "うつむく",
+          "word_meaning": "고개를 숙이다, 아래를 향하다"
+        },
+        {
+          "char": "佇",
+          "radical": "亻",
+          "component": "宁",
+          "meaning": "가만히 서다, 멈춰 서다",
+          "word": "佇む",
+          "word_reading": "たたずむ",
+          "word_meaning": "가만히 서다, 멈춰 서다"
         }
       ]
     },
@@ -821,6 +929,60 @@
           "word": "誘う",
           "word_reading": "さそう",
           "word_meaning": "(함께하자고) 권하다, 유혹하다, 불러내다"
+        },
+        {
+          "char": "惜",
+          "radical": "忄",
+          "component": "｜",
+          "meaning": "아깝다, 아쉽다",
+          "word": "惜しい",
+          "word_reading": "おしい",
+          "word_meaning": "아깝다, 아쉽다"
+        },
+        {
+          "char": "訂",
+          "radical": "言",
+          "component": "丁",
+          "meaning": "정정, 잘못된 것을 바로잡음",
+          "word": "訂正",
+          "word_reading": "ていせい",
+          "word_meaning": "정정, 잘못된 것을 바로잡음"
+        },
+        {
+          "char": "討",
+          "radical": "言",
+          "component": "寸",
+          "meaning": "토론, 서로 논의함",
+          "word": "討論",
+          "word_reading": "とうろん",
+          "word_meaning": "토론, 서로 논의함"
+        },
+        {
+          "char": "評",
+          "radical": "言",
+          "component": "｜",
+          "meaning": "비평, 잘잘못을 따져 평가함",
+          "word": "批評",
+          "word_reading": "ひひょう",
+          "word_meaning": "비평, 잘잘못을 따져 평가함"
+        },
+        {
+          "char": "詣",
+          "radical": "言",
+          "component": "旨",
+          "meaning": "조예, 학문이나 예술의 깊은 이해와 지식",
+          "word": "造詣",
+          "word_reading": "ぞうけい",
+          "word_meaning": "조예, 학문이나 예술의 깊은 이해와 지식"
+        },
+        {
+          "char": "惨",
+          "radical": "忄",
+          "component": "一",
+          "meaning": "비참함, 처량함",
+          "word": "惨め",
+          "word_reading": "みじめ",
+          "word_meaning": "비참함, 처량함"
         }
       ]
     },
@@ -1138,6 +1300,195 @@
           "word": "押し潰す",
           "word_reading": "おしつぶす",
           "word_meaning": "으깨다, 눌러 부수다"
+        },
+        {
+          "char": "継",
+          "radical": "糸",
+          "component": "｜",
+          "meaning": "이어받다, 인계받다",
+          "word": "引き継ぐ",
+          "word_reading": "ひきつぐ",
+          "word_meaning": "이어받다, 인계받다"
+        },
+        {
+          "char": "決",
+          "radical": "氵",
+          "component": "人",
+          "meaning": "다수결, 다수의 의견으로 결정함",
+          "word": "多数決",
+          "word_reading": "たすうけつ",
+          "word_meaning": "다수결, 다수의 의견으로 결정함"
+        },
+        {
+          "char": "納",
+          "radical": "糸",
+          "component": "幺",
+          "meaning": "납득, 충분히 이해하고 승복함",
+          "word": "納得",
+          "word_reading": "なっとく",
+          "word_meaning": "납득, 충분히 이해하고 승복함"
+        },
+        {
+          "char": "沼",
+          "radical": "氵",
+          "component": "口",
+          "meaning": "수렁, 헤어나기 힘든 나쁜 상황",
+          "word": "泥沼",
+          "word_reading": "どろぬま",
+          "word_meaning": "수렁, 헤어나기 힘든 나쁜 상황"
+        },
+        {
+          "char": "海",
+          "radical": "氵",
+          "component": "母",
+          "meaning": "새우로 도미를 낚는다, 적은 투자로 큰 이익을 얻음",
+          "word": "海老で鯛を釣る",
+          "word_reading": "えびでたいをつる",
+          "word_meaning": "새우로 도미를 낚는다, 적은 투자로 큰 이익을 얻음"
+        },
+        {
+          "char": "津",
+          "radical": "氵",
+          "component": "聿",
+          "meaning": "흥미진진, 몹시 흥미로워 빠져드는 모양",
+          "word": "興味津々",
+          "word_reading": "きょうみしんしん",
+          "word_meaning": "흥미진진, 몹시 흥미로워 빠져드는 모양"
+        },
+        {
+          "char": "演",
+          "radical": "氵",
+          "component": "田",
+          "meaning": "연주, 악기를 연주함",
+          "word": "演奏",
+          "word_reading": "えんそう",
+          "word_meaning": "연주, 악기를 연주함"
+        },
+        {
+          "char": "絵",
+          "radical": "糸",
+          "component": "会",
+          "meaning": "회화, 그림",
+          "word": "絵画",
+          "word_reading": "かいが",
+          "word_meaning": "회화, 그림"
+        },
+        {
+          "char": "湿",
+          "radical": "氵",
+          "component": "㬎",
+          "meaning": "가습기, 공기에 습기를 더하는 기기",
+          "word": "加湿器",
+          "word_reading": "かしつき",
+          "word_meaning": "가습기, 공기에 습기를 더하는 기기"
+        },
+        {
+          "char": "汁",
+          "radical": "氵",
+          "component": "十",
+          "meaning": "과즙, 과일의 즙",
+          "word": "果汁",
+          "word_reading": "かじゅう",
+          "word_meaning": "과즙, 과일의 즙"
+        },
+        {
+          "char": "線",
+          "radical": "糸",
+          "component": "幺",
+          "meaning": "탈선, 이야기가 옆길로 샘",
+          "word": "脱線",
+          "word_reading": "だっせん",
+          "word_meaning": "탈선, 이야기가 옆길로 샘"
+        },
+        {
+          "char": "浮",
+          "radical": "氵",
+          "component": "孚",
+          "meaning": "원형 튜브, 튜브형 부표",
+          "word": "浮き輪",
+          "word_reading": "うきわ",
+          "word_meaning": "원형 튜브, 튜브형 부표"
+        },
+        {
+          "char": "沈",
+          "radical": "氵",
+          "component": "冘",
+          "meaning": "가라앉다, 침울해지다",
+          "word": "沈む",
+          "word_reading": "しずむ",
+          "word_meaning": "가라앉다, 침울해지다"
+        },
+        {
+          "char": "治",
+          "radical": "氵",
+          "component": "口",
+          "meaning": "고치다, 낫게 하다 (병·상처) ※直す(수리)와 구별",
+          "word": "治す",
+          "word_reading": "なおす",
+          "word_meaning": "고치다, 낫게 하다 (병·상처) ※直す(수리)와 구별"
+        },
+        {
+          "char": "渡",
+          "radical": "氵",
+          "component": "又",
+          "meaning": "울려 퍼지다, 넓게 울리다",
+          "word": "響き渡る",
+          "word_reading": "ひびきわたる",
+          "word_meaning": "울려 퍼지다, 넓게 울리다"
+        },
+        {
+          "char": "浦",
+          "radical": "氵",
+          "component": "十",
+          "meaning": "방방곡곡, 구석구석",
+          "word": "津々浦々",
+          "word_reading": "つつうらうら",
+          "word_meaning": "방방곡곡, 구석구석"
+        },
+        {
+          "char": "法",
+          "radical": "氵",
+          "component": "土",
+          "meaning": "허풍을 떨다, 거짓말을 부풀리다",
+          "word": "法螺を吹く",
+          "word_reading": "ほらをふく",
+          "word_meaning": "허풍을 떨다, 거짓말을 부풀리다"
+        },
+        {
+          "char": "螺",
+          "radical": "糸",
+          "component": "幺",
+          "meaning": "허풍을 떨다, 거짓말을 부풀리다",
+          "word": "法螺を吹く",
+          "word_reading": "ほらをふく",
+          "word_meaning": "허풍을 떨다, 거짓말을 부풀리다"
+        },
+        {
+          "char": "流",
+          "radical": "氵",
+          "component": "㐬",
+          "meaning": "교류, 서로 왕래하며 사귐",
+          "word": "交流",
+          "word_reading": "こうりゅう",
+          "word_meaning": "교류, 서로 왕래하며 사귐"
+        },
+        {
+          "char": "濤",
+          "radical": "氵",
+          "component": "舀",
+          "meaning": "노도, 거세게 치는 파도, 거침없는 기세",
+          "word": "怒濤",
+          "word_reading": "どとう",
+          "word_meaning": "노도, 거세게 치는 파도, 거침없는 기세"
+        },
+        {
+          "char": "窪",
+          "radical": "氵",
+          "component": "穴",
+          "meaning": "움푹 패다, 오목하게 들어가다",
+          "word": "窪む",
+          "word_reading": "くぼむ",
+          "word_meaning": "움푹 패다, 오목하게 들어가다"
         }
       ]
     },
@@ -1590,6 +1941,96 @@
           "word": "誘う",
           "word_reading": "さそう",
           "word_meaning": "(함께하자고) 권하다, 유혹하다, 불러내다"
+        },
+        {
+          "char": "偶",
+          "radical": "亻",
+          "component": "田",
+          "meaning": "우연히, 우연",
+          "word": "偶然",
+          "word_reading": "ぐうぜん",
+          "word_meaning": "우연히, 우연"
+        },
+        {
+          "char": "訂",
+          "radical": "言",
+          "component": "丁",
+          "meaning": "정정, 잘못된 것을 바로잡음",
+          "word": "訂正",
+          "word_reading": "ていせい",
+          "word_meaning": "정정, 잘못된 것을 바로잡음"
+        },
+        {
+          "char": "討",
+          "radical": "言",
+          "component": "寸",
+          "meaning": "토론, 서로 논의함",
+          "word": "討論",
+          "word_reading": "とうろん",
+          "word_meaning": "토론, 서로 논의함"
+        },
+        {
+          "char": "評",
+          "radical": "言",
+          "component": "｜",
+          "meaning": "비평, 잘잘못을 따져 평가함",
+          "word": "批評",
+          "word_reading": "ひひょう",
+          "word_meaning": "비평, 잘잘못을 따져 평가함"
+        },
+        {
+          "char": "詣",
+          "radical": "言",
+          "component": "旨",
+          "meaning": "조예, 학문이나 예술의 깊은 이해와 지식",
+          "word": "造詣",
+          "word_reading": "ぞうけい",
+          "word_meaning": "조예, 학문이나 예술의 깊은 이해와 지식"
+        },
+        {
+          "char": "便",
+          "radical": "亻",
+          "component": "更",
+          "meaning": "편승, 기회를 이용해서 함께 올라탐",
+          "word": "便乗",
+          "word_reading": "びんじょう",
+          "word_meaning": "편승, 기회를 이용해서 함께 올라탐"
+        },
+        {
+          "char": "供",
+          "radical": "亻",
+          "component": "｜",
+          "meaning": "공양, 죽은 이를 위해 제사나 기도를 올림",
+          "word": "供養",
+          "word_reading": "くよう",
+          "word_meaning": "공양, 죽은 이를 위해 제사나 기도를 올림"
+        },
+        {
+          "char": "荷",
+          "radical": "亻",
+          "component": "口",
+          "meaning": "짐싸기, 포장",
+          "word": "荷造り",
+          "word_reading": "にづくり",
+          "word_meaning": "짐싸기, 포장"
+        },
+        {
+          "char": "俯",
+          "radical": "亻",
+          "component": "寸",
+          "meaning": "고개를 숙이다, 아래를 향하다",
+          "word": "俯く",
+          "word_reading": "うつむく",
+          "word_meaning": "고개를 숙이다, 아래를 향하다"
+        },
+        {
+          "char": "佇",
+          "radical": "亻",
+          "component": "宁",
+          "meaning": "가만히 서다, 멈춰 서다",
+          "word": "佇む",
+          "word_reading": "たたずむ",
+          "word_meaning": "가만히 서다, 멈춰 서다"
         }
       ]
     },
@@ -1961,6 +2402,78 @@
           "word": "立て掛ける",
           "word_reading": "たてかける",
           "word_meaning": "기대어 세워놓다"
+        },
+        {
+          "char": "惜",
+          "radical": "忄",
+          "component": "｜",
+          "meaning": "아깝다, 아쉽다",
+          "word": "惜しい",
+          "word_reading": "おしい",
+          "word_meaning": "아깝다, 아쉽다"
+        },
+        {
+          "char": "批",
+          "radical": "扌",
+          "component": "比",
+          "meaning": "비평, 잘잘못을 따져 평가함",
+          "word": "批評",
+          "word_reading": "ひひょう",
+          "word_meaning": "비평, 잘잘못을 따져 평가함"
+        },
+        {
+          "char": "振",
+          "radical": "扌",
+          "component": "衣",
+          "meaning": "부진, 활기가 없고 성적이 좋지 않음",
+          "word": "不振",
+          "word_reading": "ふしん",
+          "word_meaning": "부진, 활기가 없고 성적이 좋지 않음"
+        },
+        {
+          "char": "換",
+          "radical": "扌",
+          "component": "奐",
+          "meaning": "변환, 다른 형태로 바꿈",
+          "word": "変換",
+          "word_reading": "へんかん",
+          "word_meaning": "변환, 다른 형태로 바꿈"
+        },
+        {
+          "char": "惨",
+          "radical": "忄",
+          "component": "一",
+          "meaning": "비참함, 처량함",
+          "word": "惨め",
+          "word_reading": "みじめ",
+          "word_meaning": "비참함, 처량함"
+        },
+        {
+          "char": "挽",
+          "radical": "扌",
+          "component": "免",
+          "meaning": "만회, 잃은 것을 되찾음",
+          "word": "挽回",
+          "word_reading": "ばんかい",
+          "word_meaning": "만회, 잃은 것을 되찾음"
+        },
+        {
+          "char": "排",
+          "radical": "扌",
+          "component": "非",
+          "meaning": "배척, 밀어내어 물리침",
+          "word": "排斥",
+          "word_reading": "はいせき",
+          "word_meaning": "배척, 밀어내어 물리침"
+        },
+        {
+          "char": "提",
+          "radical": "扌",
+          "component": "日",
+          "meaning": "제안, 의견이나 아이디어를 내놓음",
+          "word": "提案",
+          "word_reading": "ていあん",
+          "word_meaning": "제안, 의견이나 아이디어를 내놓음"
         }
       ]
     },
@@ -2323,6 +2836,186 @@
           "word": "押し潰す",
           "word_reading": "おしつぶす",
           "word_meaning": "으깨다, 눌러 부수다"
+        },
+        {
+          "char": "決",
+          "radical": "氵",
+          "component": "人",
+          "meaning": "다수결, 다수의 의견으로 결정함",
+          "word": "多数決",
+          "word_reading": "たすうけつ",
+          "word_meaning": "다수결, 다수의 의견으로 결정함"
+        },
+        {
+          "char": "訂",
+          "radical": "言",
+          "component": "丁",
+          "meaning": "정정, 잘못된 것을 바로잡음",
+          "word": "訂正",
+          "word_reading": "ていせい",
+          "word_meaning": "정정, 잘못된 것을 바로잡음"
+        },
+        {
+          "char": "討",
+          "radical": "言",
+          "component": "寸",
+          "meaning": "토론, 서로 논의함",
+          "word": "討論",
+          "word_reading": "とうろん",
+          "word_meaning": "토론, 서로 논의함"
+        },
+        {
+          "char": "評",
+          "radical": "言",
+          "component": "｜",
+          "meaning": "비평, 잘잘못을 따져 평가함",
+          "word": "批評",
+          "word_reading": "ひひょう",
+          "word_meaning": "비평, 잘잘못을 따져 평가함"
+        },
+        {
+          "char": "詣",
+          "radical": "言",
+          "component": "旨",
+          "meaning": "조예, 학문이나 예술의 깊은 이해와 지식",
+          "word": "造詣",
+          "word_reading": "ぞうけい",
+          "word_meaning": "조예, 학문이나 예술의 깊은 이해와 지식"
+        },
+        {
+          "char": "沼",
+          "radical": "氵",
+          "component": "口",
+          "meaning": "수렁, 헤어나기 힘든 나쁜 상황",
+          "word": "泥沼",
+          "word_reading": "どろぬま",
+          "word_meaning": "수렁, 헤어나기 힘든 나쁜 상황"
+        },
+        {
+          "char": "海",
+          "radical": "氵",
+          "component": "母",
+          "meaning": "새우로 도미를 낚는다, 적은 투자로 큰 이익을 얻음",
+          "word": "海老で鯛を釣る",
+          "word_reading": "えびでたいをつる",
+          "word_meaning": "새우로 도미를 낚는다, 적은 투자로 큰 이익을 얻음"
+        },
+        {
+          "char": "津",
+          "radical": "氵",
+          "component": "聿",
+          "meaning": "흥미진진, 몹시 흥미로워 빠져드는 모양",
+          "word": "興味津々",
+          "word_reading": "きょうみしんしん",
+          "word_meaning": "흥미진진, 몹시 흥미로워 빠져드는 모양"
+        },
+        {
+          "char": "演",
+          "radical": "氵",
+          "component": "田",
+          "meaning": "연주, 악기를 연주함",
+          "word": "演奏",
+          "word_reading": "えんそう",
+          "word_meaning": "연주, 악기를 연주함"
+        },
+        {
+          "char": "湿",
+          "radical": "氵",
+          "component": "㬎",
+          "meaning": "가습기, 공기에 습기를 더하는 기기",
+          "word": "加湿器",
+          "word_reading": "かしつき",
+          "word_meaning": "가습기, 공기에 습기를 더하는 기기"
+        },
+        {
+          "char": "汁",
+          "radical": "氵",
+          "component": "十",
+          "meaning": "과즙, 과일의 즙",
+          "word": "果汁",
+          "word_reading": "かじゅう",
+          "word_meaning": "과즙, 과일의 즙"
+        },
+        {
+          "char": "浮",
+          "radical": "氵",
+          "component": "孚",
+          "meaning": "원형 튜브, 튜브형 부표",
+          "word": "浮き輪",
+          "word_reading": "うきわ",
+          "word_meaning": "원형 튜브, 튜브형 부표"
+        },
+        {
+          "char": "沈",
+          "radical": "氵",
+          "component": "冘",
+          "meaning": "가라앉다, 침울해지다",
+          "word": "沈む",
+          "word_reading": "しずむ",
+          "word_meaning": "가라앉다, 침울해지다"
+        },
+        {
+          "char": "治",
+          "radical": "氵",
+          "component": "口",
+          "meaning": "고치다, 낫게 하다 (병·상처) ※直す(수리)와 구별",
+          "word": "治す",
+          "word_reading": "なおす",
+          "word_meaning": "고치다, 낫게 하다 (병·상처) ※直す(수리)와 구별"
+        },
+        {
+          "char": "渡",
+          "radical": "氵",
+          "component": "又",
+          "meaning": "울려 퍼지다, 넓게 울리다",
+          "word": "響き渡る",
+          "word_reading": "ひびきわたる",
+          "word_meaning": "울려 퍼지다, 넓게 울리다"
+        },
+        {
+          "char": "浦",
+          "radical": "氵",
+          "component": "十",
+          "meaning": "방방곡곡, 구석구석",
+          "word": "津々浦々",
+          "word_reading": "つつうらうら",
+          "word_meaning": "방방곡곡, 구석구석"
+        },
+        {
+          "char": "法",
+          "radical": "氵",
+          "component": "土",
+          "meaning": "허풍을 떨다, 거짓말을 부풀리다",
+          "word": "法螺を吹く",
+          "word_reading": "ほらをふく",
+          "word_meaning": "허풍을 떨다, 거짓말을 부풀리다"
+        },
+        {
+          "char": "流",
+          "radical": "氵",
+          "component": "㐬",
+          "meaning": "교류, 서로 왕래하며 사귐",
+          "word": "交流",
+          "word_reading": "こうりゅう",
+          "word_meaning": "교류, 서로 왕래하며 사귐"
+        },
+        {
+          "char": "濤",
+          "radical": "氵",
+          "component": "舀",
+          "meaning": "노도, 거세게 치는 파도, 거침없는 기세",
+          "word": "怒濤",
+          "word_reading": "どとう",
+          "word_meaning": "노도, 거세게 치는 파도, 거침없는 기세"
+        },
+        {
+          "char": "窪",
+          "radical": "氵",
+          "component": "穴",
+          "meaning": "움푹 패다, 오목하게 들어가다",
+          "word": "窪む",
+          "word_reading": "くぼむ",
+          "word_meaning": "움푹 패다, 오목하게 들어가다"
         }
       ]
     }
